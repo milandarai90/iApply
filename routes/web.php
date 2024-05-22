@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+route::get('/', [HomepageController::class, 'index'])->name('showIndex');
+route::get('/register', [AuthController::class, 'registerDisplay'])->name('registerDisplay');
+route::get('/login', [AuthController::class, 'loginDisplay'])->name('loginDisplay');
+
