@@ -46,24 +46,52 @@
                         </div>
                         <hr>
                     <div>
-                    <form action="" method="POST" class="mt-3 mb-3" id="register_form">
+                       
+                    <form action="{{route('registered')}}" method="POST" class="mt-3 mb-3" id="register_form">
                         @csrf
                         <div class="form-group mb-3">
                           <label for="full_name" class="mb-2">Full Name</label>
                           <input type="text" class="form-control" name="name" id="full_name" aria-describedby="fullname" placeholder="Enter Full Name" >
                         </div>
+                        <div>
+                            @error('name')
+                              <span class="text-danger">
+                                {{$message}}
+                              </span>
+                            @enderror
+                        </div>
                         <div class="form-group mb-3">
                             <label for="email" class="mb-2">Email</label>
                             <input type="email" class="form-control" name="email" id="full_name" placeholder="Enter Your Email"  >
                             </div>
+                            <div>
+                                @error('email')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                @enderror
+                            </div>
                         <div class="form-group mb-3">
                           <label for="password" class="mb-2">Password</label>
                           <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                         
+                        </div>
+                        <div>
+                            @error('password')
+                              <span class="text-danger">
+                                {{$message}}
+                              </span>
+                            @enderror
                         </div>
                         <div class="form-group mb-4 ">
                             <label for="confirm" class="mb-2">Confirm Password</label>
                             <input type="password" class="form-control" name="cpassword" id="password_confrmation'"   placeholder="Confirm Password" >
+                            </div>
+                            <div>
+                                @error('c_password')
+                                  <span class="text-danger">
+                                    {{$message}}
+                                  </span>
+                                @enderror
                             </div>
                        <div class="d-flex justify-content-center mt-4 mb-3"> <button type="submit" class="btn btn-primary  w-25">Register</button>
                         </div>
@@ -72,6 +100,18 @@
                         <div  class="text-center"> <a href=" ">Login now.</a></div>
                         </div>
                     </form>
+                    <div >
+                        @if(Session::has('success'))
+                        <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
+                         <p class="text-small text-center text-light align-items-center">{{session::get('success')}}</p>
+                        </div>
+                         @endif
+                         @if(Session::has('fail'))
+                         <div class="form-control align-items-center" id="sessionFail" style="background-color: rgb(233, 6, 6)">
+                          <p class="text-small text-center text-light align-items-center">{{session::get('fail')}}</p>
+                         </div>
+                          @endif
+                    </div>
                 </div>
             </div>
         </main>
@@ -84,7 +124,14 @@
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
             crossorigin="anonymous"
         ></script>
-
+<script>
+       setTimeout(function () {
+  document.getElementById("sessionSuccess").style.display = "none";
+  }, 3000); 
+  setTimeout(function () {
+  document.getElementById("sessionFail").style.display = "none";
+  }, 3000); 
+</script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"

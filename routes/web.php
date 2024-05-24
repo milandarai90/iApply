@@ -1,7 +1,15 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\SuperAdminDashboardController;
+use App\Http\Controllers\SuperadminUsersControllers;
+
+use App\Http\Controllers\BranchDashboardController;
+
+use App\Http\Controllers\ConsultancyDashboardController;
+
+use App\Http\Controllers\UsersHomepageController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +23,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-route::get('/', [HomepageController::class, 'index'])->name('showIndex');
+route::get('/', [UsersHomepageController::class, 'index'])->name('showIndex');
 route::get('/register', [AuthController::class, 'registerDisplay'])->name('registerDisplay');
 route::get('/login', [AuthController::class, 'loginDisplay'])->name('loginDisplay');
+route::post('/registered', [AuthController::class, 'registered'])->name('registered');
+route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('loginCheck');
+route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+Route::prefix('/superadmin')->name('superadmin.')->group(function () {
+    Route::middleware(['isSuperAdmin'])->group(function () {
+        route::get('/dashboard', [SuperAdminDashboardController::class, 'dashboard'])->name('dashboard');
+        route::get('/users', [SuperadminUsersControllers::class, 'users'])->name('users');
+    });
+});
+
+Route::prefix('/consultancy')->name('consultancy.')->group(function () {
+    Route::middleware(['isConsultancy'])->group(function () {
+        route::get('/dashboard', [ConsultancyDashboardController::class, 'dashboard'])->name('dashboard');
+    });
+});
+
+Route::prefix('/branch')->name('branch.')->group(function () {
+    Route::middleware(['isBranch'])->group(function () {
+        route::get('/dashboard', [BranchDashboardController::class, 'dashboard'])->name('dashboard');
+    });
+});
+
+Route::prefix('/users')->name('users.')->group(function () {
+    Route::middleware(['isUser'])->group(function () {
+
+    });
+});

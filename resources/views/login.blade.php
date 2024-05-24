@@ -49,7 +49,7 @@
                 </div>
                 <hr>
             <div>
-                <form action="" class="w-100 p-3" method="POST">
+                <form action="{{route('loginCheck')}}" class="w-100 p-3" method="POST">
                          @csrf
                     <label for="email" >Email</label><br>
                     <input type="email" class="mt-3 mb-2 form-control w-100" placeholder="Enter email" id="email" name="email">
@@ -63,6 +63,18 @@
                         <button type="submit" class="btn btn-success">Login</button>  
                     </div>
                 </form>
+                <div >
+                    @if(Session::has('success'))
+                    <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
+                     <p class="text-small text-center text-light align-items-center">{{session::get('success')}}</p>
+                    </div>
+                     @endif
+                     @if(Session::has('fail'))
+                     <div class="form-control align-items-center" id="sessionFail" style="background-color: rgb(233, 6, 6)">
+                      <p class="text-small text-center text-light align-items-center">{{session::get('fail')}}</p>
+                     </div>
+                      @endif
+                </div>
             </div>
         </div>
         </main>
@@ -75,7 +87,14 @@
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
             crossorigin="anonymous"
         ></script>
-
+        <script>
+    //         setTimeout(function () {
+    //    document.getElementById("sessionSuccess").style.display = "none";
+    //    }, 3000); 
+    //    setTimeout(function () {
+    //    document.getElementById("sessionFail").style.display = "none";
+    //    }, 3000); 
+     </script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"

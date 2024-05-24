@@ -14,8 +14,13 @@
               </form>
         </div>
         <div class="me-2">
+            @guest
             <a href="{{route('loginDisplay')}}"><button class="btn btn-success">Login</button></a>
             <a href="{{route('registerDisplay')}}"><button class="btn btn-primary">Register</button></a>
+            @endguest
+            @auth
+            <a href="{{route('logout')}}"><button class="btn btn-primary">Logout</button></a>
+            @endauth
         </div>  
     </div>
   </nav>

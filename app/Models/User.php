@@ -23,6 +23,10 @@ class User extends Authenticatable
         'password',
     ];
 
+
+
+    protected $table = 'users'; // Ensure no space here
+
     /**
      * The attributes that should be hidden for serialization.
      *
