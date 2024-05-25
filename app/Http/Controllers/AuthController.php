@@ -79,7 +79,7 @@ class AuthController extends Controller
             $route = $this->redirectToRoute();
             return redirect($route);
         } else
-            return redirect()->back()->with('fail', 'Invalid Email or Password');
+            return view('login')->with('fail', 'Invalid Email or Password');
     }
 
     public function logout()
