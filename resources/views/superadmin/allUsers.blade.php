@@ -7,6 +7,7 @@
                 <th>Name</th>
                 <th>Address</th>
                 <th>Role</th>
+                <th>Details</th>
                 <th>Action</th>
             </tr>
             
@@ -16,6 +17,7 @@
                 <td>{{$item -> name}}</td>
                 <td>{{$item->address}}</td>
                 <td>{{$item->allUsers->name}}<a href="" class="ms-1">manage </a></td>
+                <td><a href="">view</a></td>
                 <td >
                 <a href=""><span class="text-danger me-1">Delete</span></a>
                 <a href=""> <span class="text-primary">Edit</span></a>
