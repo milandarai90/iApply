@@ -65,13 +65,13 @@
                 </form>
                 <div >
                     @if(Session::has('success'))
-                    <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
-                     <p class="text-small text-center text-light align-items-center">{{session::get('success')}}</p>
+                    <div class="form-control align-items-center w-50" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
+                     <p class="text-center text-light align-self-center ">{{session::get('success')}}</p>
                     </div>
                      @endif
                      @if(Session::has('fail'))
-                     <div class="form-control align-items-center" id="sessionFail" style="background-color: rgb(233, 6, 6)">
-                      <p class="text-small text-center text-light align-items-center">{{session::get('fail')}}</p>
+                     <div class="form-control align-items-center w-50" id="sessionFail" style="background-color: rgb(233, 6, 6)">
+                      <p class="text-center text-light align-self-center">{{session::get('fail')}}</p>
                      </div>
                       @endif
                 </div>
@@ -88,12 +88,12 @@
             crossorigin="anonymous"
         ></script>
         <script>
-    //         setTimeout(function () {
-    //    document.getElementById("sessionSuccess").style.display = "none";
-    //    }, 3000); 
-    //    setTimeout(function () {
-    //    document.getElementById("sessionFail").style.display = "none";
-    //    }, 3000); 
+            setTimeout(function () {
+       document.getElementById("sessionSuccess").style.display = "none";
+       }, 3000); 
+       setTimeout(function () {
+       document.getElementById("sessionFail").style.display = "none";
+       }, 3000); 
      </script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"

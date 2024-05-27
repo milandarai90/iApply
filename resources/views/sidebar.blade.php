@@ -13,13 +13,13 @@
                         </a>
                     </a>
                 </li>
-                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                <li class="nav-item" id="users"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
                     <p class="fw-bold">
                    Users
                     <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" id="addCountry">
+                <ul class="nav nav-treeview" id="viewUsers">
                     <li class="nav-item"> <a href="{{route('superadmin.users')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
                             <p>View Users</p>
                         </a> </li>
@@ -27,6 +27,23 @@
                 <ul class="nav nav-treeview" id="viewCountry">
                     <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
                             <p>###</p>
+                        </a> </li>
+                </ul>
+                </li>
+                <li class="nav-item" id="add"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                    <p class="fw-bold">
+                   Add
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="addConsultancy">
+                    <li class="nav-item"> <a href="{{route('superadmin.addConsultancy')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
+                            <p>Consultancy</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="">
+                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
+                            <p>Branch<p>
                         </a> </li>
                 </ul>
                 </li>

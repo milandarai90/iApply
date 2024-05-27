@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SuperadminAddController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
 
@@ -35,6 +36,10 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
     Route::middleware(['isSuperAdmin'])->group(function () {
         route::get('/dashboard', [SuperAdminDashboardController::class, 'dashboard'])->name('dashboard');
         route::get('/users', [SuperadminUsersControllers::class, 'users'])->name('users');
+        route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
+        route::get('/addConsultancy', [SuperadminAddController::class, 'addConsultancy'])->name('addConsultancy');
+        route::post('/registerConsultancy', [SuperadminAddController::class, 'registerConsultancy'])->name('registerConsutancy');
+
     });
 });
 

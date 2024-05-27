@@ -12,13 +12,19 @@ return new class extends Migration {
     {
         Schema::create('consultancy_infos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->unsignedBigInteger('user_id');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('consultancy_name');
-            $table->string('head_office_address');
+            $table->string('consultancy_email');
+            $table->string('head_office_district');
+            $table->string('head_office_municipality');
+            $table->string('head_office_ward');
             $table->string('telphone_num')->nullable()->default(null);
             $table->string('pan_number');
             $table->string('head_person_idcard');
+            $table->string('head_person_name');
+            $table->string('head_person_number');
+            $table->string('password');
             $table->string('valid_document');
             $table->timestamps();
         });
