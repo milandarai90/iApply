@@ -48,7 +48,24 @@
                 </ul>
                 <ul class="nav nav-treeview" id="addBranch">
                     <li class="nav-item"> <a href="{{route('superadmin.addBranch')}}" class="nav-link"> <i class="nav-icon bi bi-house-add"></i>
-                            <p>Branch<p>
+                            <p>Branch</p>
+                        </a> </li>
+                </ul>
+                </li>
+                <li class="nav-item" id=""> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning"></i>
+                    <p class="fw-bold">
+                   ###
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="###">
+                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-building-add"></i>
+                            <p>###</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="###">
+                    <li class="nav-item" > <a href="#" class="nav-link" > <i class="nav-icon bi bi-house-add"></i>
+                            <p>###<p>
                         </a> </li>
                 </ul>
                 </li>

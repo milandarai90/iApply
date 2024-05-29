@@ -33,4 +33,8 @@ class consultancy_info extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function branch()
+    {
+        return $this->hasMany(consultancy_branch::class, 'consultancy_id');
+    }
 }

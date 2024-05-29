@@ -14,17 +14,15 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('consultancy_id');
             $table->foreign('consultancy_id')->references('id')->on('consultancy_infos')->onDelete('cascade');
-            $table->string('branch_email');
             $table->string('branch_name');
-            $table->string('branch_contact');
             $table->string('branch_district');
             $table->string('branch_municipality');
             $table->string('branch_ward');
+            $table->string('branch_pan');
             $table->string('branch_manager_name');
             $table->string('branch_manager_phone');
             $table->string('branch_manager_idcard');
             $table->string('branch_valid_document');
-            $table->string('password');
             $table->timestamps();
         });
     }

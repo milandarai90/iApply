@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\consultancy_branch;
 use App\Models\consultancy_info;
 use App\Models\User;
 use Illuminate\Http\Request;
-// use App\Http\Controllers\PhoneNumber;
-use App\Rules\PhoneNumber;
-use App\Rules\PanNumber;
-use App\Rules\HeadPersonNumber;
 use Illuminate\Support\Facades\Hash;
 
 class SuperadminAddController extends Controller
@@ -76,5 +73,41 @@ class SuperadminAddController extends Controller
     {
         $consultancy = consultancy_info::with('consultancies')->get();
         return view('superadmin.addBranches', compact('consultancy'));
+    }
+
+    public function postBranch(Request $request)
+    {
+        $request->validate([
+            'consultancyName' => 'required',
+            'branchName' => 'required',
+            'branchPhone' => 'required|min:10',
+            'email' => 'required|email|unique:users,email',
+            'branchDistrict' => 'required',
+            'branchMunicipality' => 'required',
+            'branchWard' => 'required',
+            'branchPan' => 'required|min:4',
+            'branchManager' => 'required',
+            'branchManagerPhone' => 'required|min:10',
+            'branchManagerIdcard' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
+            'branchValidDocument' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
+            'password' => 'required|min:8|max:30',
+            'c_password' => 'required|same:password',
+        ]);
+        $branchManagerIdcard = time() . 'branchManagerIdcard.' . $request->file('branchManagerIdcard')->getClientOriginalExtension();
+        $path = $request->file('branchManagerIdcard')->storeAs('/public/branchManagerIdcard/' . $branchManagerIdcard);
+        $newBranchManagerIdcardPath = str_replace('/public', '', $path);
+
+        $branchvalidDocument = time() . 'branchvalidDocument.' . $request->file('branchvalidDocument')->getClientOriginalExtension();
+        $path = $request->file('branchvalidDocument')->storeAs('/public/branchvalidDocument/' . $branchvalidDocument);
+        $newBranchvalidDocumentPath = str_replace('/public', '', $path);
+
+        $branch = new consultancy_branch;
+        $user = new User;
+
+        $user->name = $request->consultancyName;
+        $user->phone = $request->branchPhone;
+        $user->role = '3';
+        $user->emai = $request->email;
+
     }
 }

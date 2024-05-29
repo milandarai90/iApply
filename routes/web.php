@@ -50,6 +50,7 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
         //branches............
 
         route::get('/addBranch', [SuperadminAddController::class, 'addBranch'])->name('addBranch');
+        route::get('/postBranch', [SuperadminAddController::class, 'postBranch'])->name('postBranch');
     });
 });
 
