@@ -46,8 +46,8 @@
                             <p>Consultancy</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-house-add"></i>
+                <ul class="nav nav-treeview" id="addBranch">
+                    <li class="nav-item"> <a href="{{route('superadmin.addBranch')}}" class="nav-link"> <i class="nav-icon bi bi-house-add"></i>
                             <p>Branch<p>
                         </a> </li>
                 </ul>

@@ -71,4 +71,10 @@ class SuperadminAddController extends Controller
         }
 
     }
+
+    public function addBranch()
+    {
+        $consultancy = consultancy_info::with('consultancies')->get();
+        return view('superadmin.addBranches', compact('consultancy'));
+    }
 }

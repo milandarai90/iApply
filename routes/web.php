@@ -35,11 +35,21 @@ route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('/superadmin')->name('superadmin.')->group(function () {
     Route::middleware(['isSuperAdmin'])->group(function () {
         route::get('/dashboard', [SuperAdminDashboardController::class, 'dashboard'])->name('dashboard');
+
+        //users......................
+
         route::get('/users', [SuperadminUsersControllers::class, 'users'])->name('users');
         route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
+
+        //consultancies..................
+
         route::get('/addConsultancy', [SuperadminAddController::class, 'addConsultancy'])->name('addConsultancy');
         route::post('/registerConsultancy', [SuperadminAddController::class, 'registerConsultancy'])->name('registerConsultancy');
         route::get('/viewConsultancies', [SuperadminUsersControllers::class, 'viewConsultancies'])->name('viewConsultancies');
+
+        //branches............
+
+        route::get('/addBranch', [SuperadminAddController::class, 'addBranch'])->name('addBranch');
     });
 });
 
