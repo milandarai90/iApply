@@ -38,8 +38,8 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
         route::get('/users', [SuperadminUsersControllers::class, 'users'])->name('users');
         route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
         route::get('/addConsultancy', [SuperadminAddController::class, 'addConsultancy'])->name('addConsultancy');
-        route::post('/registerConsultancy', [SuperadminAddController::class, 'registerConsultancy'])->name('registerConsutancy');
-
+        route::post('/registerConsultancy', [SuperadminAddController::class, 'registerConsultancy'])->name('registerConsultancy');
+        route::get('/viewConsultancies', [SuperadminUsersControllers::class, 'viewConsultancies'])->name('viewConsultancies');
     });
 });
 

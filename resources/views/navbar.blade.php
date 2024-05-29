@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-secondary p-3">
+<nav class="navbar navbar-expand-lg bg-secondary p-2">
     <DIV class="col-3 d-flex justify-content-center "><a class="navbar-brand text-light fs-6" href="#">Home</a></DIV>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

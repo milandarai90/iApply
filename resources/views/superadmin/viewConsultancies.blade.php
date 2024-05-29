@@ -12,17 +12,15 @@
                 <th></th>
                 <th>Name</th>
                 <th>Address</th>
-                <th>Role</th>
                 <th>Details</th>
                 <th>Action</th>
             </tr>
             
-                @foreach ($userData as $index => $item)
+                @foreach ($consultancies as $index => $item)
             <tr>
                 <td>{{$index+1}}</td>
-                <td>{{$item -> name}}</td>
-                <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
-                <td>{{$item->allUsers->name}}<a href="" class="ms-1">manage </a></td>
+                <td>{{$item ->consultancies-> name}}</td>
+                <td>{{$item->consultancies->u_municipality}}-{{$item->consultancies->u_ward}},{{$item->consultancies->u_district}}</td>
                 <td><a href="" class="text-success">view</a></td>
                 <td >
                 <a href="{{route('superadmin.delete')}}?id={{$item->id}}"><span class="text-danger me-1">Delete</span></a>

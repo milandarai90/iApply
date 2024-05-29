@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\consultancy_info;
+use App\Models\User;
 use Illuminate\Http\Request;
+// use App\Http\Controllers\PhoneNumber;
+use App\Rules\PhoneNumber;
+use App\Rules\PanNumber;
+use App\Rules\HeadPersonNumber;
+use Illuminate\Support\Facades\Hash;
 
 class SuperadminAddController extends Controller
 {
@@ -13,26 +20,55 @@ class SuperadminAddController extends Controller
     public function registerConsultancy(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'consultancyName' => 'required',
             'email' => 'required|email|unique:users,email',
-            'head_officeDistrict' => 'required',
-            'head_officeMunicipaity' => 'required',
-            'head_officeWard' => 'required',
-            'tel_number' => 'required',
-            'pan_number' => 'required',
+            'headOfficeDistrict' => 'required',
+            'headOfficeMunicipality' => 'required',
+            'headOfficeWard' => 'required',
+            'phone' => 'required|min:10|max:30',
+            'tel_number' => 'required | max:10',
+            'pan_number' => 'required| min:4',
             'head_person_idcard' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'head_person_name' => 'required',
-            'head_person_number' => 'required',
+            'head_person_number' => 'required|min:10|max:30',
             'valid_documents' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'password' => 'required|min:8|max:30',
             'c_password' => 'required|same:password',
         ]);
-        $head_personID = time() . 'head_person_idcard' . $request->file('head_person_idcard')->getClientOriginalExtension();
+        $head_personID = time() . 'head_person_idcard.' . $request->file('head_person_idcard')->getClientOriginalExtension();
         $id_path = $request->file('head_person_idcard')->storeAs('public/head_person_idcard/' . $head_personID);
-        $id_newpath = str_replace('public/', '', $id_path);
+        $idcard_newpath = str_replace('public/', '', $id_path);
 
-        $valid_documents = time() . 'valid_documents' . $request->file('valid_documents')->getClientOriginalExtension();
+        $valid_documents = time() . 'valid_documents.' . $request->file('valid_documents')->getClientOriginalExtension();
         $valid_documents_path = $request->file('valid_documents')->storeAs('/public/valid_documents/' . $valid_documents);
         $valid_newpath = str_replace('/public', '', $valid_documents_path);
+
+        $user = new User;
+        $user->role = '2';
+        $user->name = $request->consultancyName;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->u_district = $request->headOfficeDistrict;
+        $user->u_municipality = $request->headOfficeMunicipality;
+        $user->u_ward = $request->headOfficeWard;
+        $user->password = hash::make($request->password);
+        $saves = $user->save();
+        if ($saves) {
+            $user->createToken($user->name . 'consultancy_token');
+            $consultancy_info = new consultancy_info;
+            $consultancy_info->user_id = $user->id;
+            $consultancy_info->telphone_num = $request->tel_number;
+            $consultancy_info->pan_number = $request->pan_number;
+            $consultancy_info->head_person_idcard = $idcard_newpath;
+            $consultancy_info->head_person_fullname = $request->head_person_name;
+            $consultancy_info->head_person_number = $request->head_person_number;
+            $consultancy_info->valid_document = $valid_newpath;
+            $consultancy_info->save();
+            return redirect()->route('superadmin.addConsultancy')->with('success', 'Consultancy registered successfully.');
+        } else {
+            $user->delete();
+            return redirect()->route('superadmin.addConsultancy')->with('fail', 'user registration failed.');
+        }
+
     }
 }

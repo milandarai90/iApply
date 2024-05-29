@@ -59,9 +59,9 @@ class AuthController extends Controller
         $save = $userRegister->save();
         if ($save) {
             $userRegister->createToken($userRegister->name . 'token');
-            return view('login')->with('success', 'Registration successfull.Loginn to proceed.');
+            return redirect()->route('loginDisplay')->with('success', 'Registration successfull.Loginn to proceed.');
         } else {
-            return redirect()->back()->with('fail', 'Registration unsuccessfull.Please try again.');
+            return redirect()->route('registerDisplay')->with('fail', 'Registration unsuccessfull.Please try again.');
         }
     }
     public function loginCheck(Request $request)
@@ -79,7 +79,7 @@ class AuthController extends Controller
             $route = $this->redirectToRoute();
             return redirect($route);
         } else
-            return view('login')->with('fail', 'Invalid Email or Password');
+            return redirect()->route('loginDisplay')->with('fail', 'Invalid Email or Password');
     }
 
     public function logout()
