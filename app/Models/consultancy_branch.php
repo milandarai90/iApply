@@ -12,21 +12,9 @@ class consultancy_branch extends Model
     {
         return $this->belongsTo(consultancy_info::class, 'consultancy_id');
     }
-    public function setbranchNameAttribute($value)
+    public function userBranch()
     {
-        $this->attributes['branchName'] = ucwords($value);
-    }
-    public function setemailAttribute($value)
-    {
-        $this->attributes['email'] = ucwords($value);
-    }
-    public function setbranchDistrictAttribute($value)
-    {
-        $this->attributes['branchDistrict'] = ucwords($value);
-    }
-    public function setbranchMunicipalityAttribute($value)
-    {
-        $this->attributes['branchMunicipality'] = ucwords($value);
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function setbranchManagerAttribute($value)
     {

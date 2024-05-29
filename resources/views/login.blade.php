@@ -63,18 +63,19 @@
                         <button type="submit" class="btn btn-success">Login</button>  
                     </div>
                 </form>
-                <div >
-                    @if(Session::has('success'))
-                    <div class="form-control align-items-center w-50" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
-                     <p class="text-center text-light align-self-center ">{{session::get('success')}}</p>
-                    </div>
-                     @endif
-                     @if(Session::has('fail'))
-                     <div class="form-control align-items-center w-50" id="sessionFail" style="background-color: rgb(233, 6, 6)">
-                      <p class="text-center text-light align-self-center">{{session::get('fail')}}</p>
-                     </div>
-                      @endif
+               
+            </div>
+            <div >
+                @if(Session::has('success'))
+                <div class="form-control align-items-center w-50" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
+                 <p class="text-center text-light align-self-center ">{{session::get('success')}}</p>
                 </div>
+                 @endif
+                 @if(Session::has('fail'))
+                 <div class="form-control align-items-center w-50" id="sessionFail" style="background-color: rgb(233, 6, 6)">
+                  <p class="text-center text-light align-self-center">{{session::get('fail')}}</p>
+                 </div>
+                  @endif
             </div>
         </div>
         </main>

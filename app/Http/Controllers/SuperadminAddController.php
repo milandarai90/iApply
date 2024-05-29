@@ -97,17 +97,37 @@ class SuperadminAddController extends Controller
         $path = $request->file('branchManagerIdcard')->storeAs('/public/branchManagerIdcard/' . $branchManagerIdcard);
         $newBranchManagerIdcardPath = str_replace('/public', '', $path);
 
-        $branchvalidDocument = time() . 'branchvalidDocument.' . $request->file('branchvalidDocument')->getClientOriginalExtension();
-        $path = $request->file('branchvalidDocument')->storeAs('/public/branchvalidDocument/' . $branchvalidDocument);
-        $newBranchvalidDocumentPath = str_replace('/public', '', $path);
+        $branchValidDocument = time() . 'branchValidDocument.' . $request->file('branchValidDocument')->getClientOriginalExtension();
+        $paths = $request->file('branchValidDocument')->storeAs('/public/branchValidDocument/' . $branchValidDocument);
+        $newbranchValidDocumentPath = str_replace('/public', '', $paths);
 
         $branch = new consultancy_branch;
         $user = new User;
 
-        $user->name = $request->consultancyName;
+        $user->name = $request->branchName;
         $user->phone = $request->branchPhone;
         $user->role = '3';
-        $user->emai = $request->email;
+        $user->email = $request->email;
+        $user->password = hash::make($request->password);
+        $user->u_district = $request->branchDistrict;
+        $user->u_municipality = $request->branchMunicipality;
+        $user->u_ward = $request->branchWard;
+        $saved = $user->save();
 
+        if ($saved) {
+            $user->createToken($user->name . 'branchToken');
+            $branch->user_id = $user->id;
+            $branch->consultancy_id = $request->consultancyName;
+            $branch->branch_pan = $request->branchPan;
+            $branch->branch_manager_name = $request->branchManager;
+            $branch->branch_manager_phone = $request->branchManagerPhone;
+            $branch->branch_manager_idcard = $newBranchManagerIdcardPath;
+            $branch->branch_valid_document = $newbranchValidDocumentPath;
+            $branch->save();
+        } else {
+            $user->delete();
+            return redirect()->route('superadmin.addBranch')->with('fail', 'Cannot add a branch');
+        }
+        return redirect()->route('superadmin.addBranch')->with('success', 'Branch registered successfullly.');
     }
 }

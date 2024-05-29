@@ -17,7 +17,7 @@
               @endif
         </div>
     <div class="me-2 ms-2 d-flex justify-content-center" >
-        <form action="" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
+        <form action="{{route('superadmin.postBranch')}}" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
             @csrf
             <div class="d-flex">
                 <div class="col-4"><label for="consultancyName">Consultancy Name :</label></div>

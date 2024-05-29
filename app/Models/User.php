@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->hasOne(consultancy_info::class, 'user_id');
     }
 
+    public function userBranch()
+    {
+        return $this->hasOne(consultancy_branch::class, 'user_id');
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords($value);
