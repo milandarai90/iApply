@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class User extends Authenticatable
 {
@@ -82,5 +84,9 @@ class User extends Authenticatable
     public function setHeadpersonnameAttribute($value)
     {
         $this->attributes['u_ward'] = ucwords($value);
+    }
+    public function personalAccessTokens(): HasMany
+    {
+        return $this->hasMany(PersonalAccessToken::class, 'tokenable_id');
     }
 }

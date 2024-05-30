@@ -1,5 +1,6 @@
 @extends('base')
 @section('content')
+@if($consultancies->count()>0)
 
 <div class="container">
     <form action="">
@@ -15,15 +16,14 @@
                 <th>Details</th>
                 <th>Action</th>
             </tr>
-            
                 @foreach ($consultancies as $index => $item)
             <tr>
                 <td>{{$index+1}}</td>
-                <td>{{$item ->consultancies-> name}}</td>
-                <td>{{$item->consultancies->u_municipality}}-{{$item->consultancies->u_ward}},{{$item->consultancies->u_district}}</td>
+                <td>{{$item ->name}}</td>
+                <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
                 <td><a href="" class="text-success">view</a></td>
                 <td >
-                <a href="{{route('superadmin.delete')}}?id={{$item->id}}"><span class="text-danger me-1">Delete</span></a>
+                <a href="{{route('superadmin.delete')}}?id={{$item->personalAccessTokens->first()->token}}"><span class="text-danger me-1">Delete</span></a>
                 <a href=""> <span class="text-primary">Edit</span></a>
                 </td>
             </tr>
@@ -43,6 +43,13 @@
           @endif
     </div>
 </div>
+@else
+<div class="container">
+    <div class="mt-3 d-flex justify-content-center">
+        <h5 class="text-danger">No data available</h5>
+    </div>
+</div>
+@endif
     <style>
         #table{
             font-size: 13px;
@@ -58,7 +65,7 @@
             }, 3000); 
 
            document.getElementById('users').classList.add("menu-open");
-           document.getElementById('viewUsers').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
+           document.getElementById('viewConsultancies').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
  </script>
 
 @endsection

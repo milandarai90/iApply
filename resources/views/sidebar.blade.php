@@ -21,21 +21,22 @@
                 </a>
                 <ul class="nav nav-treeview" id="viewUsers">
                     <li class="nav-item"> <a href="{{route('superadmin.users')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
-                            <p>All Users</p>
+                            <p>All</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="viewCountry">
+                <ul class="nav nav-treeview" id="viewConsultancies">
                     <li class="nav-item"> <a href="{{route('superadmin.viewConsultancies')}}" class="nav-link"> <i class="nav-icon bi bi-building"></i>
                             <p>Consultancies</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="viewCountry">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-house"></i>
+                <ul class="nav nav-treeview" id="viewBranch">
+                    <li class="nav-item"> <a href="{{route('superadmin.viewBranch')}}" class="nav-link"> <i class="nav-icon bi bi-house"></i>
                             <p>Branch</p>
                         </a> </li>
                 </ul>
                 </li>
-                <li class="nav-item" id="add"> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning"></i>
+                <li class="nav-item" id="add"> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning">
+                </i>
                     <p class="fw-bold">
                    Add Users
                     <i class="nav-arrow bi bi-chevron-right"></i>

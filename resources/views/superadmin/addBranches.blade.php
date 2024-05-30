@@ -25,7 +25,8 @@
                     <select class="form-select form-select-sm" aria-label="select consultancy" name="consultancyName">
                         <option selected disabled>Select the Consultancy.</option>
                         @foreach ($consultancy as $item)
-                            <option value="{{$item->consultancies->id}}" class="text-danger">{{$item->consultancies->name}}</option>
+                        <option value="{{$item->id}}" class="text-danger">{{$item->consultancies->name}}
+                        </option>
                         @endforeach
                       </select>
                     <div class="mt-1">

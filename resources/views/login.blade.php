@@ -62,21 +62,21 @@
                     <div class="d-flex justify-content-center mt-4">            
                         <button type="submit" class="btn btn-success">Login</button>  
                     </div>
+                    <div class="mt-2 mb-2" >
+                        @if(Session::has('success'))
+                        <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(64, 193, 44)">
+                         <p class="text-small text-center text-light align-items-center">{{session::get('success')}}</p>
+                        </div>
+                         @endif
+                         @if(Session::has('fail'))
+                         <div class="form-control align-items-center" id="sessionFail" style="background-color: rgb(233, 6, 6)">
+                          <p class="text-small text-center text-light align-items-center">{{session::get('fail')}}</p>
+                         </div>
+                          @endif
+                    </div>
                 </form>
-               
             </div>
-            <div >
-                @if(Session::has('success'))
-                <div class="form-control align-items-center w-50" id="sessionSuccess" style="background-color: rgb(51, 198, 28)">
-                 <p class="text-center text-light align-self-center ">{{session::get('success')}}</p>
-                </div>
-                 @endif
-                 @if(Session::has('fail'))
-                 <div class="form-control align-items-center w-50" id="sessionFail" style="background-color: rgb(233, 6, 6)">
-                  <p class="text-center text-light align-self-center">{{session::get('fail')}}</p>
-                 </div>
-                  @endif
-            </div>
+           
         </div>
         </main>
         <footer>

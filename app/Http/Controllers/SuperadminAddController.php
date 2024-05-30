@@ -22,12 +22,12 @@ class SuperadminAddController extends Controller
             'headOfficeDistrict' => 'required',
             'headOfficeMunicipality' => 'required',
             'headOfficeWard' => 'required',
-            'phone' => 'required|min:10|max:30',
+            'phone' => 'required|min:10|max:10',
             'tel_number' => 'required | max:10',
             'pan_number' => 'required| min:4',
             'head_person_idcard' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'head_person_name' => 'required',
-            'head_person_number' => 'required|min:10|max:30',
+            'head_person_number' => 'required|min:10|max:10',
             'valid_documents' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'password' => 'required|min:8|max:30',
             'c_password' => 'required|same:password',
@@ -51,7 +51,7 @@ class SuperadminAddController extends Controller
         $user->password = hash::make($request->password);
         $saves = $user->save();
         if ($saves) {
-            $user->createToken($user->name . 'consultancy_token');
+            $user->createToken($user->name . '.consultancy_token');
             $consultancy_info = new consultancy_info;
             $consultancy_info->user_id = $user->id;
             $consultancy_info->telphone_num = $request->tel_number;
@@ -80,14 +80,14 @@ class SuperadminAddController extends Controller
         $request->validate([
             'consultancyName' => 'required',
             'branchName' => 'required',
-            'branchPhone' => 'required|min:10',
+            'branchPhone' => 'required|min:10|max:10',
             'email' => 'required|email|unique:users,email',
             'branchDistrict' => 'required',
             'branchMunicipality' => 'required',
             'branchWard' => 'required',
             'branchPan' => 'required|min:4',
             'branchManager' => 'required',
-            'branchManagerPhone' => 'required|min:10',
+            'branchManagerPhone' => 'required|min:10|max:10',
             'branchManagerIdcard' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'branchValidDocument' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'password' => 'required|min:8|max:30',
@@ -115,7 +115,7 @@ class SuperadminAddController extends Controller
         $saved = $user->save();
 
         if ($saved) {
-            $user->createToken($user->name . 'branchToken');
+            $user->createToken($user->name . '.branchToken');
             $branch->user_id = $user->id;
             $branch->consultancy_id = $request->consultancyName;
             $branch->branch_pan = $request->branchPan;

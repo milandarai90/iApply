@@ -40,17 +40,20 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
 
         route::get('/users', [SuperadminUsersControllers::class, 'users'])->name('users');
         route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
+        route::get('/view/details', [SuperadminUsersControllers::class, 'viewDetailsofUser'])->name('viewDetailsofUser');
 
         //consultancies..................
 
         route::get('/addConsultancy', [SuperadminAddController::class, 'addConsultancy'])->name('addConsultancy');
         route::post('/registerConsultancy', [SuperadminAddController::class, 'registerConsultancy'])->name('registerConsultancy');
         route::get('/viewConsultancies', [SuperadminUsersControllers::class, 'viewConsultancies'])->name('viewConsultancies');
+        // route::get('/deleteConsultancy', [SuperadminUsersControllers::class, 'delete'])->name('deleteConsultancy');
 
         //branches............
 
         route::get('/addBranch', [SuperadminAddController::class, 'addBranch'])->name('addBranch');
         route::post('/postBranch', [SuperadminAddController::class, 'postBranch'])->name('postBranch');
+        route::get('/viewBranch', [SuperadminUsersControllers::class, 'viewBranch'])->name('viewBranch');
     });
 });
 
