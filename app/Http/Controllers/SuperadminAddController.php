@@ -32,13 +32,19 @@ class SuperadminAddController extends Controller
             'password' => 'required|min:8|max:30',
             'c_password' => 'required|same:password',
         ]);
-        $head_personID = time() . 'head_person_idcard.' . $request->file('head_person_idcard')->getClientOriginalExtension();
-        $id_path = $request->file('head_person_idcard')->storeAs('public/head_person_idcard/' . $head_personID);
-        $idcard_newpath = str_replace('public/', '', $id_path);
+        // $head_personID = time() . 'head_person_idcard.' . $request->file('head_person_idcard')->getClientOriginalExtension();
+        // $id_path = $request->file('head_person_idcard')->storeAs('public/head_person_idcard/' . $head_personID);
+        // $idcard_newpath = str_replace('public/', '', $id_path);
 
-        $valid_documents = time() . 'valid_documents.' . $request->file('valid_documents')->getClientOriginalExtension();
-        $valid_documents_path = $request->file('valid_documents')->storeAs('/public/valid_documents/' . $valid_documents);
-        $valid_newpath = str_replace('/public', '', $valid_documents_path);
+        $image = 'head_person_idcard';
+        $idcard_newpath = $request->file('head_person_idcard')->storeAs('head_person_idcard/', $image . '.jpg', 'public');
+
+        // $valid_documents = time() . 'valid_documents.' . $request->file('valid_documents')->getClientOriginalExtension();
+        // $valid_documents_path = $request->file('valid_documents')->storeAs('public/valid_documents/' . $valid_documents);
+        // $valid_newpath = str_replace('public/', '', $valid_documents_path);
+
+        $images = 'valid_documents';
+        $valid_newpath = $request->file('valid_documents')->storeAs('valid_documents/', $images . '.jpg', 'public');
 
         $user = new User;
         $user->role = '2';
@@ -93,13 +99,21 @@ class SuperadminAddController extends Controller
             'password' => 'required|min:8|max:30',
             'c_password' => 'required|same:password',
         ]);
-        $branchManagerIdcard = time() . 'branchManagerIdcard.' . $request->file('branchManagerIdcard')->getClientOriginalExtension();
-        $path = $request->file('branchManagerIdcard')->storeAs('/public/branchManagerIdcard/' . $branchManagerIdcard);
-        $newBranchManagerIdcardPath = str_replace('/public', '', $path);
 
-        $branchValidDocument = time() . 'branchValidDocument.' . $request->file('branchValidDocument')->getClientOriginalExtension();
-        $paths = $request->file('branchValidDocument')->storeAs('/public/branchValidDocument/' . $branchValidDocument);
-        $newbranchValidDocumentPath = str_replace('/public', '', $paths);
+        $image = 'branchManagerIdcard';
+        $newBranchManagerIdcardPath = $request->file('branchManagerIdcard')->storeAs('branchManagerIdcard/', $image . '.jpg', 'public');
+
+        // $branchManagerIdcard = time() . 'branchManagerIdcard.' . $request->file('branchManagerIdcard')->getClientOriginalExtension();
+        // $path = $request->file('branchManagerIdcard')->storeAs('public/branchManagerIdcard/' . $branchManagerIdcard);
+        // $newBranchManagerIdcardPath = str_replace('public/', '', $path);
+
+        $images = 'branchValidDocument';
+        $newbranchValidDocumentPath = $request->file('branchValidDocument')->storeAs('branchValidDocument/', $images . '.jpg', 'public');
+
+        // $branchValidDocument = time() . 'branchValidDocument.' . $request->file('branchValidDocument')->getClientOriginalExtension();
+        // $paths = $request->file('branchValidDocument')->storeAs('public/branchValidDocument/' . $branchValidDocument);
+        // $newbranchValidDocumentPath = str_replace('public/', '', $paths);
+
 
         $branch = new consultancy_branch;
         $user = new User;

@@ -51,11 +51,15 @@ class SuperadminUsersControllers extends Controller
 
     public function viewDetailsofUser(Request $request)
     {
+        $title = 'Details of';
         $token = $request->id;
-        $findToken = PersonalAccessToken::find($token)->first();
+        $findToken = PersonalAccessToken::where('token', $token)->first();
         if ($findToken) {
-            $findTokenUser = $findToken->user()->with('personalAccessTokens')->first();
-            return view('superadmin.viewDetailsofUser', compact('findTokenUser'));
+            $findTokenUser = $findToken->user()->with('personalAccessTokens', 'allUsers', 'consultancies', 'userBranch')->first();
+            // $userData = User::with()->get();
+            return view('superadmin.viewDetailsofUser', compact('findTokenUser', 'title'));
         }
+        return redirect()->back()->with('fail', 'User not found.');
     }
+
 }

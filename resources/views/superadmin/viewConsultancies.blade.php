@@ -21,7 +21,7 @@
                 <td>{{$index+1}}</td>
                 <td>{{$item ->name}}</td>
                 <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
-                <td><a href="" class="text-success">view</a></td>
+                <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token}}" class="text-success">view</a></td>
                 <td >
                 <a href="{{route('superadmin.delete')}}?id={{$item->personalAccessTokens->first()->token}}"><span class="text-danger me-1">Delete</span></a>
                 <a href=""> <span class="text-primary">Edit</span></a>
