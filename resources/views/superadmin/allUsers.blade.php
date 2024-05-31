@@ -12,6 +12,9 @@
             <tr>
                 <th></th>
                 <th>Name</th>
+             
+                <th>Head</th>
+            
                 <th>Email</th>
                 <th>Address</th>
                 <th>Role</th>
@@ -22,7 +25,12 @@
                 @foreach ($userData as $index => $item)
             <tr>
                 <td>{{$index+1}}</td>
-                <td>{{$item -> name}}</td>
+                <td>{{$item ->name}}</td>
+                @if(!empty($item->userBranch->Branch))
+                <td>{{$item->userBranch->Branch->consultancies->name}}</td>
+                @else
+                <td></td>
+                @endif
                 <td>{{$item->email}}</td>
 
                 <td>

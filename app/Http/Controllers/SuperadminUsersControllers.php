@@ -13,8 +13,7 @@ class SuperadminUsersControllers extends Controller
 {
     public function users()
     {
-        $userData = User::with('allUsers', 'personalAccessTokens')->orderBy('role', 'asc')->get();
-
+        $userData = User::with('allUsers', 'personalAccessTokens', 'userBranch', 'consultancies')->orderBy('role', 'asc')->get();
         $data = compact('userData');
         return view('superadmin.allUsers')->with($data);
     }
