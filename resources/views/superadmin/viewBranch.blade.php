@@ -13,6 +13,7 @@
                     <th></th>
                     <th>Consutancy</th>
                     <th>Branch Name</th>
+                    <th>Email</th>
                     <th>Contact</th>
                     <th>Address</th>
                     <th>Details</th>
@@ -23,6 +24,7 @@
                     <td>{{$index+1}}</td>
                     <td>{{$item->userBranch->branch->consultancies->name}}</td>
                     <td>{{$item->name}}</td>
+                    <td>{{$item->email}}</td>
                     <td>{{$item->phone}}</td>
                     <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
                     <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token}}" class="text-success">view</a></td>

@@ -37,14 +37,14 @@ class SuperadminUsersControllers extends Controller
     {
         $consultancies = User::where('role', '2')->with('consultancies', 'personalAccessTokens')->get()
             ->sortBy(function ($query) {
-                $query->consultancies->role;
+                $query->consultancies->name;
             });
         return view('superadmin.viewConsultancies', compact('consultancies'));
     }
     public function viewBranch()
     {
         $viewBranch = user::where('role', '3')->with('userBranch')->get()->sortBy(function ($query) {
-            $query->userBranch->role;
+            $query->userBranch->name;
         });
         return view('superadmin.viewBranch', compact('viewBranch'));
     }
@@ -56,7 +56,6 @@ class SuperadminUsersControllers extends Controller
         $findToken = PersonalAccessToken::where('token', $token)->first();
         if ($findToken) {
             $findTokenUser = $findToken->user()->with('personalAccessTokens', 'allUsers', 'consultancies', 'userBranch')->first();
-            // $userData = User::with()->get();
             return view('superadmin.viewDetailsofUser', compact('findTokenUser', 'title'));
         }
         return redirect()->back()->with('fail', 'User not found.');

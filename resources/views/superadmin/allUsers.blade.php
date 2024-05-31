@@ -12,6 +12,7 @@
             <tr>
                 <th></th>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Address</th>
                 <th>Role</th>
                 <th>Details</th>
@@ -22,6 +23,8 @@
             <tr>
                 <td>{{$index+1}}</td>
                 <td>{{$item -> name}}</td>
+                <td>{{$item->email}}</td>
+
                 <td>
                     @if($item->u_district)
                         {{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}
