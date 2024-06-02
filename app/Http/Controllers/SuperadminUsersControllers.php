@@ -25,7 +25,14 @@ class SuperadminUsersControllers extends Controller
         if ($tokenFind) {
             $user = $tokenFind->user()->with('personalAccessTokens')->first();
             // $data = User::where('consultancy_id', $user->consultancy_id);
-            $user->delete();
+            // dd($user);
+            // $user->delete();
+            if ($user->branch_id) {
+                consultancy_branch::destroy($user->branch_id);
+            }
+            if ($user->consultancy_id) {
+                consultancy_info::destroy($user->consultancy_id);
+            }
             $tokenFind->delete();
             return redirect()->back()->with('success', 'Deleted successfully.');
         } else {

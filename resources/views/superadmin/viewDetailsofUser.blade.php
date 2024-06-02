@@ -4,7 +4,11 @@
     <div class="d-flex justify-content-center mt-3 mb-3">
        <div class="border w-75 h-auto rounded border-2 p-4">
         <div>
-           <h5 class="text-center ">{{$title}} {{$findTokenUser->name}}</h5>
+           <h5 class="text-center ">{{$title}}
+            @if(!empty($findTokenUser->consultancy_id && $findTokenUser->branch_id))
+            {{$findTokenUser->consultancy->consultancyDetails->name}} ,
+            @endif
+            {{$findTokenUser->name}}</h5>
         </div>
     <hr>
         <div class="row col-12">
