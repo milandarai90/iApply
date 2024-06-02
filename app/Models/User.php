@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function userBranch()
     {
-        return $this->hasOne(consultancy_branch::class, 'branch_id');
+        return $this->belongsTo(consultancy_branch::class, 'branch_id');
     }
 
     public function setNameAttribute($value)

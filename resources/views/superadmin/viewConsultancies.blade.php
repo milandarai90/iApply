@@ -21,7 +21,7 @@
                 @foreach ($consultancies as $index => $item)
             <tr>
                 <td>{{$index+1}}</td>
-                <td>{{$item ->name}}</td>
+                <td class="text-danger">{{$item ->name}}</td>
                 <td>{{$item ->email}}</td>
                 <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
                 <td>{{$item->phone}}</td>

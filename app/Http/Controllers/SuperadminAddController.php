@@ -71,8 +71,11 @@ class SuperadminAddController extends Controller
 
     public function addBranch()
     {
-        $consultancy = consultancy_info::with('consultancyDetails')->get();
+        // $consultancy = consultancy_info::with('consultancyDetails')->get();
+
+        $consultancy = User::where('role', '2')->with('consultancy')->get();
         return view('superadmin.addbranches', compact('consultancy'));
+
     }
 
     public function postBranch(Request $request)

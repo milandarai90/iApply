@@ -22,7 +22,7 @@
                     @foreach ($viewBranch as $index => $item)
                 <tr>
                     <td>{{$index+1}}</td>
-                    <td>{{$item->userBranch->branch->consultancies->name}}</td>
+                    <td class="text-danger">{{$item->consultancy->consultancyDetails->name}}</td>
                     <td>{{$item->name}}</td>
                     <td>{{$item->email}}</td>
                     <td>{{$item->phone}}</td>

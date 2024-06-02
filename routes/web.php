@@ -39,8 +39,8 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
         //users......................
 
         route::get('/users', [SuperadminUsersControllers::class, 'users'])->name('users');
-        route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
         route::get('/view/details', [SuperadminUsersControllers::class, 'viewDetailsofUser'])->name('viewDetailsofUser');
+        route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
 
         //consultancies..................
 

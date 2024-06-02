@@ -24,6 +24,7 @@ class SuperadminUsersControllers extends Controller
         $tokenFind = PersonalAccessToken::where('token', $token)->first();
         if ($tokenFind) {
             $user = $tokenFind->user()->with('personalAccessTokens')->first();
+            // $data = User::where('consultancy_id', $user->consultancy_id);
             $user->delete();
             $tokenFind->delete();
             return redirect()->back()->with('success', 'Deleted successfully.');
@@ -34,19 +35,18 @@ class SuperadminUsersControllers extends Controller
 
     public function viewConsultancies()
     {
-        $consultancies = User::where('role', '2')->with('consultancies', 'personalAccessTokens')->get()
+        $consultancies = User::where('role', '2')->with('consultancy', 'personalAccessTokens')->get()
             ->sortBy(function ($query) {
-                $query->consultancies->name;
+                $query->name;
             });
         return view('superadmin.viewConsultancies', compact('consultancies'));
     }
     public function viewBranch()
     {
-        // $viewBranch = user::where('role', '3')->with('userBranch')->get()->sortBy(function ($query) {
-        //     $query->userBranch->name ?? '';
-        // });
-        // return view('superadmin.viewBranch', compact('viewBranch'));
-        // $viewBranch = consultancy_branch::with('') 
+        $viewBranch = user::where('role', '3')->with('consultancy', 'personalAccessTokens')->get()->sortBy(function ($query) {
+            $query->consultancy_id;
+        });
+        return view('superadmin.viewBranch', compact('viewBranch'));
     }
 
     public function viewDetailsofUser(Request $request)
@@ -55,7 +55,7 @@ class SuperadminUsersControllers extends Controller
         $token = $request->id;
         $findToken = PersonalAccessToken::where('token', $token)->first();
         if ($findToken) {
-            $findTokenUser = $findToken->user()->with('personalAccessTokens', 'allUsers', 'consultancies', 'userBranch')->first();
+            $findTokenUser = $findToken->user()->with('personalAccessTokens', 'allUsers', 'consultancy', 'userBranch')->first();
             return view('superadmin.viewDetailsofUser', compact('findTokenUser', 'title'));
         }
         return redirect()->back()->with('fail', 'User not found.');
