@@ -13,7 +13,7 @@ class SuperadminUsersControllers extends Controller
 {
     public function users()
     {
-        $userData = User::with('allUsers', 'personalAccessTokens', 'userBranch', 'consultancies')->orderBy('role', 'asc')->get();
+        $userData = User::with('allUsers', 'personalAccessTokens', 'consultancy')->orderBy('role', 'asc')->get();
         $data = compact('userData');
         return view('superadmin.allUsers')->with($data);
     }
@@ -42,10 +42,11 @@ class SuperadminUsersControllers extends Controller
     }
     public function viewBranch()
     {
-        $viewBranch = user::where('role', '3')->with('userBranch')->get()->sortBy(function ($query) {
-            $query->userBranch->name;
-        });
-        return view('superadmin.viewBranch', compact('viewBranch'));
+        // $viewBranch = user::where('role', '3')->with('userBranch')->get()->sortBy(function ($query) {
+        //     $query->userBranch->name ?? '';
+        // });
+        // return view('superadmin.viewBranch', compact('viewBranch'));
+        // $viewBranch = consultancy_branch::with('') 
     }
 
     public function viewDetailsofUser(Request $request)

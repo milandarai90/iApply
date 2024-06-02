@@ -17,6 +17,10 @@ return new class extends Migration {
             $table->foreign('role')->references('id')->on('roles')->onDelete('cascade');
             $table->string('name');
             $table->string('email')->unique();
+            $table->unsignedBigInteger('consultancy_id')->nullable();
+            $table->foreign('consultancy_id')->references('id')->on('consultancy_infos')->onDelete('cascade');
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->foreign('branch_id')->references('id')->on('consultancy_branches')->onDelete('cascade');
             $table->string('phone')->unique()->nullable();
             $table->string('u_district')->nullable();
             $table->string('u_municipality')->nullable();

@@ -12,8 +12,6 @@ return new class extends Migration {
     {
         Schema::create('consultancy_infos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('telphone_num')->nullable()->default(null);
             $table->string('pan_number');
             $table->string('head_person_idcard');

@@ -12,9 +12,7 @@
             <tr>
                 <th></th>
                 <th>Name</th>
-             
-                <th>Head</th>
-            
+                <th>Consultancy</th>
                 <th>Email</th>
                 <th>Address</th>
                 <th>Role</th>
@@ -26,11 +24,11 @@
             <tr>
                 <td>{{$index+1}}</td>
                 <td>{{$item ->name}}</td>
-                @if(!empty($item->userBranch->Branch))
-                <td>{{$item->userBranch->Branch->consultancies->name}}</td>
+                @if(!empty($item->consultancy_id && $item->branch_id))
+                <td class="text-danger">{{$item->consultancy->consultancyDetails->name}}</td>
                 @else
                 <td></td>
-                @endif
+                @endif     
                 <td>{{$item->email}}</td>
 
                 <td>

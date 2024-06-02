@@ -14,7 +14,7 @@ class consultancy_branch extends Model
     }
     public function userBranch()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'branch_id');
     }
     public function setbranchManagerAttribute($value)
     {

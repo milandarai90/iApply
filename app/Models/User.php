@@ -55,14 +55,14 @@ class User extends Authenticatable
         return $this->belongsTo(roles::class, 'role');
     }
 
-    public function consultancies()
+    public function consultancy()
     {
-        return $this->hasOne(consultancy_info::class, 'user_id');
+        return $this->belongsTo(consultancy_info::class, 'consultancy_id');
     }
 
     public function userBranch()
     {
-        return $this->hasOne(consultancy_branch::class, 'user_id');
+        return $this->hasOne(consultancy_branch::class, 'branch_id');
     }
 
     public function setNameAttribute($value)

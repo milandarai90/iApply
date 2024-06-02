@@ -14,8 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('consultancy_id');
             $table->foreign('consultancy_id')->references('id')->on('consultancy_infos')->onDelete('cascade');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('branch_pan');
             $table->string('branch_manager_name');
             $table->string('branch_manager_phone');

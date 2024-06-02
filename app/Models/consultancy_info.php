@@ -29,9 +29,9 @@ class consultancy_info extends Model
         $this->attributes['u_ward'] = ucwords($value);
     }
 
-    public function consultancies()
+    public function consultancyDetails()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasOne(User::class, 'consultancy_id');
     }
     public function branch()
     {
