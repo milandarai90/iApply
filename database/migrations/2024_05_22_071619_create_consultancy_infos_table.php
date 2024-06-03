@@ -13,10 +13,10 @@ return new class extends Migration {
         Schema::create('consultancy_infos', function (Blueprint $table) {
             $table->id();
             $table->string('telphone_num')->nullable()->default(null);
-            $table->string('pan_number');
+            $table->string('pan_number')->unique();
             $table->string('head_person_idcard');
             $table->string('head_person_fullname');
-            $table->string('head_person_number');
+            $table->string('head_person_number')->unique();
             $table->string('valid_document');
             $table->timestamps();
         });

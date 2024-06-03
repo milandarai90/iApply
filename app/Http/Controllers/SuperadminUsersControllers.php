@@ -80,4 +80,42 @@ class SuperadminUsersControllers extends Controller
         }
     }
 
+    public function updateConsultancy(Request $request)
+    {
+        $token = $request->id;
+        $request->validate([
+            'consultancyName' => 'required',
+            'headOfficeDistrict' => 'required',
+            'headOfficeMunicipality' => 'required',
+            'headOfficeWard' => 'required',
+            'phone' => 'required|min:10|max:10',
+            'tel_number' => 'required | max:10',
+            'pan_number' => 'required| min:4',
+            'head_person_name' => 'required',
+            'head_person_number' => 'required|min:10|max:10',
+        ]);
+        $searchUser = PersonalAccessToken::where('token', $token)->first();
+        if ($searchUser) {
+            $foundUser = $searchUser->user()->with('personalAccessTokens', 'consultancy');
+
+            $foundUser->consultancy->telphone_num = $request->tel_number;
+            $foundUser->consultancy->pan_number = $request->pan_number;
+            $foundUser->consultancy->head_person_fullname = $request->head_person_name;
+            $foundUser->consultancy->head_person_number = $request->head_person_number;
+            $saved = $$foundUser->consultancy->save();
+            if ($saved) {
+                $foundUser->name = $request->consultancy_name;
+                $foundUser->u_district = $request->headOfficeDistrict;
+                $foundUser->u_municipality = $request->headOFficeMunicipality;
+                $foundUser->u_ward = $request->headOfficeWard;
+                $foundUser->phone = $request->phone;
+                $foundUser->save();
+                return redirect()->back()->with('success', 'Consultancy updated Successfully.');
+            }
+            return redirect()->back()->with('fail', 'Consultancy update failed.');
+
+        }
+        return redirect()->back()->with('fail', 'No user fouund.');
+    }
+
 }

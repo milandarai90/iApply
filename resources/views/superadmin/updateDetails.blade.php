@@ -20,7 +20,7 @@
               @endif
         </div>
     <div class="me-2 ms-2 d-flex justify-content-center" >
-        <form action="" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
+        <form action="{{route('superadmin.updateConsultancy')}}?id={{$token}}" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
             @csrf
             <div class="d-flex">
                 <div class="col-4"><label for="consultancyName">Consultancy Name :</label></div>
@@ -36,19 +36,6 @@
                 </div>
             </div>
            
-            <div class="d-flex mt-2">
-                <div class="col-4"><label for="email">Consultancy Email :</label></div>
-                <div class="col-8">
-                    <input type="text" value="{{$findTokenUser->consultancy->consultancyDetails->email}}" class="form-control form-control-sm" name="email" required>
-                    <div class="mt-1">
-                        @error('email')
-                        <span class="text-danger">
-                            {{$message}}
-                        </span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
            
             <div class="d-flex mt-2">
                 <div class="col-4"><label for="headOfficeDistrict">Head Office District :</label></div>
@@ -229,20 +216,6 @@
                             {{$message}}
                         </span>
                         @enderror</div>
-                </div>
-            </div>
-           
-            <div class="d-flex mt-2">
-                <div class="col-4"><label for="email">Branch Email :</label></div>
-                <div class="col-8">
-                    <input type="email" class="form-control form-control-sm" value="{{$findTokenUser ->email}}" name="email" required>
-                    <div class="mt-1">
-                        @error('email')
-                        <span class="text-danger">
-                            {{$message}}
-                        </span>
-                        @enderror
-                    </div>
                 </div>
             </div>
            

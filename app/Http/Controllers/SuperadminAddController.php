@@ -33,11 +33,16 @@ class SuperadminAddController extends Controller
             'c_password' => 'required|same:password',
         ]);
 
-        $image = 'head_person_idcard';
-        $idcard_newpath = $request->file('head_person_idcard')->storeAs('consultancy_head_person_idcard', $image . '.jpg', 'public');
+        $image = time() . 'consultancy_head_idcard .' . $request->file('head_person_idcard')->getClientOriginalExtension();
+        $path = $request->file('head_person_idcard')->storeAs('public/consultancyHeadIdcard/' . $image);
+        $idcard_newpath = str_replace('public/', '', $path);
 
-        $images = 'valid_documents';
-        $valid_newpath = $request->file('valid_documents')->storeAs('consultancy_valid_documents', $images . '.jpg', 'public');
+        $images = time() . 'consultancy_validDocs .' . $request->file('valid_documents')->getClientOriginalExtension();
+        $paths = $request->file('valid_documents')->storeAs('public/valid_documents/' . $images);
+        $valid_newpath = str_replace('public/', '', $paths);
+
+        // $images = 'valid_documents';
+        // $valid_newpath = $request->file('valid_documents')->storeAs('consultancy_valid_documents', $images . '.jpg', 'public');
 
         $consultancy_info = new consultancy_info;
         $consultancy_info->telphone_num = $request->tel_number;
@@ -97,11 +102,14 @@ class SuperadminAddController extends Controller
             'c_password' => 'required|same:password',
         ]);
 
-        $image = 'branchManagerIdcard';
-        $newBranchManagerIdcardPath = $request->file('branchManagerIdcard')->storeAs('branchManagerIdcard', $image . '.jpg', 'public');
+        $image = time() . 'branchManagerIdcard .' . $request->file('branchManagerIdcard')->getClientOriginalExtension();
+        $path = $request->file('branchManagerIdcard')->storeAs('public/branchManagerIdcard/' . $image);
+        $newBranchManagerIdcardPath = str_replace('public/', '', $path);
 
-        $images = 'branchValidDocument';
-        $newbranchValidDocumentPath = $request->file('branchValidDocument')->storeAs('branchValidDocument', $images . '.jpg', 'public');
+        $images = time() . 'branchValidDocument .' . $request->file('branchValidDocument')->getClientOriginalExtension();
+        $paths = $request->file('branchValidDocument')->storeAs('public/branchValidDocument/' . $images);
+        $newbranchValidDocumentPath = str_replace('public/', '', $paths);
+
 
         $branch = new consultancy_branch;
         $user = new User;
