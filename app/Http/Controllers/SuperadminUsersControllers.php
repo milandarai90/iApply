@@ -67,5 +67,17 @@ class SuperadminUsersControllers extends Controller
         }
         return redirect()->back()->with('fail', 'User not found.');
     }
+    public function update(Request $request)
+    {
+        $consultancyTitle = 'Consultancy Update Form';
+        $branchTitle = 'Branch Udpate Form';
+        $consultancyDatas = User::where('role', '2')->with('consultancy')->get();
+        $token = $request->id;
+        $findToken = PersonalAccessToken::where('token', $token)->first();
+        if ($findToken) {
+            $findTokenUser = $findToken->user()->with('personalAccessTokens', 'consultancy', 'userBranch')->first();
+            return view('superadmin.updateDetails', compact('findTokenUser', 'consultancyTitle', 'branchTitle', 'consultancyDatas'));
+        }
+    }
 
 }

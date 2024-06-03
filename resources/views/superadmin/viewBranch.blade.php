@@ -30,7 +30,7 @@
                     <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token}}" class="text-success">view</a></td>
                     <td >
                     <a href="{{route('superadmin.delete')}}?id={{$item->personalAccessTokens->first()->token}}"><span class="text-danger me-1">Delete</span></a>
-                    <a href=""> <span class="text-primary">Edit</span></a>
+                    <a href="{{route('superadmin.update')}}?id={{$item->personalAccessTokens->first()->token}}"> <span class="text-primary">Edit</span></a>
                     </td>
                 </tr>
                     @endforeach
@@ -72,7 +72,7 @@
             }, 3000); 
 
            document.getElementById('users').classList.add("menu-open");
-           document.getElementById('viewUsers').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
+           document.getElementById('viewBranch').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
  </script>
 
 @endsection

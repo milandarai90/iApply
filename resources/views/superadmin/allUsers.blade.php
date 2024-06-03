@@ -43,7 +43,7 @@
                 <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token}}" class="text-success">view</a></td>
                 <td >
                 <a href="{{route('superadmin.delete')}}?id={{$item->personalAccessTokens->first()->token}}"><span class="text-danger me-1">Delete</span></a>
-                <a href=""> <span class="text-primary">Edit</span></a>
+                <a href="{{route('superadmin.update')}}?id={{$item->personalAccessTokens->first()->token}}"> <span class="text-primary">Edit</span></a>
                 </td>
                 @else
                     No tokens available

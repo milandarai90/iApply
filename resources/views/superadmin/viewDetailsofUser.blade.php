@@ -25,7 +25,7 @@
             @elseif(!empty($findTokenUser->u_district))
                 <small>Address: {{ $findTokenUser->u_district }}</small>
             @else
-                <small>No address available.</small>
+                <small>Address: No address available.</small>
             @endif
             </div>
             <div class="col-4">
