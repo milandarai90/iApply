@@ -55,6 +55,7 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
         route::get('/addBranch', [SuperadminAddController::class, 'addBranch'])->name('addBranch');
         route::post('/postBranch', [SuperadminAddController::class, 'postBranch'])->name('postBranch');
         route::get('/viewBranch', [SuperadminUsersControllers::class, 'viewBranch'])->name('viewBranch');
+        route::post('/updateBranch', [SuperadminUsersControllers::class, 'updateBranch'])->name('updateBranch');
     });
 });
 
