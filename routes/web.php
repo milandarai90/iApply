@@ -42,6 +42,8 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
         route::get('/view/details', [SuperadminUsersControllers::class, 'viewDetailsofUser'])->name('viewDetailsofUser');
         route::get('/delete', [SuperadminUsersControllers::class, 'delete'])->name('delete');
         route::get('/update', [SuperadminUsersControllers::class, 'update'])->name('update');
+        // route::get('/updateRoles', [SuperadminUsersControllers::class, 'updateRoles'])->name('updateRoles');
+        // route::post('/submitRoles', [SuperadminUsersControllers::class, 'submitRoles'])->name('submitRoles');
 
         //consultancies..................
 

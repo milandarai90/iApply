@@ -38,7 +38,12 @@
                             No Data Available...
                         @endif
                 </td>
-                <td>{{$item->allUsers->name}}<a href="" class="ms-1">manage </a></td>
+                <td>{{$item->allUsers->name}}
+                    {{-- @if($item->role == 1)
+                    <a href="#"></a>
+                    @else
+                    <a href="{{route('superadmin.updateRoles')}}?id={{$item->personalAccessTokens->first()->token}}" class="ms-1">manage </a></td>
+                    @endif --}}
                 @if ($item->personalAccessTokens->isNotEmpty())
                 <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token}}" class="text-success">view</a></td>
                 <td >
