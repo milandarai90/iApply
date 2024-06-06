@@ -79,8 +79,7 @@
 
     @if(auth()->user()->role == 2)
     <div class="sidebar-wrapper">
-        <nav class="mt-2">
-       
+        <nav class="mt-2">    
             <ul class="nav sidebar-menu flex-column " data-lte-toggle="treeview" data-accordion="false">
                 <li class="nav-item">       
                         <a href="#" class="nav-link" id="dashboard">
@@ -89,20 +88,20 @@
                         </a>
                     </a>
                 </li>
-                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                <li class="nav-item" id="consultancyBranch"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-building text-warning"></i>
                     <p class="fw-bold">
-                   Country
+                   Branch
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" id="addCountry">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
-                            <p>Add Country</p>
+                <ul class="nav nav-treeview" id="consultancyAddBranch">
+                    <li class="nav-item"> <a href="{{route('consultancy.addBranch')}}" class="nav-link"> <i class="nav-icon bi bi-house-add"></i>
+                            <p>Add</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="viewCountry">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
-                            <p>View Country</p>
+                <ul class="nav nav-treeview" id="consultancyViewBranch">
+                    <li class="nav-item"> <a href="{{route('consultancy.viewBranch')}}" class="nav-link"> <i class="nav-icon bi bi-house"></i>
+                            <p>View</p>
                         </a> </li>
                 </ul>
                 </li>

@@ -12,18 +12,18 @@ class AuthController extends Controller
 {
     public function registerDisplay()
     {
-        // if (Auth::user()) {
-        //     $route = $this->redirectToRoute();
-        //     return redirect($route);
-        // }
+        if (Auth::user()) {
+            $route = $this->redirectToRoute();
+            return redirect($route);
+        }
         return view('register');
     }
     public function loginDisplay()
     {
-        // if (Auth::user()) {
-        //     $route = $this->redirectToRoute();
-        //     return redirect($route);
-        // }
+        if (Auth::user()) {
+            $route = $this->redirectToRoute();
+            return redirect($route);
+        }
         return view('login');
     }
 

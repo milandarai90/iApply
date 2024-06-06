@@ -67,8 +67,8 @@ class SuperadminAddController extends Controller
             $user->createToken($user->name . '.consultancy_token');
             return redirect()->route('superadmin.addConsultancy')->with('success', 'Consultancy registered successfully.');
         } else {
-            $users = $consultancy_info->id;
-            $users->delete();
+            // $users = $consultancy_info->id;
+            $consultancy_info->delete();
             return redirect()->route('superadmin.addConsultancy')->with('fail', 'user registration failed.');
         }
 
@@ -136,7 +136,7 @@ class SuperadminAddController extends Controller
 
         } else {
             $users = $user->id;
-            $users->delete();
+            $branch->delete();
             return redirect()->route('superadmin.addBranch')->with('fail', 'Cannot add a branch');
         }
         return redirect()->route('superadmin.addBranch')->with('success', 'Branch registered successfullly.');

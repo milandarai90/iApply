@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\consultancyBranchController;
 use App\Http\Controllers\SuperadminAddController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
@@ -64,6 +65,12 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
 Route::prefix('/consultancy')->name('consultancy.')->group(function () {
     Route::middleware(['isConsultancy'])->group(function () {
         route::get('/dashboard', [ConsultancyDashboardController::class, 'dashboard'])->name('dashboard');
+
+        //branch
+
+        route::get('/addBranch', [consultancyBranchController::class, 'addBranch'])->name('addBranch');
+        route::post('/postBranch', [consultancyBranchController::class, 'postBranch'])->name('postBranch');
+        route::get('/viewBranch', [consultancyBranchController::class, 'viewBranch'])->name('viewBranch');
     });
 });
 
