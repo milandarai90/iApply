@@ -65,7 +65,8 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
 Route::prefix('/consultancy')->name('consultancy.')->group(function () {
     Route::middleware(['isConsultancy'])->group(function () {
         route::get('/dashboard', [ConsultancyDashboardController::class, 'dashboard'])->name('dashboard');
-
+        route::get('/delete', [consultancyBranchController::class, 'delete'])->name('delete');
+        route::get('/viewDetails', [consultancyBranchController::class, 'viewDetails'])->name('viewDetails');
         //branch
 
         route::get('/addBranch', [consultancyBranchController::class, 'addBranch'])->name('addBranch');

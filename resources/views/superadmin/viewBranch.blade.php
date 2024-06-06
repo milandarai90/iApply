@@ -11,7 +11,7 @@
             <table class="text-center table table-bordered table-hover mt-2">
                 <tr>
                     <th></th>
-                    <th>Consutancy</th>
+                    <th>Consultancy</th>
                     <th>Branch Name</th>
                     <th>Email</th>
                     <th>Contact</th>
@@ -27,10 +27,10 @@
                     <td>{{$item->email}}</td>
                     <td>{{$item->phone}}</td>
                     <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
-                    <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token}}" class="text-success">view</a></td>
+                    <td><a href="{{route('superadmin.viewDetailsofUser')}}?id={{$item->personalAccessTokens->first()->token ??null}}" class="text-success">view</a></td>
                     <td >
-                    <a href="{{route('superadmin.delete')}}?id={{$item->personalAccessTokens->first()->token}}"><span class="text-danger me-1">Delete</span></a>
-                    <a href="{{route('superadmin.update')}}?id={{$item->personalAccessTokens->first()->token}}"> <span class="text-primary">Edit</span></a>
+                    <a href="{{route('superadmin.delete')}}?id={{$item->personalAccessTokens->first()->token ??null}}"><span class="text-danger me-1">Delete</span></a>
+                    <a href="{{route('superadmin.update')}}?id={{$item->personalAccessTokens->first()->token ??null}}"> <span class="text-primary">Edit</span></a>
                     </td>
                 </tr>
                     @endforeach

@@ -1,7 +1,7 @@
 @extends('base')
 @section('content')
 
-@if($branch->count()>0)
+@if(count($branch)>0)
     <div class="container">
         <form action="">
             <button class="mt-2 mb-2 float-end border border-none" style="font-size:18px; border-radius:20% "><i class="bi bi-search"></i></button>
@@ -11,7 +11,7 @@
             <table class="text-center table table-bordered table-hover mt-2">
                 <tr>
                     <th></th>
-                    <th>Consutancy</th>
+                    <th>Consultancy</th>
                     <th>Branch Name</th>
                     <th>Email</th>
                     <th>Contact</th>
@@ -25,12 +25,12 @@
                     <td>{{$index+1}}</td>
                     <td class="text-danger">{{$item->branch->consultancyDetails->name}}</td>
                     <td>{{$item->userBranch->name}}</td>
-                    <td>{{$item->email}}</td>
-                    <td>{{$item->phone}}</td>
-                    <td>{{$item->u_municipality}}-{{$item->u_ward}},{{$item->u_district}}</td>
-                    <td><a href="" class="text-success">view</a></td>
+                    <td>{{$item->userBranch->email}}</td>
+                    <td>{{$item->userBranch->phone}}</td>
+                    <td>{{$item->userBranch->u_municipality}}-{{$item->userBranch->u_ward}},{{$item->userBranch->u_district}}</td>
+                    <td><a href="{{route('consultancy.viewDetails')}}?id={{$item->userBranch->personalAccessTokens->first()->token ??null}}" class="text-success">view</a></td>
                     <td >
-                    <a href=""><span class="text-danger me-1">Delete</span></a>
+                    <a href="{{route('consultancy.delete')}}?id={{$item->userBranch->personalAccessTokens->first()->token ??null}}"><span class="text-danger me-1">Delete</span></a>
                     <a href=""> <span class="text-primary">Edit</span></a>
                     </td>
                 </tr>

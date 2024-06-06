@@ -49,18 +49,16 @@
                     <small>Head Office Email : {{$findTokenUser->consultancy->consultancyDetails->email}}</small><br>
                     <small>Head Office Phone : {{$findTokenUser->consultancy->consultancyDetails->phone}}</small><br>
                     <small>Head Office Address : {{$findTokenUser->consultancy->consultancyDetails->u_municipality}} - {{$findTokenUser->consultancy->consultancyDetails->u_ward}} , {{$findTokenUser->consultancy->consultancyDetails->u_district}}</small><br>
-                    <small>Head office PAN : {{$findTokenUser->consultancy->consultancyDetails->pan_number}}</small><br>
-                    <small>Head Person Name : {{$findTokenUser->consultancy->consultancyDetails->head_person_fullname}}</small><br>
-                    <small>Head Person Number :  {{$findTokenUser->consultancy->consultancyDetails->head_person_number}}</small><br>
+                    <small>Head Office Telephone Number :  {{$findTokenUser->consultancy->pan_number}}</small><br>
+                    <small>Head office PAN : {{$findTokenUser->consultancy->pan_number}}</small><br>
+                    <small>Head Person Name : {{$findTokenUser->consultancy->head_person_fullname}}</small><br>
+                    <small>Head Person Number :  {{$findTokenUser->consultancy->head_person_number}}</small><br>
                 </div>
                 <div class="col-6">
                     <h6 class="mt-4 text-danger">More Details</h6>
-                    @foreach($findTokenUser->consultancy->branch  as $branch)
-                    <small>Branch PAN Number: {{$branch->branch_pan}}</small><br>
-                    <small>Branch Manager Name : {{$branch->branch_manager_name}}</small><br>
-                     <small>Branch Manager Number : {{$branch->branch_manager_phone}}</small><br> 
-                    @endforeach
-
+                    <small>Branch PAN Number: {{$findTokenUser->userBranch->branch_pan}}</small><br>
+                    <small>Branch Manager Name : {{$findTokenUser->userBranch->branch_manager_name}}</small><br>
+                     <small>Branch Manager Number : {{$findTokenUser->userBranch->branch_manager_phone}}</small><br> 
                 </div>
                 @endif
             </div> 

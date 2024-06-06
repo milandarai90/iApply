@@ -2,7 +2,7 @@
 @section('content')
 <div class="container mb-5">
     <div class="d-flex justify-content-center mt-3 ">
-        <h5 class="text-danger">Branch Register Form</h5>
+        <h5 class="text-danger">Branch Registration</h5>
     </div>
         <div class="mt-2 mb-2" >
             @if(Session::has('success'))

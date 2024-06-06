@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PersonalAccessToken;
 use App\Models\consultancy_branch;
 use App\Models\consultancy_info;
 use App\Models\User;
@@ -68,7 +69,7 @@ class consultancyBranchController extends Controller
             $user->createToken($user->name . '.branchToken');
 
         } else {
-            $users = $user->id;
+            // $users = $user->id;
             $branch->delete();
             return redirect()->route('consultancy.addBranch')->with('fail', 'Cannot add a branch');
         }
@@ -78,7 +79,34 @@ class consultancyBranchController extends Controller
     public function viewBranch()
     {
         $branch = consultancy_branch::where('consultancy_id', Auth::user()->consultancy_id)->with('userBranch', 'branch')->get();
-        // dd($branch);
         return view('consultancy.viewBranch', compact('branch'));
+    }
+
+    public function delete(Request $request)
+    {
+        $token = $request->id;
+        $tokenUser = PersonalAccessToken::where('token', $token)->first();
+        if ($tokenUser) {
+            $user = $tokenUser->user()->with('personalAccessTokens', 'userBranch', 'consultancy')->first();
+            if ($user->branch_id) {
+                consultancy_branch::destroy($user->branch_id);
+            }
+            $tokenUser->delete();
+            return redirect()->back()->with('success', 'Branch Deleted Successfully.');
+        } else {
+            return redirect()->back()->with('fail', 'Branch is not deleted.');
+        }
+    }
+
+
+    public function viewDetails(Request $request)
+    {
+        $title = 'Details of ';
+        $token = $request->id;
+        $findToken = personalAccessToken::where('token', $token)->first();
+        if ($findToken) {
+            $user = $findToken->user()->with('personalAccessTokens', 'userBranch', 'consultancy', 'allUsers')->first();
+            return view('consultancy.viewDetailsofUser', compact('user', 'title'));
+        }
     }
 }

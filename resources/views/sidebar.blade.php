@@ -82,7 +82,7 @@
         <nav class="mt-2">    
             <ul class="nav sidebar-menu flex-column " data-lte-toggle="treeview" data-accordion="false">
                 <li class="nav-item">       
-                        <a href="#" class="nav-link" id="dashboard">
+                        <a href="{{route('consultancy.dashboard')}}" class="nav-link" id="dashboard">
                             <i class="nav-icon bi bi-speedometer text-warning"></i>
                             <p class="fw-bold">Dashboard</p>
                         </a>
