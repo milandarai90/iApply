@@ -69,7 +69,6 @@ class consultancyBranchController extends Controller
             $user->createToken($user->name . '.branchToken');
 
         } else {
-            // $users = $user->id;
             $branch->delete();
             return redirect()->route('consultancy.addBranch')->with('fail', 'Cannot add a branch');
         }

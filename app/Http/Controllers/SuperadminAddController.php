@@ -41,9 +41,6 @@ class SuperadminAddController extends Controller
         $paths = $request->file('valid_documents')->storeAs('public/valid_documents/' . $images);
         $valid_newpath = str_replace('public/', '', $paths);
 
-        // $images = 'valid_documents';
-        // $valid_newpath = $request->file('valid_documents')->storeAs('consultancy_valid_documents', $images . '.jpg', 'public');
-
         $consultancy_info = new consultancy_info;
         $consultancy_info->telphone_num = $request->tel_number;
         $consultancy_info->pan_number = $request->pan_number;
@@ -67,7 +64,6 @@ class SuperadminAddController extends Controller
             $user->createToken($user->name . '.consultancy_token');
             return redirect()->route('superadmin.addConsultancy')->with('success', 'Consultancy registered successfully.');
         } else {
-            // $users = $consultancy_info->id;
             $consultancy_info->delete();
             return redirect()->route('superadmin.addConsultancy')->with('fail', 'user registration failed.');
         }
@@ -76,8 +72,6 @@ class SuperadminAddController extends Controller
 
     public function addBranch()
     {
-        // $consultancy = consultancy_info::with('consultancyDetails')->get();
-
         $consultancy = User::where('role', '2')->with('consultancy')->get();
         return view('superadmin.addbranches', compact('consultancy'));
 

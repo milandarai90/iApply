@@ -24,9 +24,6 @@ class SuperadminUsersControllers extends Controller
         $tokenFind = PersonalAccessToken::where('token', $token)->first();
         if ($tokenFind) {
             $user = $tokenFind->user()->with('personalAccessTokens')->first();
-            // $data = User::where('consultancy_id', $user->consultancy_id);
-            // dd($user);
-            // $user->delete();
             if ($user->branch_id) {
                 consultancy_branch::destroy($user->branch_id);
             }
@@ -155,34 +152,4 @@ class SuperadminUsersControllers extends Controller
         }
         return redirect()->back()->with('fail', 'User not found.');
     }
-    // public function updateRoles(Request $request)
-    // {
-    //     $token = $request->id;
-    //     $findUser = PersonalAccessToken::where('token', $token)->first();
-    //     if ($findUser) {
-    //         $user = $findUser->user()->with('personalAccessTokens', 'allUsers')->first();
-    //         $roles = roles::all();
-    //         return view('superadmin.updateRoles', compact('user', 'roles', 'token'));
-    //     }
-    //     return redirect()->back()->with('fail', 'No User Found');
-    // }
-
-    // public function submitRoles(Request $request)
-    // {
-    //     $token = $request->id;
-    //     $userCheck = personalAccessToken::where('token', $token)->first();
-    //     if ($userCheck) {
-    //         $user = $userCheck->user()->with('personalAccessTokens')->first();
-    //         $request->validate([
-    //             'roles' => 'required',
-    //         ]);
-    //         $user->role = $request->roles;
-    //         $save = $user->save();
-    //         if ($save) {
-    //             return redirect()->route('superadmin.users')->with('success', 'Role is updated successfully.');
-    //         }
-    //         return redirect()->back()->with('fail', 'Role is not updated.');
-    //     }
-    //     return redirect()->back()->with('fail', 'User cannot be found.');
-    // }
 }
