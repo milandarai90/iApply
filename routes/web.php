@@ -71,6 +71,8 @@ Route::prefix('/consultancy')->name('consultancy.')->group(function () {
         route::get('/addBranch', [consultancyBranchController::class, 'addBranch'])->name('addBranch');
         route::post('/postBranch', [consultancyBranchController::class, 'postBranch'])->name('postBranch');
         route::get('/viewBranch', [consultancyBranchController::class, 'viewBranch'])->name('viewBranch');
+        route::get('/updateBranch', [consultancyBranchController::class, 'updateDetails'])->name('updateBranch');
+        route::post('/submitBranch', [consultancyBranchController::class, 'submitBranch'])->name('submitBranch');
     });
 });
 

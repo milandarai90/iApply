@@ -31,7 +31,7 @@
                     <td><a href="{{route('consultancy.viewDetails')}}?id={{$item->userBranch->personalAccessTokens->first()->token ??null}}" class="text-success">view</a></td>
                     <td >
                     <a href="{{route('consultancy.delete')}}?id={{$item->userBranch->personalAccessTokens->first()->token ??null}}"><span class="text-danger me-1">Delete</span></a>
-                    <a href=""> <span class="text-primary">Edit</span></a>
+                    <a href="{{route('consultancy.updateBranch')}}?id={{$item->userBranch->personalAccessTokens->first()->token ?? null}}"> <span class="text-primary">Edit</span></a>
                     </td>
                 </tr>
                     @endforeach

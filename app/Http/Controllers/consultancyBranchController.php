@@ -108,4 +108,50 @@ class consultancyBranchController extends Controller
             return view('consultancy.viewDetailsofUser', compact('user', 'title'));
         }
     }
+
+    public function updateDetails(Request $request)
+    {
+        $token = $request->id;
+        $findUser = PersonalAccessToken::where('token', $token)->first();
+        if ($findUser) {
+            $user = $findUser->user()->with('personalAccessTokens', 'userBranch', 'consultancy', 'allUsers')->first();
+            $title = $user->name;
+            return view('consultancy.updateDetails', compact('user', 'title'));
+        }
+        return redirect()->back()->with('fail', 'User Data is Not Found.');
+    }
+    public function submitBranch(Request $request)
+    {
+        $request->validate([
+            'branchName' => 'required',
+            'branchPhone' => 'required|min:10|max:10',
+            'branchDistrict' => 'required',
+            'branchMunicipality' => 'required',
+            'branchWard' => 'required',
+            'branchPan' => 'required|min:4',
+            'branchManager' => 'required',
+            'branchManagerPhone' => 'required|min:10|max:10',
+        ]);
+        $token = $request->id;
+        $finduser = personalAccessToken::where('token', $token)->first();
+        if ($token) {
+            $user = $finduser->user()->with('personalAccessTokens', 'userBranch')->first();
+            $user->userBranch->branch_pan = $request->branchPan;
+            $user->userBranch->branch_manager_name = $request->branchManager;
+            $user->userBranch->branch_manager_phone = $request->branchManagerPhone;
+            $save = $user->userBranch->save();
+            if ($save) {
+                $user->name = $request->branchName;
+                $user->phone = $request->branchPhone;
+                $user->u_district = $request->branchDistrict;
+                $user->u_municipality = $request->branchMunicipality;
+                $user->u_ward = $request->branchWard;
+                $user->save();
+                return redirect()->back()->with('success', 'Branch is updated successfully.');
+            }
+            return redirect()->back()->with('fail', 'Branch is not updated.');
+
+        }
+        return redirect()->back()->with('fail', 'User not found.');
+    }
 }
