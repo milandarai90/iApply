@@ -82,8 +82,7 @@
                 <div  class="d-flex justify-content-center">
                     <img src="{{asset('storage/' . $user->userBranch->branch_manager_idcard)}}" style="width:90%" alt="...">
                 </div>
-            </div>
-            
+            </div>           
         </div>
         @endif
     </div>

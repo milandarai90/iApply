@@ -29,12 +29,7 @@
     <div class="d-flex justify-content-center col-6">
         <a href="#" class="text-decoration-none text-dark "><li class="list-unstyled">Home</li></a>
     </div>
-        {{-- <div class="d-flex justify-content-end">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-        </div> --}}
+      
         <div class=" col-3">
             {{-- <button class="btn btn-success">Login</button> --}}
             <a href="{{route('registerDisplay')}} " class="me-3 d-flex justify-content-end"><button class="btn btn-primary">Register</button></a>
