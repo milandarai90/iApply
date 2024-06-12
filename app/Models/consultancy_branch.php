@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class consultancy_branch extends Model
 {
@@ -19,5 +21,15 @@ class consultancy_branch extends Model
     public function setbranchManagerAttribute($value)
     {
         $this->attributes['branchManager'] = ucwords($value);
+    }
+
+    public function classes()
+    {
+        return $this->hasMany(classroom::class, 'classroom_id');
+    }
+
+    public function classBranch()
+    {
+        return $this->hasMany(classroom::class, 'branchclass_id');
     }
 }
