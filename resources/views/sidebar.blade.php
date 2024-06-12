@@ -125,18 +125,19 @@
                 </li>
                 <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
                     <p class="fw-bold">
-                  ##
+                  Classes
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview" id="addCountry">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
-                            <p>##</p>
+                    <li class="nav-item"> <a href="{{route('branch.addClass')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
+                            <p>Add Class</p>
                         </a> </li>
                 </ul>
                 <ul class="nav nav-treeview" id="viewCountry">
                     <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
                             <p>##</p>
+                        </a> </li>
                 </ul>
                 </li>
     
