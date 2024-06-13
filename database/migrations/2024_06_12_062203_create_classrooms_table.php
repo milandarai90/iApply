@@ -12,8 +12,10 @@ return new class extends Migration {
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('branchclass_id');
-            $table->foreign('branchclass_id')->references('id')->on('consultancy_branches')->onDelete('cascade');
+            $table->unsignedBigInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('consultancy_branches')->onDelete('cascade');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->string('class_name');
             $table->string('seats_number');
             $table->enum('status', ["available", "unavailable"])->default('available');

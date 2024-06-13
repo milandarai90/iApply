@@ -83,6 +83,7 @@ Route::prefix('/branch')->name('branch.')->group(function () {
     Route::middleware(['isBranch'])->group(function () {
         route::get('/dashboard', [BranchDashboardController::class, 'dashboard'])->name('dashboard');
         route::get('/addClass', [ClassroomController::class, 'addClass'])->name('addClass');
+        // route::post('/postClass', [ClassroomController::class, 'postClass'])->name('postClass');
     });
 });
 

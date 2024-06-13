@@ -123,13 +123,13 @@
                         </a>
                     </a>
                 </li>
-                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                <li class="nav-item" id="class"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
                     <p class="fw-bold">
                   Classes
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" id="addCountry">
+                <ul class="nav nav-treeview" id="addClass">
                     <li class="nav-item"> <a href="{{route('branch.addClass')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
                             <p>Add Class</p>
                         </a> </li>
