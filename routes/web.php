@@ -95,6 +95,8 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         route::post('/postCourse', [CourseController::class, 'postCourse'])->name('postCourse');
         route::get('/viewCourse', [CourseController::class, 'viewCourse'])->name('viewCourse');
         route::get('/deleteCourse', [CourseController::class, 'deleteCourse'])->name('deleteCourse');
+        route::get('/updateCourse', [CourseController::class, 'updateCourse'])->name('updateCourse');
+        route::post('/submitCourse', [CourseController::class, 'submitCourse'])->name('submitCourse');
 
     });
 });

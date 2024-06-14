@@ -123,14 +123,14 @@
                         </a>
                     </a>
                 </li>
-                <li class="nav-item" id="class"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                <li class="nav-item" id="class"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-grid-3x3-gap text-warning"></i>
                     <p class="fw-bold">
                   Classes
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview" id="addClass">
-                    <li class="nav-item"> <a href="{{route('branch.addClass')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
+                    <li class="nav-item"> <a href="{{route('branch.addClass')}}" class="nav-link"> <i class="nav-icon bi bi-plus-lg"></i>
                             <p>Add Class</p>
                         </a> </li>
                 </ul>
@@ -140,19 +140,19 @@
                         </a> </li>
                 </ul>
                 </li>
-                <li class="nav-item" id="course"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                <li class="nav-item" id="course"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
                     <p class="fw-bold">
                   Courses
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview" id="addCourse">
-                    <li class="nav-item"> <a href="{{route('branch.addCourse')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
+                    <li class="nav-item"> <a href="{{route('branch.addCourse')}}" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
                             <p>Add Courses</p>
                         </a> </li>
                 </ul>
                 <ul class="nav nav-treeview" id="viewCourse">
-                    <li class="nav-item"> <a href="{{route('branch.viewCourse')}}" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
+                    <li class="nav-item"> <a href="{{route('branch.viewCourse')}}" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
                             <p>View Courses</p>
                         </a> </li>
                 </ul>

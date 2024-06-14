@@ -21,8 +21,8 @@
                     <td>{{$item->course}}</td>
                     <td><a href="" class="text-success">view</a></td>
                     <td >
-                    <a href="{{route('branch.deleteCourse')}}?id={{$item->branchCourse->userBranch->personalAccessTokens->first()->token}}"><span class="text-danger me-1">Delete</span></a>
-                    <a href=""> <span class="text-primary">Edit</span></a>
+                    <a href="{{route('branch.deleteCourse')}}?uid={{$item->branchCourse->userBranch->personalAccessTokens->first()->token}}&id={{$item->id}}"><span class="text-danger me-1">Delete</span></a>
+                    <a href="{{route('branch.updateCourse')}}?uid={{$item->branchCourse->userBranch->personalAccessTokens->first()->token}}&id={{$item->id}}"> <span class="text-primary">Edit</span></a>
                     </td>
                 </tr>
                     @endforeach
