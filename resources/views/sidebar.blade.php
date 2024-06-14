@@ -117,7 +117,7 @@
        
             <ul class="nav sidebar-menu flex-column " data-lte-toggle="treeview" data-accordion="false">
                 <li class="nav-item">       
-                        <a href="#" class="nav-link" id="dashboard">
+                        <a href="{{route('branch.dashboard')}}" class="nav-link" id="dashboard">
                             <i class="nav-icon bi bi-speedometer text-warning"></i>
                             <p class="fw-bold">Dashboard</p>
                         </a>
@@ -137,6 +137,23 @@
                 <ul class="nav nav-treeview" id="viewCountry">
                     <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
                             <p>##</p>
+                        </a> </li>
+                </ul>
+                </li>
+                <li class="nav-item" id="course"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-globe2 text-warning"></i>
+                    <p class="fw-bold">
+                  Courses
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="addCourse">
+                    <li class="nav-item"> <a href="{{route('branch.addCourse')}}" class="nav-link"> <i class="nav-icon bi bi-plus-square"></i>
+                            <p>Add Courses</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="viewCourse">
+                    <li class="nav-item"> <a href="{{route('branch.viewCourse')}}" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
+                            <p>View Courses</p>
                         </a> </li>
                 </ul>
                 </li>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\consultancyBranchController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SuperadminAddController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
@@ -82,8 +83,19 @@ Route::prefix('/consultancy')->name('consultancy.')->group(function () {
 Route::prefix('/branch')->name('branch.')->group(function () {
     Route::middleware(['isBranch'])->group(function () {
         route::get('/dashboard', [BranchDashboardController::class, 'dashboard'])->name('dashboard');
+
+        //class
+
         route::get('/addClass', [ClassroomController::class, 'addClass'])->name('addClass');
         // route::post('/postClass', [ClassroomController::class, 'postClass'])->name('postClass');
+
+        //course
+
+        route::get('/addCourse', [CourseController::class, 'addCourse'])->name('addCourse');
+        route::post('/postCourse', [CourseController::class, 'postCourse'])->name('postCourse');
+        route::get('/viewCourse', [CourseController::class, 'viewCourse'])->name('viewCourse');
+        route::get('/deleteCourse', [CourseController::class, 'deleteCourse'])->name('deleteCourse');
+
     });
 });
 

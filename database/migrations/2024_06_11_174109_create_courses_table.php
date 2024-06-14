@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->foreign('branch_id')->references('id')->on('consultancy_branches')->onDelete('cascade');
             $table->unsignedBigInteger('counsultancy_id')->nullable();
-            $table->foreign('counsultancy_id')->references('id')->on('consultancy_infos')->onDelete('cascade');
+            $table->foreign('consultancy_id')->references('id')->on('consultancy_infos')->onDelete('cascade');
             $table->string('course');
             $table->timestamps();
         });
