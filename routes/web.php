@@ -87,7 +87,7 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         //class
 
         route::get('/addClass', [ClassroomController::class, 'addClass'])->name('addClass');
-        // route::post('/postClass', [ClassroomController::class, 'postClass'])->name('postClass');
+        route::post('/postClass', [ClassroomController::class, 'postClass'])->name('postClass');
 
         //course
 

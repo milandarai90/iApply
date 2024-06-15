@@ -180,7 +180,6 @@
                         <option value="{{$item->consultancy_id}}" class="text-danger">{{$item->name}}
                         </option>
                         @endforeach
-                   
                       </select>
                     <div class="mt-1">
                         @error('consultancyName')

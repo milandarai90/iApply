@@ -32,6 +32,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="d-flex mt-2">
+                <div class="col-4"><label for="course">Select course :</label></div>
+                <div class="col-8">
+                    <select class="form-select form-select-sm" aria-label="select consultancy" name="course">
+                        <option value="" selected>Select a course</option>
+                        @foreach($course as $item)
+                        <option value="{{$item->id}}" class="text-danger">{{$item->course}}</option>
+                        @endforeach
+                      </select>
+                    <div class="mt-1">
+                        @error('course')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                        @enderror
+                       </div>
+                </div>
+            </div>
+
+     
            
             <div class="d-flex mt-2">
                 <div class="col-4"><label for="seats_number">Numbers of available seats :</label></div>
@@ -103,7 +124,7 @@
             </div>
            
             <div class="mt-2 mb-2 d-flex justify-content-center">
-                <button type="submit" class=" w-25 text-center text-light bg-primary form-control form-control-sm ">Register</button>
+                <button type="submit" class=" w-25 text-center text-light bg-primary form-control form-control-sm ">Save</button>
             </div>
         </form>
     </div>
