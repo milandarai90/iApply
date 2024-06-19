@@ -134,9 +134,9 @@
                             <p>Add Class</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="viewCountry">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
-                            <p>##</p>
+                <ul class="nav nav-treeview" id="viewClasses">
+                    <li class="nav-item"> <a href="{{route('branch.viewClass')}}" class="nav-link"> <i class="nav-icon bi bi-eye-fill"></i>
+                            <p>All class</p>
                         </a> </li>
                 </ul>
                 </li>

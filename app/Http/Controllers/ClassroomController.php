@@ -42,4 +42,10 @@ class ClassroomController extends Controller
         }
         return redirect()->back()->with('fail', 'Class is not added.');
     }
+
+    public function viewClass()
+    {
+        $classes = classroom::where('branch_id', Auth::user()->branch_id)->get();
+        return view('branch.viewClass', compact('classes'));
+    }
 }
