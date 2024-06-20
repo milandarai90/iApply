@@ -90,6 +90,7 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         route::post('/postClass', [ClassroomController::class, 'postClass'])->name('postClass');
         route::get('/viewClass', [ClassroomController::class, 'viewClass'])->name('viewClass');
         route::get('/viewClass1', [ClassroomController::class, 'viewClass1'])->name('viewClass1');
+        route::get('/viewClass2', [ClassroomController::class, 'viewClass2'])->name('viewClass2');
 
         //course
 

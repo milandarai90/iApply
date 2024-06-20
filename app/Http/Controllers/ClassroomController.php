@@ -45,12 +45,25 @@ class ClassroomController extends Controller
 
     public function viewClass()
     {
-        $course = course::all();
+        $course = course::with('branchCourse')->get();
         return view('branch.class', compact('course'));
     }
     public function viewClass1()
     {
-        $classes = classroom::where('branch_id', Auth::user()->branch_id)->get();
+        $classes = classroom::where('branch_id', Auth::user()->branch_id)
+            ->orderBy('course_id', 'asc')->get();
         return view('branch.viewClass', compact('classes'));
+    }
+    public function viewClass2(Request $request)
+    {
+        $cid = $request->cid;
+        $uid = $request->uid;
+
+        $token = PersonalAccessToken::where('token', $uid)->first();
+        if ($token) {
+            $classes = classroom::where('course_id', $cid)->get();
+            return view('branch.viewClass2', compact('classes'));
+        }
+        return redirect()->back()->with('fail', 'Something went wrong...');
     }
 }
