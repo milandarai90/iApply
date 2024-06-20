@@ -45,6 +45,11 @@ class ClassroomController extends Controller
 
     public function viewClass()
     {
+        $course = course::all();
+        return view('branch.class', compact('course'));
+    }
+    public function viewClass1()
+    {
         $classes = classroom::where('branch_id', Auth::user()->branch_id)->get();
         return view('branch.viewClass', compact('classes'));
     }

@@ -24,4 +24,8 @@ class course extends Model
     {
         return $this->belongsTo(consultancy_branch::class, 'branch_id');
     }
+    public function course()
+    {
+        return $this->hasMany(classroom::class, 'course_id');
+    }
 }

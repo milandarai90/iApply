@@ -1,41 +1,31 @@
 @extends('base')
 @section('content')
 
-@if(count($classes)>0)
-    <div class="container">
-
-        <div id="viewClass" class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 mt-2 ms-3">
-            @foreach($classes as $item)
-            <div class="col-3 border border-2 border-danger text-light me-3 p-2 " id="showClass">
-                <h4 class="fw-bolder text-center">{{$item->class_name}}</h4>
-                <div class="d-flex justify-content-center">
-                    <small>{{$item->course->course}}</small>
-                </div>
-                <hr>
-                <div>
-                    <span >Time :  {{$item->starting_time}} - {{$item->ending_time}}</span>
-                </div>
-                <div>
-                    <span >Date :  {{$item->starting_date}} - {{$item->ending_date}}</span> 
-                </div>
-                <div>
-                    <span >Students : /{{$item->seats_number}}</span>
-                </div>
-                <div>
-                 <span> Status : </span><small >{{$item->status}}</small>
-                </div>
-            <hr>
-            <div class="d-flex">
-               <div class="col d-flex justify-content-center  fw-bold" >
-                <a href="" class="text-decoration-none text-light"><i class="bi bi-trash3"></i></a>
-               </div>
-               <div class="col d-flex justify-content-center  fw-bold">
-                <a href="" class="text-decoration-none text-light" ><i class="bi bi-pencil"></i></a>
-                </div>
-            </div>
-            </div>
-           @endforeach
+@if(count($course)>0)
+    <div class="container me-2">
+        <div class="mt-3">
+            <h4 class="ms-4">Select a course to see a class for.</h4>
         </div>
+
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-2 ms-3">
+               <a href="{{route('branch.viewClass1')}}" class="text-decoration-none text-light">
+                <div class="col me-3 " id="showClass">
+                    <div class="p-5 text-center">
+                        <span>All</span>
+                    </div>
+                  </div>
+               </a>
+
+                @foreach($course as $item)
+             <a href="" class="text-decoration-none text-light">
+                <div class="col me-3 " id="showClass">
+                    <div class="p-5 text-center">
+                        <span>{{$item->course}}</span>
+                    </div>
+                  </div>
+             </a>
+              @endforeach
+            </div>
         <div class="mt-2 mb-2" >
             @if(Session::has('success'))
             <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(64, 193, 44)">
@@ -58,9 +48,14 @@
 
 @endif
     <style>
+       
         #showClass{
             background-color: rgb(232, 87, 87);
             border-radius: 3%;
+        }
+        #showClass :hover{
+            background-color: rgb(255, 90, 90);
+            border-radius: 4%;
         }
         #showClass span{
             font-weight: 600;
