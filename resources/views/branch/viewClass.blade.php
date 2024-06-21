@@ -3,6 +3,18 @@
 
 @if(count($classes)>0)
     <div class="container">
+        <div class="mt-2 mb-2" >
+            @if(Session::has('success'))
+            <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(64, 193, 44)">
+             <p class="text-small text-center text-light align-items-center">{{session::get('success')}}</p>
+            </div>
+             @endif
+             @if(Session::has('fail'))
+             <div class="form-control align-items-center" id="sessionFail" style="background-color: rgb(233, 6, 6)">
+              <p class="text-small text-center text-light align-items-center">{{session::get('fail')}}</p>
+             </div>
+              @endif
+        </div>
 
         <div id="viewClass" class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 mt-2 ms-3">
             @foreach($classes as $item)
@@ -27,27 +39,19 @@
             <hr>
             <div class="d-flex">
                <div class="col d-flex justify-content-center  fw-bold" >
-                <a href="" class="text-decoration-none text-light"><i class="bi bi-trash3"></i></a>
+                <a href="{{route('branch.deleteClass')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}" class="text-decoration-none text-light"><i class="bi bi-trash3"></i></a>
                </div>
                <div class="col d-flex justify-content-center  fw-bold">
-                <a href="" class="text-decoration-none text-light" ><i class="bi bi-pencil"></i></a>
+                <a href="" class="text-decoration-none text-light" ><i class="bi bi-arrow-clockwise"></i></a>
+                </div>
+               <div class="col d-flex justify-content-center  fw-bold">
+                <a href="{{route('branch.editClass')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}" class="text-decoration-none text-light" ><i class="bi bi-pencil"></i></a>
                 </div>
             </div>
             </div>
            @endforeach
         </div>
-        <div class="mt-2 mb-2" >
-            @if(Session::has('success'))
-            <div class="form-control align-items-center" id="sessionSuccess" style="background-color: rgb(64, 193, 44)">
-             <p class="text-small text-center text-light align-items-center">{{session::get('success')}}</p>
-            </div>
-             @endif
-             @if(Session::has('fail'))
-             <div class="form-control align-items-center" id="sessionFail" style="background-color: rgb(233, 6, 6)">
-              <p class="text-small text-center text-light align-items-center">{{session::get('fail')}}</p>
-             </div>
-              @endif
-        </div>
+       
     </div>
 @else
     <div class="container">

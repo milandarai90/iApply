@@ -14,7 +14,7 @@ class classroom extends Model
     }
     public function classBranch()
     {
-        return $this->belongsTo(consultancy_branch::class, 'branchclass_id');
+        return $this->belongsTo(consultancy_branch::class, 'branch_id');
     }
     public function course()
     {

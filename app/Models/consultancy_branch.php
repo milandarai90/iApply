@@ -22,16 +22,11 @@ class consultancy_branch extends Model
     {
         $this->attributes['branchManager'] = ucwords($value);
     }
+    public function classBranch()
+    {
+        return $this->hasMany(classroom::class, 'branch_id');
+    }
 
-    // public function classes()
-    // {
-    //     return $this->hasMany(classroom::class, 'classroom_id');
-    // }
-
-    // public function classBranch()
-    // {
-    //     return $this->hasMany(classroom::class, 'branchclass_id');
-    // }
     public function branchCourse()
     {
         return $this->hasMany(course::class, 'branch_id');

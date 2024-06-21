@@ -91,6 +91,11 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         route::get('/viewClass', [ClassroomController::class, 'viewClass'])->name('viewClass');
         route::get('/viewClass1', [ClassroomController::class, 'viewClass1'])->name('viewClass1');
         route::get('/viewClass2', [ClassroomController::class, 'viewClass2'])->name('viewClass2');
+        route::get('/deleteClass', [ClassroomController::class, 'deleteClass'])->name('deleteClass');
+        route::get('/editClass', [ClassroomController::class, 'editClass'])->name('editClass');
+        route::get('/editClass2', [ClassroomController::class, 'editClass2'])->name('editClass2');
+        route::post('/updateClass', [ClassroomController::class, 'updateClass'])->name('updateClass');
+        route::post('/updateClass2', [ClassroomController::class, 'updateClass2'])->name('updateClass2');
 
         //course
 

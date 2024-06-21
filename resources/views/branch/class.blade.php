@@ -17,7 +17,7 @@
                </a>
 
                 @foreach($course as $item)
-             <a href="{{route('branch.viewClass2')}}?uid={{$item->branchCourse->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}" class="text-decoration-none text-light">
+             <a href="{{route('branch.viewClass2')}}?uid={{$item->branchCourse->userBranch->personalAccessTokens->first()->token}}&courseid={{$item->id}}" class="text-decoration-none text-light">
                 <div class="col me-3 " id="showClass">
                     <div class="p-5 text-center">
                         <span>{{$item->course}}</span>
