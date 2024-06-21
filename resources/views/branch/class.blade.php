@@ -54,8 +54,7 @@
             border-radius: 3%;
         }
         #showClass :hover{
-            background-color: rgb(255, 90, 90);
-            border-radius: 4%;
+            box-shadow: 10px 10px 20px rgba(36, 36, 36, 0.5);
         }
         #showClass span{
             font-weight: 600;

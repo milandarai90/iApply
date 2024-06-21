@@ -67,6 +67,9 @@
             background-color: rgb(232, 87, 87);
             border-radius: 3%;
         }
+        #showClass:hover {
+            box-shadow: 10px 10px 20px rgba(36, 36, 36, 0.5);
+        }
         #showClass span{
             font-weight: 600;
             text-align: center;
