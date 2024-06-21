@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\consultancyBranchController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SuperadminAddController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
@@ -105,6 +106,10 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         route::get('/deleteCourse', [CourseController::class, 'deleteCourse'])->name('deleteCourse');
         route::get('/updateCourse', [CourseController::class, 'updateCourse'])->name('updateCourse');
         route::post('/submitCourse', [CourseController::class, 'submitCourse'])->name('submitCourse');
+
+        //students
+
+        route::get('/addStudents', [StudentsController::class, 'addStudents'])->name('addStudents');
 
     });
 });
