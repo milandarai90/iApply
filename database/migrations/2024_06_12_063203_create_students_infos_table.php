@@ -18,9 +18,11 @@ return new class extends Migration {
             $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
             $table->unsignedBigInteger('course_id')->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->string('joining_date');
+            $table->string('completed_date')->nullable();
             $table->enum('joined_type', ["online", "physical"]);
             $table->enum('status', ["booked", "joined", "completed"]);
-            $table->enum('activity', ["active", "inactive"]);
+            // $table->enum('activity', ["active", "inactive"]);
             $table->timestamps();
         });
     }
