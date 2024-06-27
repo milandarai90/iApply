@@ -17,7 +17,7 @@
               @endif
         </div>
     <div class="me-2 ms-2 d-flex justify-content-center" >
-        <form action="" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
+        <form action="{{route('branch.postStudents')}}" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
             @csrf
             <div class="d-flex mt-2">
                 <div class="col-4"><label for="studentName">Student Name :</label></div>
@@ -78,7 +78,7 @@
             <div class="d-flex mt-2">
                 <div class="col-4"><label for="u_muncipality">Student Muncipality:</label></div>
                 <div class="col-8">
-                    <input type="text" class="form-control form-control-sm" name="u_muncipality" >
+                    <input type="text" class="form-control form-control-sm" name="u_municipality" >
                     <div class="mt-1">
                         @error('u_muncipality')
                         <span class="text-danger">
@@ -158,6 +158,26 @@
             </div>       
 
             <div class="d-flex mt-2">
+                <div class="col-4"><label for="classes">Status:</label></div>
+                <div class="col-8">
+                    <select class="form-select form-select-sm" aria-label="select consultancy" name="status">
+                        <option selected disabled>Select the class.</option>
+                        <option value="booked" class="text-danger">Booked</option>
+                        <option value="joined" class="text-danger">Joined</option>
+                        {{-- <option value="joined" class="text-danger">Joined</option> --}}
+                        {{-- @endforeach --}}
+                      </select>
+                    <div class="mt-1">
+                        @error('classes')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                        @enderror
+                       </div>
+                </div>
+            </div>
+
+            <div class="d-flex mt-2">
                 <div class="col-4"><label for="password">Password :</label></div>
                 <div class="col-8">
                     <input type="password" class="form-control form-control-sm" name="password" required>
@@ -171,6 +191,20 @@
                 </div>
             </div>
             
+            <div class="d-flex mt-2">
+                <div class="col-4"><label for="password">Confirm password :</label></div>
+                <div class="col-8">
+                    <input type="password" class="form-control form-control-sm" name="c_password" required>
+                    <div class="mt-1">
+                        @error('password')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-2 mb-2 d-flex justify-content-center">
                 <button type="submit" class=" w-25 text-center text-light bg-primary form-control form-control-sm ">Register</button>
             </div>

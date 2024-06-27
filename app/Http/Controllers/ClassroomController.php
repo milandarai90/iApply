@@ -12,7 +12,6 @@ class ClassroomController extends Controller
 {
     public function addClass()
     {
-
         $course = course::where('branch_id', Auth::user()->branch_id)->get();
         return view('branch.addClass', compact('course'));
     }
