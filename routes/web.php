@@ -97,6 +97,9 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         route::get('/editClass2', [ClassroomController::class, 'editClass2'])->name('editClass2');
         route::post('/updateClass', [ClassroomController::class, 'updateClass'])->name('updateClass');
         route::post('/updateClass2', [ClassroomController::class, 'updateClass2'])->name('updateClass2');
+        route::get('/addStudents1', [ClassroomController::class, 'addStudents1'])->name('addStudents1');
+        route::post('/postStudents1', [ClassroomController::class, 'postStudents1'])->name('postStudents1');
+        route::get('/addStudents2', [ClassroomController::class, 'addStudents2'])->name('addStudents2');
 
         //course
 
@@ -111,6 +114,7 @@ Route::prefix('/branch')->name('branch.')->group(function () {
 
         route::get('/addStudents', [StudentsController::class, 'addStudents'])->name('addStudents');
         route::post('/postStudents', [StudentsController::class, 'postStudents'])->name('postStudents');
+
 
     });
 });

@@ -45,6 +45,9 @@
                <div class="col d-flex justify-content-center  fw-bold">
                 <a href="" class="text-decoration-none text-light" ><i class="bi bi-arrow-clockwise"></i></a>
                 </div>
+                <div class="col d-flex justify-content-center  fw-bold">
+                    <a href="{{route('branch.addStudents2')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}&courseid={{$courseid}}" class="text-decoration-none text-light" ><i class="bi bi-person-add"></i></a>
+                    </div>
                <div class="col d-flex justify-content-center  fw-bold">
                 <a href="{{route('branch.editClass2')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}&courseid={{$courseid}}" class="text-decoration-none text-light" ><i class="bi bi-pencil"></i></a>
                 </div>

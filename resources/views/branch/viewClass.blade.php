@@ -31,7 +31,7 @@
                     <span >Date :  {{$item->starting_date}} - {{$item->ending_date}}</span> 
                 </div>
                 <div>
-                    <span >Students : /{{$item->seats_number}}</span>
+                    <span >Students : {{$item->studentCount}}/{{$item->seats_number}}</span>
                 </div>
                 <div>
                  <span> Status : </span><small >{{$item->status}}</small>
@@ -44,6 +44,9 @@
                <div class="col d-flex justify-content-center  fw-bold">
                 <a href="" class="text-decoration-none text-light" ><i class="bi bi-arrow-clockwise"></i></a>
                 </div>
+                <div class="col d-flex justify-content-center  fw-bold">
+                    <a href="{{route('branch.addStudents1')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&courseid={{$item->course->id}}&cid={{$item->id}}" class="text-decoration-none text-light" ><i class="bi bi-person-add"></i></a>
+                    </div>
                <div class="col d-flex justify-content-center  fw-bold">
                 <a href="{{route('branch.editClass')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}" class="text-decoration-none text-light" ><i class="bi bi-pencil"></i></a>
                 </div>
