@@ -19,7 +19,7 @@
 
         <div id="viewClass" class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 mt-2 ms-3">
             @foreach($classes as $item)
-            <div class="col-3 border border-2 border-danger text-light me-3 p-2 " id="showClass">
+            <div class="col-3 border border-2 border-secondary bg-success text-light me-3 p-2 " id="showClass">
                 <h4 class="fw-bolder text-center">{{$item->class_name}}</h4>
                 <div class="d-flex justify-content-center">
                     <small>{{$item->course->course}}</small>
@@ -32,7 +32,7 @@
                     <span >Date :  {{$item->starting_date}} - {{$item->ending_date}}</span> 
                 </div>
                 <div>
-                    <span >Students : /{{$item->seats_number}}</span>
+                    <span >Students : {{$item->studentCount}} / {{$item->seats_number}}</span>
                 </div>
                 <div>
                  <span> Status : </span><small >{{$item->status}}</small>
@@ -89,7 +89,13 @@
         setTimeout(function () {
             document.getElementById("sessionFail").style.display = "none";
             }, 3000); 
-
+// if($student < $item->seats_number){
+//             document.getElementById('showClass').classList.add("bg-success");
+// }elseif($student === $item->seats_number){
+//     document.getElementById('showClass').classList.add("bg-danger");
+// }else{
+//     document.getElementById('showClass').classList.add("bg-danger");
+// }
            document.getElementById('class').classList.add("menu-open");
            document.getElementById('viewClasses').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
  </script>

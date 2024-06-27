@@ -18,7 +18,7 @@
 
         <div id="viewClass" class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 mt-2 ms-3">
             @foreach($classes as $item)
-            <div class="col-3 border border-2 border-danger text-light me-3 p-2 " id="showClass">
+            <div class="col-3 border border-2 border-secondary text-light bg-success me-3 p-2" id="showClass">
                 <h4 class="fw-bolder text-center">{{$item->class_name}}</h4>
                 <div class="d-flex justify-content-center">
                     <small>{{$item->course->course}}</small>
@@ -31,7 +31,7 @@
                     <span >Date :  {{$item->starting_date}} - {{$item->ending_date}}</span> 
                 </div>
                 <div>
-                    <span >Students : {{$item->studentCount}}/{{$item->seats_number}}</span>
+                    <span >Students : {{$item->studentCount}} / {{$item->seats_number}}</span>
                 </div>
                 <div>
                  <span> Status : </span><small >{{$item->status}}</small>
@@ -45,7 +45,7 @@
                 <a href="" class="text-decoration-none text-light" ><i class="bi bi-arrow-clockwise"></i></a>
                 </div>
                 <div class="col d-flex justify-content-center  fw-bold">
-                    <a href="{{route('branch.addStudents1')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&courseid={{$item->course->id}}&cid={{$item->id}}" class="text-decoration-none text-light" ><i class="bi bi-person-add"></i></a>
+                    <a href="{{route('branch.addStudents1')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&courseid={{$item->course->id}}&cid={{$item->id}}" class="text-decoration-none text-light" id="useradd" ><i class="bi bi-person-add"></i></a>
                     </div>
                <div class="col d-flex justify-content-center  fw-bold">
                 <a href="{{route('branch.editClass')}}?uid={{$item->classBranch->userBranch->personalAccessTokens->first()->token}}&cid={{$item->id}}" class="text-decoration-none text-light" ><i class="bi bi-pencil"></i></a>
@@ -66,7 +66,7 @@
 @endif
     <style>
         #showClass{
-            background-color: rgb(232, 87, 87);
+           /* background-color: #28a745;; */
             border-radius: 3%;
         }
         #showClass:hover {

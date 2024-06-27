@@ -17,7 +17,7 @@
               @endif
         </div>
     <div class="me-2 ms-2 d-flex justify-content-center" >
-        <form action="" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
+        <form action="{{route('branch.postStudents2')}}?uid={{$uid}}&cid={{$cid}}&courseid={{$courseid}}" method="POST" class="p-2 border border-2 w-75" style="border-radius: 3%" enctype="multipart/form-data">
             @csrf
             <div class="d-flex mt-2">
                 <div class="col-4"><label for="studentName">Student Name :</label></div>
