@@ -158,19 +158,19 @@
                 </ul>
                 </li>
 
-                <li class="nav-item" id="students"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
+                <li class="nav-item" id="students"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-people-fill text-warning"></i>
                     <p class="fw-bold">
                   Students
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview" id="addstudents">
-                    <li class="nav-item"> <a href="{{route('branch.addStudents')}}" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
+                    <li class="nav-item"> <a href="{{route('branch.addStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-fill-add"></i>
                             <p>Add Students</p>
                         </a> </li>
                 </ul>
                 <ul class="nav nav-treeview" id="viewstudents">
-                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
+                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
                             <p>View Students</p>
                         </a> </li>
                 </ul>

@@ -110,6 +110,7 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         //students
 
         route::get('/addStudents', [StudentsController::class, 'addStudents'])->name('addStudents');
+        route::post('/postStudents', [StudentsController::class, 'postStudents'])->name('postStudents');
 
     });
 });

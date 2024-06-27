@@ -108,10 +108,10 @@
                 <div class="col-8">
                     <select class="form-select form-select-sm" aria-label="select consultancy" name="classes">
                         <option selected disabled>Select the class.</option>
-                        {{-- @foreach ($consultancy as $item) --}}
-                        <option value="" class="text-danger">
+                        @foreach ($classroom as $item)
+                        <option value="{{$item->id}}" class="text-danger">{{$item->class_name}}
                         </option>
-                        {{-- @endforeach --}}
+                        @endforeach
                       </select>
                     <div class="mt-1">
                         @error('classes')
@@ -128,10 +128,10 @@
                 <div class="col-8">
                     <select class="form-select form-select-sm" aria-label="select consultancy" name="course">
                         <option selected disabled>Select the course.</option>
-                        {{-- @foreach ($consultancy as $item) --}}
-                        <option value="" class="text-danger">
+                        @foreach ($course as $item)
+                        <option value="{{$item->id}}" class="text-danger">{{$item->course}}
                         </option>
-                        {{-- @endforeach --}}
+                        @endforeach
                       </select>
                     <div class="mt-1">
                         @error('course')
@@ -186,7 +186,7 @@
             document.getElementById("sessionFail").style.display = "none";
             }, 3000); 
 
-           document.getElementById('consultancyBranch').classList.add("menu-open");
-           document.getElementById('consultancyAddBranch').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
+           document.getElementById('students').classList.add("menu-open");
+           document.getElementById('addstudents').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
     </script>
 @endsection
