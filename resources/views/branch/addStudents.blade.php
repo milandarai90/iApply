@@ -155,7 +155,21 @@
                         @enderror
                     </div>
                 </div>
-            </div>           
+            </div>       
+
+            <div class="d-flex mt-2">
+                <div class="col-4"><label for="password">Password :</label></div>
+                <div class="col-8">
+                    <input type="password" class="form-control form-control-sm" name="password" required>
+                    <div class="mt-1">
+                        @error('password')
+                        <span class="text-danger">
+                            {{$message}}
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
             
             <div class="mt-2 mb-2 d-flex justify-content-center">
                 <button type="submit" class=" w-25 text-center text-light bg-primary form-control form-control-sm ">Register</button>
