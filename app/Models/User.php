@@ -90,6 +90,7 @@ class User extends Authenticatable
     {
         $this->attributes['u_ward'] = ucwords($value);
     }
+
     public function personalAccessTokens(): HasMany
     {
         return $this->hasMany(PersonalAccessToken::class, 'tokenable_id');

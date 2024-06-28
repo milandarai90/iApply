@@ -13,4 +13,9 @@ class Otp extends Model
         'otp',
         'expires_at'
     ];
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = ucwords($value);
+    }
+
 }

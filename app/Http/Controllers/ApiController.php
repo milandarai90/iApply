@@ -21,21 +21,14 @@ class ApiController extends Controller
             'password' => 'required|string|min:8',
             'c_password' => 'required|string|min:8|same:password'
         ]);
-
-        // Generate OTP
         $otp = rand(10000, 99999);
         $expiresAt = Carbon::now()->addMinutes(10);
-
-        // Save OTP to database
         Otp::create([
             'email' => $request->email,
             'otp' => $otp,
             'expires_at' => $expiresAt,
         ]);
-
-        // Send OTP to user's email
         Mail::to($request->email)->send(new SendOtpMail($otp));
-
         return response()->json(['message' => 'OTP sent to your email'], 200);
     }
 
@@ -57,8 +50,6 @@ class ApiController extends Controller
         if (!$otpRecord) {
             return response()->json(['message' => 'Invalid or expired OTP'], 400);
         }
-
-        // Create user
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -66,7 +57,6 @@ class ApiController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         $user->createToken($user->name . 'token');
-        // Delete OTP record
         $otpRecord->delete();
 
         return response()->json(['message' => 'User registered successfully'], 201);

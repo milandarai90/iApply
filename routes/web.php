@@ -32,6 +32,10 @@ route::get('/', [UsersHomepageController::class, 'index'])->name('showIndex');
 route::get('/register', [AuthController::class, 'registerDisplay'])->name('registerDisplay');
 route::get('/login', [AuthController::class, 'loginDisplay'])->name('loginDisplay');
 route::post('/registered', [AuthController::class, 'registered'])->name('registered');
+route::get('/otp_form', [AuthController::class, 'otp_form'])->name('otp_form');
+route::post('/otp_verify', [AuthController::class, 'otp_verify'])->name('otp_verify');
+route::post('/otp_resend', [AuthController::class, 'otp_resend'])->name('otp_resend');
+
 route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('loginCheck');
 route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
