@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Otp;
 use App\Mail\SendOtpMail; // Import the SendOtpMail class
@@ -33,7 +34,7 @@ class ApiController extends Controller
         ]);
 
         // Send OTP to user's email
-        Mail::to($request->email)->send(new SendOtpMail($otp)); // Correctly type-hint the mailable
+        Mail::to($request->email)->send(new SendOtpMail($otp));
 
         return response()->json(['message' => 'OTP sent to your email'], 200);
     }
@@ -69,6 +70,25 @@ class ApiController extends Controller
         $otpRecord->delete();
 
         return response()->json(['message' => 'User registered successfully'], 201);
+    }
+
+    public function login(Request $request)
+    {
+
+        $creds = $request->only('email', 'password');
+        if (Auth::attempt($creds)) {
+            $user = Auth::user();
+            $response = [
+                'name' => $user->name,
+                'email' => $user->email,
+                'message' => 'Login is successfull.'
+            ];
+            return response()->json($response, 200);
+        }
+        $response = [
+            'message' => 'Invalid email or password'
+        ];
+        return response()->json($response, 404);
     }
 }
 

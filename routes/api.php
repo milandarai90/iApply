@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [ApiController::class, 'register']);
 Route::post('/verify_otp', [ApiController::class, 'verifyOtp']);
+Route::post('/login', [ApiController::class, 'login']);
+
