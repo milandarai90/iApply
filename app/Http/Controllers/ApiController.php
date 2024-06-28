@@ -80,6 +80,37 @@ class ApiController extends Controller
         ];
         return response()->json($response, 404);
     }
+
+    public function resendOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+        ]);
+        $oldOtp = Otp::where('email', $request->otp)
+            ->where('expires_at', '>', Carbon::now())
+            ->first();
+        if ($oldOtp) {
+            Mail::to($request->email)->send(new SendOtpMail($oldOtp->otp));
+            $response = [
+                'message' => 'Otp has already been sent. Please check your email',
+            ];
+            return response()->json($response, 200);
+        } else {
+            $otp = rand(10000, 99999);
+            $expiresAt = Carbon::now()->addMinutes(10);
+
+            Otp::create([
+                "email" => $request->email,
+                "otp" => $otp,
+                "expires_at" => $expiresAt,
+            ]);
+            Mail::to($request->email)->send(new SendOtpMail($otp));
+            $response = [
+                'message' => 'Otp has been sent. Please check your email.',
+            ];
+            return response()->json($response, 200);
+        }
+    }
 }
 
 
