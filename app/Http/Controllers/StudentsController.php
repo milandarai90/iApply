@@ -50,6 +50,8 @@ class StudentsController extends Controller
         if ($save) {
             $student = new studentsInfo();
             $student->user_id = $user->id;
+            $student->branch_id = Auth::user()->branch_id;
+            $student->consultancy_id = Auth::user()->consultancy_id;
             $student->classroom_id = $request->classes;
             $student->course_id = $request->course;
             $student->joined_type = 'physical';
@@ -61,6 +63,61 @@ class StudentsController extends Controller
         } else {
             $user->delete();
             return redirect()->route('branch.addStudents')->with('fail', 'Student is not registered');
+        }
+    }
+    public function joinedStudents()
+    {
+
+        $user = PersonalAccessToken::where('token', Auth::user()->personalAccessTokens->first()->token);
+        if ($user) {
+            $student = studentsInfo::where('branch_id', Auth::user()->branch_id)
+                ->get();
+            if ($student) {
+                $students = studentsInfo::where('status', 'joined')
+                    ->with('student', 'classes')
+                    ->get();
+                return view('branch.joinedStudents', compact('students', 'user'));
+            }
+        }
+    }
+    public function bookedStudents()
+    {
+        $user = PersonalAccessToken::where('token', Auth::user()->personalAccessTokens->first()->token);
+        if ($user) {
+            $student = studentsInfo::where('branch_id', Auth::user()->branch_id)
+                ->get();
+            if ($student) {
+                $students = studentsInfo::where('status', 'booked')
+                    ->with('student', 'classes')
+                    ->get();
+                return view('branch.bookedStudents', compact('students', 'user'));
+            }
+        }
+    }
+    public function completedStudents()
+    {
+
+        $user = PersonalAccessToken::where('token', Auth::user()->personalAccessTokens->first()->token);
+        if ($user) {
+            $student = studentsInfo::where('branch_id', Auth::user()->branch_id)
+                ->get();
+            if ($student) {
+                $students = studentsInfo::where('status', 'completed')
+                    ->with('student', 'classes')
+                    ->get();
+                return view('branch.completedStudents', compact('students', 'user'));
+            }
+        }
+    }
+    public function viewStudents()
+    {
+
+        $user = PersonalAccessToken::where('token', Auth::user()->personalAccessTokens->first()->token);
+        if ($user) {
+            $students = studentsInfo::where('branch_id', Auth::user()->branch_id)
+                ->with('student', 'classes')
+                ->get();
+            return view('branch.viewStudents', compact('students', 'user'));
         }
     }
 }

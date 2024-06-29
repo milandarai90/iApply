@@ -120,6 +120,10 @@ Route::prefix('/branch')->name('branch.')->group(function () {
 
         route::get('/addStudents', [StudentsController::class, 'addStudents'])->name('addStudents');
         route::post('/postStudents', [StudentsController::class, 'postStudents'])->name('postStudents');
+        route::get('/viewStudents', [StudentsController::class, 'viewStudents'])->name('viewStudents');
+        route::get('/bookedStudents', [StudentsController::class, 'bookedStudents'])->name('bookedStudents');
+        route::get('/joinedStudents', [StudentsController::class, 'joinedStudents'])->name('joinedStudents');
+        route::get('/completedStudents', [StudentsController::class, 'completedStudents'])->name('completedStudents');
 
 
     });

@@ -213,6 +213,8 @@ class ClassroomController extends Controller
             if ($save) {
                 $student = new studentsInfo;
                 $student->user_id = $user->id;
+                $student->branch_id = Auth::user()->branch_id;
+                $student->consultancy_id = Auth::user()->consultancy_id;
                 $student->classroom_id = $cid;
                 $student->course_id = $courseid;
                 $student->joined_type = 'physical';
@@ -267,6 +269,8 @@ class ClassroomController extends Controller
             if ($save) {
                 $student = new studentsInfo;
                 $student->user_id = $user->id;
+                $student->branch_id = Auth::user()->branch_id;
+                $student->consultancy_id = Auth::user()->consultancy_id;
                 $student->classroom_id = $cid;
                 $student->course_id = $courseid;
                 $student->joined_type = 'physical';

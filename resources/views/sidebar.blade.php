@@ -166,12 +166,27 @@
                 </a>
                 <ul class="nav nav-treeview" id="addstudents">
                     <li class="nav-item"> <a href="{{route('branch.addStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-fill-add"></i>
-                            <p>Add Students</p>
+                            <p>Add </p>
                         </a> </li>
                 </ul>
                 <ul class="nav nav-treeview" id="viewstudents">
-                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
-                            <p>View Students</p>
+                    <li class="nav-item"> <a href="{{route('branch.viewStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>All </p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="bookedstudents">
+                    <li class="nav-item"> <a href="{{route('branch.bookedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>Booked</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="joinedstudents">
+                    <li class="nav-item"> <a href="{{route('branch.joinedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>Joined</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="completedstudents">
+                    <li class="nav-item"> <a href="{{route('branch.completedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>Completed</p>
                         </a> </li>
                 </ul>
                 </li>
