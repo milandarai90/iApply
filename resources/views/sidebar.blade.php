@@ -122,6 +122,24 @@
                             <p class="fw-bold">Dashboard</p>
                         </a>
                     </a>
+
+                    <li class="nav-item" id="course"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
+                    <p class="fw-bold">
+                  Courses
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="addCourse">
+                    <li class="nav-item"> <a href="{{route('branch.addCourse')}}" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
+                            <p>Add Courses</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="viewCourse">
+                    <li class="nav-item"> <a href="{{route('branch.viewCourse')}}" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
+                            <p>View Courses</p>
+                        </a> </li>
+                </ul>
+                </li>
                 </li>
                 <li class="nav-item" id="class"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-grid-3x3-gap text-warning"></i>
                     <p class="fw-bold">
@@ -140,23 +158,7 @@
                         </a> </li>
                 </ul>
                 </li>
-                <li class="nav-item" id="course"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
-                    <p class="fw-bold">
-                  Courses
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" id="addCourse">
-                    <li class="nav-item"> <a href="{{route('branch.addCourse')}}" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
-                            <p>Add Courses</p>
-                        </a> </li>
-                </ul>
-                <ul class="nav nav-treeview" id="viewCourse">
-                    <li class="nav-item"> <a href="{{route('branch.viewCourse')}}" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
-                            <p>View Courses</p>
-                        </a> </li>
-                </ul>
-                </li>
+           
 
                 <li class="nav-item" id="students"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-people-fill text-warning"></i>
                     <p class="fw-bold">
@@ -187,6 +189,23 @@
                 <ul class="nav nav-treeview" id="completedstudents">
                     <li class="nav-item"> <a href="{{route('branch.completedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
                             <p>Completed</p>
+                        </a> </li>
+                </ul>
+                </li>
+                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
+                    <p class="fw-bold">
+                  Countries
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="addCountry">
+                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
+                            <p>Add Countries</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="viewCountry">
+                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
+                            <p>View Countries</p>
                         </a> </li>
                 </ul>
                 </li>
