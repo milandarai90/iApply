@@ -37,4 +37,8 @@ class consultancy_info extends Model
     {
         return $this->hasMany(consultancy_branch::class, 'consultancy_id');
     }
+
+    public function consultancy_to_country(){
+        return $this->hasMany(country::class,'consultancy_id');
+    }
 }

@@ -105,6 +105,24 @@
                         </a> </li>
                 </ul>
                 </li>
+
+                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
+                    <p class="fw-bold">
+                  Countries
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="addCountry">
+                    <li class="nav-item"> <a href="{{route('consultancy.addCountry')}}" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
+                            <p>Add Countries</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="viewCountry">
+                    <li class="nav-item"> <a href="{{route('consultancy.viewCountry')}}" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
+                            <p>View Countries</p>
+                        </a> </li>
+                </ul>
+                </li>
     
             </ul>
         </nav>
@@ -192,23 +210,7 @@
                         </a> </li>
                 </ul>
                 </li>
-                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
-                    <p class="fw-bold">
-                  Countries
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" id="addCountry">
-                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-journal-plus"></i>
-                            <p>Add Countries</p>
-                        </a> </li>
-                </ul>
-                <ul class="nav nav-treeview" id="viewCountry">
-                    <li class="nav-item"> <a href="" class="nav-link"> <i class="nav-icon bi bi-journal-check"></i>
-                            <p>View Countries</p>
-                        </a> </li>
-                </ul>
-                </li>
+             
     
             </ul>
         </nav>

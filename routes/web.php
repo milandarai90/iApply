@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\consultancyBranchController;
+use App\Http\Controllers\ConsultancyCountryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SuperadminAddController;
@@ -82,6 +83,12 @@ Route::prefix('/consultancy')->name('consultancy.')->group(function () {
         route::get('/viewBranch', [consultancyBranchController::class, 'viewBranch'])->name('viewBranch');
         route::get('/updateBranch', [consultancyBranchController::class, 'updateDetails'])->name('updateBranch');
         route::post('/submitBranch', [consultancyBranchController::class, 'submitBranch'])->name('submitBranch');
+
+        //country
+
+        route::get('/addCountry',[ConsultancyCountryController::class,'addCountry'])->name('addCountry');
+        route::post('/postCountry',[ConsultancyCountryController::class,'postCountry'])->name('postCountry');
+        route::get('/viewCountry',[ConsultancyCountryController::class,'viewCountry'])->name('viewCountry');
     });
 });
 
