@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SuperadminAddController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
+use App\Http\Controllers\GuidelinesController;
 
 use App\Http\Controllers\BranchDashboardController;
 
@@ -89,6 +90,10 @@ Route::prefix('/consultancy')->name('consultancy.')->group(function () {
         route::get('/addCountry',[ConsultancyCountryController::class,'addCountry'])->name('addCountry');
         route::post('/postCountry',[ConsultancyCountryController::class,'postCountry'])->name('postCountry');
         route::get('/viewCountry',[ConsultancyCountryController::class,'viewCountry'])->name('viewCountry');
+
+        //guidelines
+
+        route::get('/guidelines',[GuidelinesController::class,'guidelines'])->name('guidelines');
     });
 });
 

@@ -123,6 +123,14 @@
                         </a> </li>
                 </ul>
                 </li>
+
+                <li class="nav-item" id="guidelines"> <a href="{{route('consultancy.guidelines')}}" class="nav-link"> <i class="nav-icon bi bi-journals text-warning"></i>
+                    <p class="fw-bold">
+                  Guidelines
+                        {{-- <i class="nav-arrow bi bi-chevron-right"></i> --}}
+                    </p>
+                    </a>
+                </li>
     
             </ul>
         </nav>
