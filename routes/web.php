@@ -94,6 +94,9 @@ Route::prefix('/consultancy')->name('consultancy.')->group(function () {
         //guidelines
 
         route::get('/guidelines',[GuidelinesController::class,'guidelines'])->name('guidelines');
+        route::get('/guidelinesView',[GuidelinesController::class,'guidelinesView'])->name('guidelinesView');
+        route::get('/guidelinesAdd',[GuidelinesController::class,'guidelinesAdd'])->name('guidelinesAdd');
+        route::post('/guidelinesPost',[GuidelinesController::class,'guidelinesPost'])->name('guidelinesPost');
     });
 });
 

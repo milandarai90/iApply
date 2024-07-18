@@ -9,7 +9,7 @@
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-2 ms-3">
 
                 @foreach($country as $item)
-             <a href="hh" class="text-decoration-none text-light">
+             <a href="{{route('consultancy.guidelinesView')}}?uid={{Auth::user()->personalAccessTokens->first()->token}}&con_id={{Auth::user()->consultancy_id}}&country={{$item->id}}" class="text-decoration-none text-light">
                 <div class="col me-3 bg-success " id="showCountry">
                     <div class="p-5 text-center">
                         <span>{{$item->name}}</span>
