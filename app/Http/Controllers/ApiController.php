@@ -64,21 +64,24 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-        $creds = $request->only('email', 'password');
-        if (Auth::attempt($creds)) {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $response = [
-                'name' => $user->name,
-                'email' => $user->email,
-                'message' => 'Login is successfull.'
-            ];
-            return response()->json($response, 200);
+            $token = $user->createToken('Personal Access Token')->accessToken;
+
+            return response()->json([
+                'token' => $token->token,
+                'user' => $user->name,
+            ]);
         }
-        $response = [
-            'message' => 'Invalid email or password'
-        ];
-        return response()->json($response, 404);
+
+        return response()->json(['error' => 'Invalid email or password.'], 401);
     }
 
     public function resendOtp(Request $request)
@@ -111,6 +114,74 @@ class ApiController extends Controller
             return response()->json($response, 200);
         }
     }
+    public function home() {
+        if (Auth::check() && Auth::user()->role === 4) {
+            $consultancies = consultancy_infos::with('consultancyDetails', 'branch')->get();
+            $countries = country::with('country_to_consultancy')->get();
+            $home = [];
+    
+            if ($consultancies->isNotEmpty()) {
+                foreach ($consultancies as $consultancy) {
+                    $home[] = [
+                        'consultancy_id' => $consultancy->id,
+                        'consultancy_name' => $consultancy->consultancyDetails->name,
+                    ];
+                }
+            }
+    
+            if ($countries->isNotEmpty()) {
+                foreach ($countries as $country) {
+                    $home[] = [
+                        'country_id' => $country->id,
+                        'country_name' => $country->name,
+                    ];
+                }
+            }
+    
+            if (!empty($home)) {
+                return response()->json(['home_data' => $home]);
+            } else {
+                return response()->json(['message' => 'Data not found'], 404);
+            }
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    }
+    
+
+    // public function home(){
+    //     if(Auth::user() && auth::user()->role === 4){
+    //         $consultancies = consultancy_infos::all()
+    //         ->with('consultancyDetails','branch')
+    //         ->get();
+    //         $countries = country::all()
+    //         ->with('country_to_consultancy')
+    //         ->get();
+    //         $home = [];
+    //         if($consultancies->isNotEmpty()){
+    //             foreach($consultancies as $consultancies){
+    //             $consultancyHome[] = [
+    //               'consultancy_id'=>$consultancies->id,
+    //                 'consultancy_name'=> $consultancies->consultancyDetails->name,
+    //               ];
+    //               array_push($home,$consultancyHome);
+    //           }
+    //        }
+    //        if($countries->isNotEmpty()){
+    //             foreach($countries as $countries){
+    //             $countryHome[]=[
+    //                 'country_id'=>$countries->id,
+    //                 'country_name'=>$countries->name,
+    //             ];
+    //             array_push($home,$countryHome);
+    //         }
+    //         return response()->json(['home_data'=>$home]);
+    //        }else{
+    //         $response = ['message' => 'Data not found'];
+    //         return response()->json($response, 404);
+    //        }
+    //     }
+    // }
 }
 
 
