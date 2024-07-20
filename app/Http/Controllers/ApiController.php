@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use App\Models\consultancy_info; // Correct import statement
+use App\Models\country; // Correct import statement
 use Carbon\Carbon;
 use App\Models\Otp;
 use App\Mail\SendOtpMail; // Import the SendOtpMail class
@@ -66,22 +68,22 @@ class ApiController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string',
+            'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
-            $token = $user->createToken('Personal Access Token')->accessToken;
-
-            return response()->json([
-                'token' => $token->token,
-                'user' => $user->name,
-            ]);
+            $token = $user->createToken('Personal Access Token')->plainTextToken;
+            return response()->json(['token' => $token ,'email'=>$user->email], 200);
         }
 
-        return response()->json(['error' => 'Invalid email or password.'], 401);
+        return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+    public function logout(Request $request)
+    {
+        $user = Auth::guard('sanctum')->user();
+        $user->currentAccessToken()->delete();
+        return response()->json(['message' => 'Logged out successfully'], 200);
     }
 
     public function resendOtp(Request $request)
@@ -114,74 +116,49 @@ class ApiController extends Controller
             return response()->json($response, 200);
         }
     }
-    public function home() {
-        if (Auth::check() && Auth::user()->role === 4) {
-            $consultancies = consultancy_infos::with('consultancyDetails', 'branch')->get();
-            $countries = country::with('country_to_consultancy')->get();
-            $home = [];
-    
-            if ($consultancies->isNotEmpty()) {
-                foreach ($consultancies as $consultancy) {
-                    $home[] = [
-                        'consultancy_id' => $consultancy->id,
-                        'consultancy_name' => $consultancy->consultancyDetails->name,
-                    ];
+    public function home()
+    {
+        // Check if the user is authenticated
+        if (Auth::guard('sanctum')->check()) {
+            $user = Auth::guard('sanctum')->user();
+
+            if ($user->role == 4) {
+                $consultancies = consultancy_info::with('consultancyDetails', 'branch')->get();
+                $countries = Country::with('country_to_consultancy')->get();
+                $homeData = []; // Properly initialize the homeData array
+
+                if ($consultancies->isNotEmpty()) {
+                    foreach ($consultancies as $consultancy) {
+                        $homeItem = [
+                            'consultancy_id' => $consultancy->id,
+                            'consultancy_name' => $consultancy->consultancyDetails->name,
+                            'consultancy_email'=>$consultancy->consultancyDetails->email,
+                        ];
+                        array_push($homeData, $homeItem);
+                    }
                 }
-            }
-    
-            if ($countries->isNotEmpty()) {
-                foreach ($countries as $country) {
-                    $home[] = [
-                        'country_id' => $country->id,
-                        'country_name' => $country->name,
-                    ];
+                $countryData = [];
+
+                if ($countries->isNotEmpty()) {
+                    foreach ($countries as $country) {
+                        $countryItem = [
+                            'country_id' => $country->id,
+                            'country_name' => $country->name,
+                        ];
+                        array_push($countryData, $countryItem);
+                    }
                 }
-            }
-    
-            if (!empty($home)) {
-                return response()->json(['home_data' => $home]);
+
+                if (!empty($homeData)) {
+                    return response()->json(['consultancy_data' => $homeData ,'country_data'=> $countryData]);
+                } else {
+                    return response()->json(['message' => 'Data not found'], 404);
+                }
             } else {
-                return response()->json(['message' => 'Data not found'], 404);
+                return response()->json(['message' => 'Unauthorized'], 403);
             }
         } else {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
     }
-    
-
-    // public function home(){
-    //     if(Auth::user() && auth::user()->role === 4){
-    //         $consultancies = consultancy_infos::all()
-    //         ->with('consultancyDetails','branch')
-    //         ->get();
-    //         $countries = country::all()
-    //         ->with('country_to_consultancy')
-    //         ->get();
-    //         $home = [];
-    //         if($consultancies->isNotEmpty()){
-    //             foreach($consultancies as $consultancies){
-    //             $consultancyHome[] = [
-    //               'consultancy_id'=>$consultancies->id,
-    //                 'consultancy_name'=> $consultancies->consultancyDetails->name,
-    //               ];
-    //               array_push($home,$consultancyHome);
-    //           }
-    //        }
-    //        if($countries->isNotEmpty()){
-    //             foreach($countries as $countries){
-    //             $countryHome[]=[
-    //                 'country_id'=>$countries->id,
-    //                 'country_name'=>$countries->name,
-    //             ];
-    //             array_push($home,$countryHome);
-    //         }
-    //         return response()->json(['home_data'=>$home]);
-    //        }else{
-    //         $response = ['message' => 'Data not found'];
-    //         return response()->json($response, 404);
-    //        }
-    //     }
-    // }
 }
-
-

@@ -4,7 +4,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <div class="collapse navbar-collapse col-8 d-flex justify-content-center" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse col-7 d-flex justify-content-center" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
        <h6 class="text-light fw-bold mt-2"> {{Auth::user()->name}}
         @if(Auth::user()->role == 3)
@@ -14,7 +14,8 @@
        </h6>
       </ul>                 
     </div>
-    <div class="col-2 d-flex justify-content-center">
-        <a href="{{route('logout')}}" class="d-flex justify-conteny-end text-decoration-none"><li class="btn btn-primary border border-3 border-primary fw-bold">Logout</li></a>
+    <div class="col-3 d-flex justify-content-center">
+      <a href="{{route('profile')}}" class="d-flex justify-conteny-end text-decoration-none"><li class="btn btn-success border border-3 border-success fw-bold me-2">Profile</li></a>
+      <a href="{{route('logout')}}" class="d-flex justify-conteny-end text-decoration-none"><li class="btn btn-primary border border-3 border-primary fw-bold">Logout</li></a>
     </div>
   </nav>

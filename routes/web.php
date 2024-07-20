@@ -10,6 +10,7 @@ use App\Http\Controllers\SuperadminAddController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
 use App\Http\Controllers\GuidelinesController;
+use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\BranchDashboardController;
 
@@ -40,6 +41,9 @@ route::post('/otp_resend', [AuthController::class, 'otp_resend'])->name('otp_res
 
 route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('loginCheck');
 route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+route::get('/addProfile', [ProfileController::class, 'addProfile'])->name('addProfile');
+route::post('/postProfile', [ProfileController::class, 'postProfile'])->name('postProfile');
 
 
 Route::prefix('/superadmin')->name('superadmin.')->group(function () {

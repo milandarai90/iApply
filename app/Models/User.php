@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -94,5 +95,8 @@ class User extends Authenticatable
     public function personalAccessTokens(): HasMany
     {
         return $this->hasMany(PersonalAccessToken::class, 'tokenable_id');
+    }
+    public function userToProfileImage(){
+        return $this->hasOne(ProfileImage::class,'user_id');
     }
 }
