@@ -10,7 +10,7 @@ class ProfileController extends Controller
 {
     public function profile(){
        $user = ProfileImage::where('user_id',Auth::user()->id)
-       ->latest()->get();
+       ->latest()->first();
     //    dd($user);
        return view('profile',compact('user'));
     }

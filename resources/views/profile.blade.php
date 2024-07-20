@@ -15,21 +15,25 @@
     </div>
     <div class="d-flex justify-content-center">
    <div class=" mt-2  col-6 border border-secondary p-3">
+       <div>
+           <h5 class="text-center mb-3 fw-bold">Profile</h5>
+       </div>
     <div class="d-flex justify-content-center mt-2">
        <div>
         <div class="d-flex justify-content-center">
-           @foreach ($user as $item)
-           <img src="{{asset('storage/'.$item->image_path)}}" class="border border-secondary border-2" style="height: 120px; width:120px; border-radius: 50%;" alt="profile.img">
-           @endforeach
+        @if($user)
+           <img src="{{asset('storage/'.$user->image_path)}}" class="border border-secondary border-2" style="height: 140px; width:180px; border-radius: 50%;" alt="profile.img">
+           @endif
         </div><br>
        <div class=" ">
-        <a href="{{route('addProfile')}}" class="float-start"><small>insert</small></a>
+        <a href="{{route('addProfile')}}" class="float-start"><small>insert/change</small></a>
         <a href="" class="float-end text-danger"><small>delete</small></a>
        </div>
        </div>
     </div>
-    <div>
-        <span>{{Auth::user()->name}}</span>
+    <hr>
+    <div class="d-flex justify-content-center">
+        <span class=" fw-bold">{{Auth::user()->name}}</span>
     </div>
     <hr>
         <div class="mt-2">
