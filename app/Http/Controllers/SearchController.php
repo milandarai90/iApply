@@ -95,12 +95,12 @@ class SearchController extends Controller
                     ];
                 });
     
-                return response()->json(['consultancy' => $consultancyData]);
+                return response()->json(['consultancy_data' => $consultancyData]);
             }
     
     
         // Search in User with role '3' (Branch)
-         // Search in User with role '3' (Branch)
+
          $branch = User::with('consultancy', 'userToProfileImage', 'userBranch')
          ->where('role', '3')
          ->where(function ($q) use ($query) {
@@ -109,57 +109,69 @@ class SearchController extends Controller
          })
          ->get();
 
-     if ($branch->isNotEmpty()) {
-         $branchData = $branch->map(function ($item) {
-             $courses = Course::where('consultancy_id', $item->consultancy_id)
-                 ->where('branch_id', $item->branch_id)
-                 ->with('course')
-                 ->get()
-                 ->map(function ($course) use ($item) {
-                     $classes = Classroom::where('course_id', $course->id)
-                         ->where('branch_id', $item->branch_id)
-                         ->with('course')
-                         ->get();
-
-                     $classCounts = $classes->count();
-
-                     $classDetails = $classes->map(function ($classData) use ($classCounts) {
-                         return [
-                             'id' => $classData->id,
-                             'class_name' => $classData->class_name,
-                             'students_number' => $classCounts,
-                             'seat_numbers' => $classData->seats_number,
-                             'status' => $classData->status,
-                             'start_time' => $classData->starting_time,
-                             'end_time' => $classData->ending_time,
-                             'start_date' => $classData->starting_date,
-                             'end_date' => $classData->ending_date,
-                         ];
-                     });
-
-                     return [
-                         'id' => $course->id,
-                         'course_title' => $course->course,
-                         'class_details' => $classDetails->isNotEmpty() ? $classDetails : null,
-                     ];
-                 });
-
-             return [
-                 'id' => $item->id,
-                 'name' => $item->name,
-                 'email' => $item->email,
-                 'phone_number' => $item->phone,
-                 'photo' => $item->userToProfileImage ? url('storage/' . $item->userToProfileImage->image_path) : null,
-                 'district' => $item->u_district,
-                 'municipality' => $item->u_municipality,
-                 'ward' => $item->u_ward,
-                 'course_details' => $courses->isNotEmpty() ? $courses : null,
-             ];
-         });
-
-         return response()->json(['branch' => $branchData]);
-     }
-
+         if ($branch->isNotEmpty()) {
+            $branchData = $branch->map(function ($item) {
+                $courses = Course::where('consultancy_id', $item->consultancy_id)
+                    ->where('branch_id', $item->branch_id)
+                    ->with('course')
+                    ->get()
+                    ->map(function ($course) use ($item) {
+                        $classes = Classroom::where('course_id', $course->id)
+                            ->where('branch_id', $item->branch_id)
+                            ->with('course')
+                            ->get();
+        
+                        $classCounts = $classes->count();
+        
+                        $classDetails = $classes->map(function ($classData) use ($classCounts, $item) {
+        
+                            return [
+                                'id' => $classData->id,
+                                'class_name' => $classData->class_name,
+                                'students_number' => $classCounts,
+                                'seat_numbers' => $classData->seats_number,
+                                'status' => $classData->status,
+                                'start_time' => $classData->starting_time,
+                                'end_time' => $classData->ending_time,
+                                'start_date' => $classData->starting_date,
+                                'end_date' => $classData->ending_date,
+                            ];
+                        });
+        
+                        return [
+                            'id' => $course->id,
+                            'course_title' => $course->course,
+                            'class_details' => $classDetails->isNotEmpty() ? $classDetails : null,
+                        ];
+                    });
+        
+                $consultancies = consultancy_info::where('id', $item->consultancy_id)
+                    ->with('consultancyDetails')
+                    ->get()
+                    ->map(function ($consultancy) {
+                        return [
+                            'id' => $consultancy->consultancyDetails->id,
+                            'name' => $consultancy->consultancyDetails->name,
+                        ];
+                    });
+        
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'email' => $item->email,
+                    'phone_number' => $item->phone,
+                    'photo' => $item->userToProfileImage ? url('storage/' . $item->userToProfileImage->image_path) : null,
+                    'district' => $item->u_district,
+                    'municipality' => $item->u_municipality,
+                    'ward' => $item->u_ward,
+                    'course_details' => $courses->isNotEmpty() ? $courses : null,
+                    'consultancy_data' => $consultancies->isNotEmpty() ? $consultancies : null,
+                ];
+            });
+        
+            return response()->json(['branch' => $branchData]);
+        }
+        
             
         // Search in Country
         $country = Country::with('country_to_consultancy', 'country_to_guidelines')
