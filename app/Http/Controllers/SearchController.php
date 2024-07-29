@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Consultancy_info;
 use App\Models\Consultancy_branch;
 use App\Models\Country;
+use App\Models\Classroom;
 use App\Models\Course;
 
 class SearchController extends Controller
@@ -32,10 +33,42 @@ class SearchController extends Controller
             ->get();
             if ($consultancy->isNotEmpty()) {
                 $consultancyData = $consultancy->map(function ($user) {
+
                     $branches = consultancy_branch::where('consultancy_id', $user->consultancy_id)
                     ->with('userBranch.userToProfileImage')
                     ->get()
-                    ->map(function ($branch) {
+                    ->map(function ($branch) use ($user) {
+                        $courses = Course::where('consultancy_id', $user->consultancy_id)
+                            ->where('branch_id', $branch->id)
+                            ->get()
+                            ->map(function($course) use ($branch) {
+
+                                $classCount = Classroom::where('branch_id',$branch->id)
+                                ->where('course_id',$course->id)
+                                ->count();
+
+                                $classes = Classroom::where('branch_id',$branch->id)
+                                ->where('course_id',$course->id)
+                                ->get()
+                                ->map(function($class) use ($classCount) {
+                                    return[
+                                        'id'=>$class->id,
+                                        'class_name'=>$class->class_name,
+                                        'students_number' =>$classCount,
+                                        'seat_numbers'=>$class->seats_number,
+                                        'status'=>$class->status,
+                                        'start_time'=>$class->starting_time,
+                                        'end_time'=>$class->ending_time,
+                                        'start_date'=>$class->starting_date,
+                                        'end_date'=>$class->ending_date,
+                                    ];
+                                });
+                                return [
+                                    'id' => $course->id,
+                                    'course_title'=>$course->course,
+                                    'classes' => $classes->isNotEmpty() ? $classes : null
+                                ];
+                            });
                         return [
                             'id' => $branch->userBranch->id,
                             'name' => $branch->userBranch->name,
@@ -45,6 +78,7 @@ class SearchController extends Controller
                             'district' => $branch->userBranch->u_district,
                             'municipality' => $branch->userBranch->u_municipality,
                             'ward' => $branch->userBranch->u_ward,
+                            'course' => $courses->isNotEmpty() ? $courses :null,
                         ];
                     });
     
@@ -57,7 +91,7 @@ class SearchController extends Controller
                         'district' => $user->u_district,
                         'municipality' => $user->u_municipality,
                         'ward' => $user->u_ward,
-                        'branch_details' => $branches,
+                        'branch_details' => $branches->isNotEmpty() ? $branches :null,
                     ];
                 });
     
@@ -66,18 +100,34 @@ class SearchController extends Controller
     
     
         // Search in User with role '3' (Branch)
-        $branch = User::with('userBranch')
+        $branch = User::with('consultancy', 'userToProfileImage','userBranch')
             ->where('role', '3')
             ->where(function($q) use ($query) {
                 $q->where('name', 'LIKE', "%{$query}%")
                   ->orWhere('email', 'LIKE', "%{$query}%");
             })
             ->get();
+            if($branch->isNotEmpty()){
+               
+            $branchData = $branch->map(function($item){
 
-        if ($branch->isNotEmpty()) {
-            return response()->json(['branch' => $branch]);
-        }
+                return[
+                        'id'=> $item->id,
+                        'name' => $item->name,
+                        'email' => $item->email,
+                        'phone_number' => $item->phone,
+                        'photo' => $item->userToProfileImage ? url('storage/' . $item->userToProfileImage->image_path) : null,
+                        'district' => $item->u_district,
+                        'municipality' => $item->u_municipality,
+                        'ward' => $item->u_ward,
+                ];
+            });
 
+                return response()->json(['branch' => $branchData]);
+            }
+    
+           
+            
         // Search in Country
         $country = Country::with('country_to_consultancy', 'country_to_guidelines')
             ->where('name', 'LIKE', "%{$query}%")
