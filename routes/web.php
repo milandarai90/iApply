@@ -11,6 +11,7 @@ use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\SuperadminUsersControllers;
 use App\Http\Controllers\GuidelinesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NotificationController;
 
 use App\Http\Controllers\BranchDashboardController;
 
@@ -70,6 +71,9 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
         route::post('/postBranch', [SuperadminAddController::class, 'postBranch'])->name('postBranch');
         route::get('/viewBranch', [SuperadminUsersControllers::class, 'viewBranch'])->name('viewBranch');
         route::post('/updateBranch', [SuperadminUsersControllers::class, 'updateBranch'])->name('updateBranch');
+
+        //notification..........
+        route::get('notification',[NotificationController::class,'notification'])->name('notification');
 
 
     });

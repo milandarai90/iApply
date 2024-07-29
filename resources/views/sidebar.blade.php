@@ -53,6 +53,13 @@
                         </a> </li>
                 </ul>
                 </li>
+                <li class="nav-item">       
+                    <a href="{{route('superadmin.notification')}}" class="nav-link" id="Notification">
+                        <i class="nav-icon bi bi-bell text-warning"></i>
+                        <p class="fw-bold">Notification</p>
+                    </a>
+                </a>
+            </li>
                 <li class="nav-item" id=""> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning"></i>
                     <p class="fw-bold">
                    ###

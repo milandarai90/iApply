@@ -79,6 +79,7 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
+  
     public function logout(Request $request)
     {
         $user = Auth::guard('sanctum')->user();
