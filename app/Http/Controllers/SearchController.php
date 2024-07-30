@@ -95,7 +95,7 @@ class SearchController extends Controller
                     ];
                 });
     
-                return response()->json(['consultancy_data' => $consultancyData]);
+                return response()->json(['consultancy_details' => $consultancyData]);
             }
     
     
@@ -152,6 +152,13 @@ class SearchController extends Controller
                         return [
                             'id' => $consultancy->consultancyDetails->id,
                             'name' => $consultancy->consultancyDetails->name,
+                            'phone_number'=>$consultancy->consultancyDetails->phone,
+                            'email'=>$consultancy->consultancyDetails->email,
+                            'photo' => $consultancy->consultancyDetails->userToProfileImage ? url('storage/' . $consultancy->consultancyDetails->userToProfileImage->image_path) : null,
+                            'district' => $consultancy->consultancyDetails->u_district,
+                            'municipality' => $consultancy->consultancyDetails->u_municipality,
+                            'ward' => $consultancy->consultancyDetails->u_ward,
+
                         ];
                     });
         
@@ -165,7 +172,7 @@ class SearchController extends Controller
                     'municipality' => $item->u_municipality,
                     'ward' => $item->u_ward,
                     'course_details' => $courses->isNotEmpty() ? $courses : null,
-                    'consultancy_data' => $consultancies->isNotEmpty() ? $consultancies : null,
+                    'consultancy_details' => $consultancies->isNotEmpty() ? $consultancies : null,
                 ];
             });
         
@@ -174,24 +181,90 @@ class SearchController extends Controller
         
             
         // Search in Country
-        $country = Country::with('country_to_consultancy', 'country_to_guidelines')
-            ->where('name', 'LIKE', "%{$query}%")
-            ->get();
+        // $country = Country::with('country_to_consultancy', 'country_to_guidelines')
+        //     ->where('name', 'LIKE', "%{$query}%")
+        //     ->get();
 
-        if ($country->isNotEmpty()) {
-            return response()->json(['country' => $country]);
-        }
+        // if ($country->isNotEmpty()) {
+        //     return response()->json(['country' => $country]);
+        // }
 
         // Search in Course
-        $course = Course::with('branchCourse', 'course')
+        $courses = Course::with('branchCourse', 'course')
             ->where('course', 'LIKE', "%{$query}%")
             ->get();
 
-        if ($course->isNotEmpty()) {
-            return response()->json(['course' => $course]);
+            if ($courses->isNotEmpty()) {
+                $courseData = $courses->map(function ($courseDetails) {
+        
+                    $classes = Classroom::where('course_id', $courseDetails->id)
+                        ->where('branch_id', $courseDetails->branch_id)
+                        ->with('course')
+                        ->get();
+        
+                    $classCounts = $classes->count();
+        
+                    // Corrected use statement to remove $courseDetails, as it is not used in the closure
+                    $classDetails = $classes->map(function ($classData) use ($classCounts) {
+                        return [
+                            'id' => $classData->id,
+                            'class_name' => $classData->class_name,
+                            'students_number' => $classCounts,
+                            'seat_numbers' => $classData->seats_number,
+                            'status' => $classData->status,
+                            'start_time' => $classData->starting_time,
+                            'end_time' => $classData->ending_time,
+                            'start_date' => $classData->starting_date,
+                            'end_date' => $classData->ending_date,
+                        ];
+                    });
+        
+                    $branchData = Consultancy_branch::where('id', $courseDetails->branch_id)
+                        ->with('branch', 'userBranch')
+                        ->get()
+                        ->map(function ($branchDetails) {
+                            return [
+                                'id' => $branchDetails->userBranch->id,
+                                'name' => $branchDetails->userBranch->name,
+                                'email' => $branchDetails->userBranch->email,
+                                'phone_number' => $branchDetails->userBranch->phone,
+                                'photo' => $branchDetails->userBranch->userToProfileImage ? url('storage/' . $branchDetails->userBranch->userToProfileImage->image_path) : null,
+                                'district' => $branchDetails->userBranch->u_district,
+                                'municipality' => $branchDetails->userBranch->u_municipality,
+                                'ward' => $branchDetails->userBranch->u_ward,
+                            ];
+                        });
+        
+                    // Changed from $branchDetails to correct scope of $courseDetails
+                    $consultancyData = Consultancy_info::where('id', $courseDetails->consultancy_id)
+                        ->with('consultancyDetails')
+                        ->get()
+                        ->map(function ($consultancy) {
+                            return [
+                                'id' => $consultancy->consultancyDetails->id,
+                                'name' => $consultancy->consultancyDetails->name,
+                                'phone_number' => $consultancy->consultancyDetails->phone,
+                                'email' => $consultancy->consultancyDetails->email,
+                                'photo' => $consultancy->consultancyDetails->userToProfileImage ? url('storage/' . $consultancy->consultancyDetails->userToProfileImage->image_path) : null,
+                                'district' => $consultancy->consultancyDetails->u_district,
+                                'municipality' => $consultancy->consultancyDetails->u_municipality,
+                                'ward' => $consultancy->consultancyDetails->u_ward,
+                            ];
+                        });
+        
+                    return [
+                        'id' => $courseDetails->id,
+                        'course_title' => $courseDetails->course,
+                        'class_details' => $classDetails->isNotEmpty() ? $classDetails : null,
+                        'branch_details' => $branchData->isNotEmpty() ? $branchData : null,
+                        'consultancy_details' => $consultancyData->isNotEmpty() ? $consultancyData : null,
+                    ];
+                });
+        
+                return response()->json(['course' => $courseData]);
+            }
+        
+            // If no results found
+            return response()->json(['message' => 'No Data Found.']);
         }
-
-        // If no results found
-        return response()->json(['message' => 'No Data Found.']);
-    }
 }
