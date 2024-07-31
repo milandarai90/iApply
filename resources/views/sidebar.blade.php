@@ -60,20 +60,20 @@
                     </a>
                 </a>
             </li>
-                <li class="nav-item" id=""> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning"></i>
+                <li class="nav-item" id="country"> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning"></i>
                     <p class="fw-bold">
-                   ###
+                   Country
                     <i class="nav-arrow bi bi-chevron-right"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" id="###">
+                <ul class="nav nav-treeview" id="addCountry">
                     <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-building-add"></i>
-                            <p>###</p>
+                            <p>Add</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="###">
+                <ul class="nav nav-treeview" id="viewCountry">
                     <li class="nav-item" > <a href="#" class="nav-link" > <i class="nav-icon bi bi-house-add"></i>
-                            <p>###<p>
+                            <p>View<p>
                         </a> </li>
                 </ul>
                 </li>

@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\consultancy_info; // Correct import statement
-use App\Models\country; // Correct import statement
+use App\Models\country; 
+use App\Models\course; 
+use App\Models\classroom; 
+use App\Models\country_guidelines; 
 use Carbon\Carbon;
 use App\Models\Otp;
 use App\Mail\SendOtpMail; // Import the SendOtpMail class
@@ -134,12 +137,77 @@ class ApiController extends Controller
                     ->get()
                     ->map(function($branchDetails) use ($consultancyDetails){
 
+                        $course = course::where('consultancy_id',$branchDetails->consultancy_id)
+                        ->where('branch_id',$branchDetails->id)
+                        ->with('course')
+                        ->get()
+                        ->map(function ($course) use ($branchDetails){
+
+                            $classDetails = classroom::where('branch_id',$branchDetails->id)
+                            ->where('course_id',$course->id)
+                            ->get();
+
+                            $classCount = $classDetails->count();
+
+                           $classDetails= $classDetails->map(function ($class) use ($course , $classCount){
+
+                                return[
+                                    'id'=>$class->id,
+                                    'class_name'=>$class->class_name,
+                                    'students_number' =>$classCount,
+                                    'seat_numbers'=>$class->seats_number,
+                                    'status'=>$class->status,
+                                    'start_time'=>$class->starting_time,
+                                    'end_time'=>$class->ending_time,
+                                    'start_date'=>$class->starting_date,
+                                    'end_date'=>$class->ending_date,
+                                ];
+                            });
+
+                            return[
+                                'id' => $course->id,
+                                'course_title'=>$course->course,
+                                'class_details' => $classDetails->isNotEmpty() ? $classDetails : null
+                            ];
+                        });
+
                         return[
                             'id'=>$branchDetails->id,
                             'name'=>$branchDetails->userBranch->name,
+                            'email'=>$branchDetails->userBranch->email,
+                            'phone'=>$branchDetails->userBranch->phone,
+                            'u_district'=>$branchDetails->userBranch->u_district,
+                            'u_municipality'=>$branchDetails->userBranch->u_municipality,
+                            'u_ward'=>$branchDetails->userBranch->u_ward,
+                            'photo' => $branchDetails->userBranch->userToProfileImage ?  url(asset('storage/'.$branchDetails->userBranch->userToProfileImage->image_path)):null,
+                            'course_details' => $course,
                         ];
 
                     });
+
+
+                    $country = country::where('consultancy_id',$consultancyDetails->id)
+                    ->with('country_to_guidelines')
+                    ->get()
+                    ->map(function($countryData){
+
+                        $guidelines = country_guidelines::where('consultancy_id',$countryData->consultancy_id)
+                        ->where('country_id',$countryData->id)
+                        ->get()
+                        ->map(function ($guide) use ($countryData){
+
+                            return[
+                               'process'=>$guide->guidelines
+                            ];
+                        });
+
+                        return[
+                            'country'=>$countryData->name,
+                            'map'=>$countryData->country_map ? url('storage/'. $countryData->country_map) : null,
+                            'guidelines'=> $guidelines->isNotEmpty() ?$guidelines:null,
+                        ];
+                    });
+
 
                     return [
                         'id'=>$consultancyDetails->id,
@@ -151,6 +219,8 @@ class ApiController extends Controller
                         'u_ward'=>$consultancyDetails->consultancyDetails->u_ward,
                         'photo' => $consultancyDetails->consultancyDetails->userToProfileImage ?  url(asset('storage/'.$consultancyDetails->consultancyDetails->userToProfileImage->image_path)):null,
                         'branch_details'=> $branch,
+                        'country_details'=>$country->isNotEmpty() ? $country :null,
+
                     ];
                 });
                 return response()->json(['consultancy_details'=> $consultancy]);
