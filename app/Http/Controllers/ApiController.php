@@ -12,6 +12,7 @@ use App\Models\country; // Correct import statement
 use Carbon\Carbon;
 use App\Models\Otp;
 use App\Mail\SendOtpMail; // Import the SendOtpMail class
+use App\Models\consultancy_branch;
 
 class ApiController extends Controller
 {
@@ -123,41 +124,38 @@ class ApiController extends Controller
         if (Auth::guard('sanctum')->check()) {
             $user = Auth::guard('sanctum')->user();
 
-            if ($user->role == 4) {
-                $consultancies = consultancy_info::with('consultancyDetails', 'branch')->get();
-                $countries = Country::with('country_to_consultancy')->get();
-                $homeData = []; // Properly initialize the homeData array
+            if($user->role ==4){
+                $consultancy = consultancy_info::with('consultancyDetails','consultancyDetails.userToProfileImage')
+                ->get()
+                ->map(function($consultancyDetails){
 
-                if ($consultancies->isNotEmpty()) {
-                    foreach ($consultancies as $consultancy) {
-                        $homeItem = [
-                            'consultancy_id' => $consultancy->id,
-                            'consultancy_name' => $consultancy->consultancyDetails->name,
-                            'consultancy_email'=>$consultancy->consultancyDetails->email,
+                    $branch = consultancy_branch::where('consultancy_id',$consultancyDetails->id)
+                    ->with('userBranch','userBranch.userToProfileImage','classBranch','branchCourse')
+                    ->get()
+                    ->map(function($branchDetails) use ($consultancyDetails){
+
+                        return[
+                            'id'=>$branchDetails->id,
+                            'name'=>$branchDetails->userBranch->name,
                         ];
-                        array_push($homeData, $homeItem);
-                    }
-                }
-                $countryData = [];
 
-                if ($countries->isNotEmpty()) {
-                    foreach ($countries as $country) {
-                        $countryItem = [
-                            'country_id' => $country->id,
-                            'country_name' => $country->name,
-                        ];
-                        array_push($countryData, $countryItem);
-                    }
-                }
+                    });
 
-                if (!empty($homeData)) {
-                    return response()->json(['consultancy_data' => $homeData ,'country_data'=> $countryData]);
-                } else {
-                    return response()->json(['message' => 'Data not found'], 404);
-                }
-            } else {
-                return response()->json(['message' => 'Unauthorized'], 403);
+                    return [
+                        'id'=>$consultancyDetails->id,
+                        'name'=>$consultancyDetails->consultancyDetails->name,
+                        'email'=>$consultancyDetails->consultancyDetails->email,
+                        'phone'=>$consultancyDetails->consultancyDetails->phone,
+                        'u_district'=>$consultancyDetails->consultancyDetails->u_district,
+                        'u_municipality'=>$consultancyDetails->consultancyDetails->u_municipality,
+                        'u_ward'=>$consultancyDetails->consultancyDetails->u_ward,
+                        'photo' => $consultancyDetails->consultancyDetails->userToProfileImage ?  url(asset('storage/'.$consultancyDetails->consultancyDetails->userToProfileImage->image_path)):null,
+                        'branch_details'=> $branch,
+                    ];
+                });
+                return response()->json(['consultancy_details'=> $consultancy]);
             }
+
         } else {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
