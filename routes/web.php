@@ -12,13 +12,10 @@ use App\Http\Controllers\SuperadminUsersControllers;
 use App\Http\Controllers\GuidelinesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
-
+use App\Http\Controllers\GeneralCountryController;
 use App\Http\Controllers\BranchDashboardController;
-
 use App\Http\Controllers\ConsultancyDashboardController;
-
 use App\Http\Controllers\UsersHomepageController;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,6 +71,11 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
 
         //notification..........
         route::get('notification',[NotificationController::class,'notification'])->name('notification');
+
+        //general Country
+
+        route::get('/addGeneralCountry', [GeneralCountryController::class, 'addGeneralCountry'])->name('addGeneralCountry');
+
 
 
     });
