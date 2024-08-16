@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use App\Models\Otp;
 use App\Mail\SendOtpMail; // Import the SendOtpMail class
 use App\Models\consultancy_branch;
+use App\Models\generalCountry;
+use App\Models\generalCountryGuidelines;
 
 class ApiController extends Controller
 {
@@ -223,7 +225,28 @@ class ApiController extends Controller
 
                     ];
                 });
-                return response()->json(['consultancy_details'=> $consultancy]);
+                $generalCountry = generalCountry::get()
+                ->map(function ($generalCountryDetails){
+                    
+                    $generalCountryGuidelines = generalCountryGuidelines::where('generalCountry_id',$generalCountryDetails->id)
+                    ->get()
+                    ->map(function ($guidelines) use ($generalCountryDetails){
+
+                        return[
+                            'id'=>$guidelines->id,
+                            'Guidelines'=> $guidelines->guidelines,
+                        ];
+                    });
+
+                    return[
+                        'id'=> $generalCountryDetails->id,
+                        'country'=>$generalCountryDetails->name,
+                        'map'=> url(asset('storage/'.$generalCountryDetails->map)),
+                        'guidelines'=>$generalCountryGuidelines,
+                    ];
+
+                } );
+                return response()->json(['consultancy_details'=> $consultancy,'general_country'=>$generalCountry]);
             }
 
         } else {

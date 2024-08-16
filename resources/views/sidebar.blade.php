@@ -67,30 +67,12 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview" id="addGeneralCountry">
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-building-add"></i>
-                            <p>Add</p>
-                        </a> </li>
-                </ul>
-                <ul class="nav nav-treeview" id="viewGeneralCountry">
-                    <li class="nav-item" > <a href="#" class="nav-link" > <i class="nav-icon bi bi-house-add"></i>
-                            <p>View</p>
-                        </a> </li>
-                </ul>
-                </li>
-
-                <li class="nav-item" id="generalCountryGuidelines"> <a href="#" class="nav-link"> <i class="nav-icon bi-plus-square text-warning"></i>
-                    <p class="fw-bold">
-                   Guidelines
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" id="addGeneralCountryGuidelines">
                     <li class="nav-item"> <a href="{{route('superadmin.addGeneralCountry')}}" class="nav-link"> <i class="nav-icon bi bi-building-add"></i>
                             <p>Add</p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="viewGeneralCountryGuidelines">
-                    <li class="nav-item" > <a href="#" class="nav-link" > <i class="nav-icon bi bi-house-add"></i>
+                <ul class="nav nav-treeview" id="viewGeneralCountry">
+                    <li class="nav-item" > <a href="{{route('superadmin.viewGeneralCountry')}}" class="nav-link" > <i class="nav-icon bi bi-house-add"></i>
                             <p>View</p>
                         </a> </li>
                 </ul>

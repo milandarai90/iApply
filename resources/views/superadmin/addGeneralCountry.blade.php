@@ -17,7 +17,7 @@
               @endif
         </div>
     <div class="me-2 ms-2 d-flex justify-content-center" >
-        <form action="#" method="POST" class="p-4 border border-2 w-50" style="border-radius: 3%" enctype="multipart/form-data">
+        <form action="{{route('superadmin.postGeneralCountry')}}" method="POST" class="p-4 border border-2 w-50" style="border-radius: 3%" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label for="name">Country Name</label><br>

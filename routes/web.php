@@ -16,6 +16,7 @@ use App\Http\Controllers\GeneralCountryController;
 use App\Http\Controllers\BranchDashboardController;
 use App\Http\Controllers\ConsultancyDashboardController;
 use App\Http\Controllers\UsersHomepageController;
+use App\Http\Controllers\generalCountryGuidelinesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,7 +75,14 @@ Route::prefix('/superadmin')->name('superadmin.')->group(function () {
 
         //general Country
 
-        route::get('/addGeneralCountry', [GeneralCountryController::class, 'addGeneralCountry'])->name('addGeneralCountry');
+        route::get('/addGeneralCountry', [GeneralCountryController::class, 'addGeneralCountry'])->name('addGeneralCountry');    
+        route::post('/postGeneralCountry', [GeneralCountryController::class, 'postGeneralCountry'])->name('postGeneralCountry');
+        route::get('/viewGeneralCountry', [GeneralCountryController::class, 'viewGeneralCountry'])->name('viewGeneralCountry');
+
+        //generalCountryGuidelines
+        route::get('/addGeneralCountryGuidelines',[generalCountryGuidelinesController::class,'addGeneralCountryGuidelines'])->name('addGeneralCountryGuidelines');
+        route::post('/postGeneralCountryGuidelines',[generalCountryGuidelinesController::class,'postGeneralCountryGuidelines'])->name('postGeneralCountryGuidelines');
+        route::get('/viewGeneralCountryGuidelines',[generalCountryGuidelinesController::class,'viewGeneralCountryGuidelines'])->name('viewGeneralCountryGuidelines');
 
 
 
