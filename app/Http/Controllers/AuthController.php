@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SendOtpMail;
 use App\Models\Otp;
-use App\Models\user;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
