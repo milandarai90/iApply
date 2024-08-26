@@ -99,4 +99,7 @@ class User extends Authenticatable
     public function userToProfileImage(){
         return $this->hasOne(ProfileImage::class,'user_id');
     }
+    public function userToBookingRequest(){
+        return $this->hasMany(BookingRequest::class,'user_id');
+    }
 }

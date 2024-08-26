@@ -31,4 +31,8 @@ class consultancy_branch extends Model
     {
         return $this->hasMany(course::class, 'branch_id');
     }
+    public function branch_to_bookingRequest()
+    {
+        return $this->hasMany(BookingRequest::class, 'branch_id');
+    }
 }

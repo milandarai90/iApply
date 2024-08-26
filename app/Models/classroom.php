@@ -20,4 +20,8 @@ class classroom extends Model
     {
         return $this->belongsTo(course::class, 'course_id');
     }
+    public function classroom_to_bookingRequest()
+    {
+        return $this->hasMany(BookingRequest::class, 'classroom_id');
+    }
 }

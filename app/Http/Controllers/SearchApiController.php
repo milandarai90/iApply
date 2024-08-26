@@ -99,6 +99,7 @@ class SearchApiController extends Controller
                         });
 
                         return[
+                            'id'=>$countryData->id,
                             'country'=>$countryData->name,
                             'map'=>$countryData->country_map ? url('storage/'. $countryData->country_map) : null,
                             'guidelines'=> $guidelines->isNotEmpty() ?$guidelines:null,

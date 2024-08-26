@@ -41,4 +41,7 @@ class consultancy_info extends Model
     public function consultancy_to_country(){
         return $this->hasMany(country::class,'consultancy_id');
     }
+    public function consultancy_to_bookingRequest(){
+        return $this->hasMany(BookingRequest::class,'consultancy_id');
+    }
 }

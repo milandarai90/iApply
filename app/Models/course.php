@@ -28,4 +28,8 @@ class course extends Model
     {
         return $this->hasMany(classroom::class, 'course_id');
     }
+    public function course_to_bookingRequest()
+    {
+        return $this->hasMany(BookingRequest::class, 'course_id');
+    }
 }
