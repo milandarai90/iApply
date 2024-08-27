@@ -1,7 +1,7 @@
 @extends('base')
 @section('content')
 
-@if(count($students)>0)
+@if($bookingData->count()>0)
     <div class="container">
         <form action="">
             <button class="mt-2 mb-2 float-end border border-none" style="font-size:18px; border-radius:20% "><i class="bi bi-search"></i></button>
@@ -12,35 +12,35 @@
                 <tr>
                     <th></th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Contact</th>
                     <th>Address</th>
-                    <th>More Details</th>
-                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Course</th>
+                    <th>Classroom</th>
                     <th>Action</th>
                 </tr>
-            
-                    @foreach ($students as $index => $item)
+                    @foreach ($bookingData as $index => $item)
                 <tr>
                     <td>{{$index+1}}</td>
-                    <td class="text-danger">{{$item->student->name}}</td>
-                    <td>{{$item->student->email}}</td>
-
-                    @if($item->student->phone)
-                    <td>{{$item->student->phone}}</td>
+                    <td class="text-danger">{{$item->bookingRequestToUser->name}}</td>
+                    @if($item->bookingRequestToUser->u_municipality && $item->bookingRequestToUser->u_ward && $item->bookingRequestToUser->u_district)
+                    <td>{{$item->bookingRequestToUser->u_municipality}}-{{$item->bookingRequestToUser->u_ward}},{{$item->bookingRequestToUser->u_district}}</td>
+                    @else
+                    <td>
+                        null
+                    </td>
+                    @endif
+                    <td>{{$item->bookingRequestToUser->email}}</td>
+                    @if($item->bookingRequestToUser->phone)
+                    <td>{{$item->bookingRequestToUser->phone}}</td>
                     @else
                     <td>null</td>
                     @endif
-                    @if( $item->student->u_municipalit && $item->student->u_ward && $item->student->u_district)
-                    <td>{{$item->student->u_municipality}} - {{$item->student->u_ward}} , {{$item->student->u_district}}</td>
-                    @else
-                    <td>null</td>
-                    @endif
-                    <td><a href="" class="text-success">view</a></td>
-                    <td class="fw-bold text-warning">{{$item->status}}</td>
-                    <td >
-                    <a href=""><span class="text-danger me-1">Delete</span></a>
-                    <a href=""> <span class="text-primary">Edit</span></a>
+                    <td>{{$item->bookingRequest_to_course->course}}</td>
+                    <td>{{$item->bookingRequest_to_classroom->class_name}}</td>
+                    <td>
+                    <a href="{{route('branch.rejectedBookingRequest')}}?id={{$item->id}}"><span class="text-danger me-1">Reject</span></a>
+                    <a href="{{route('branch.acceptBookingRequest')}}?id={{$item->id}}"> <span class="text-primary">Accept</span></a>
                     </td>
                 </tr>
                     @endforeach
@@ -62,7 +62,7 @@
 @else
     <div class="container">
         <div class="mt-3 d-flex justify-content-center">
-            <h5 class="text-danger">No data available</h5>
+            <h5 class="text-danger">No Request is here.</h5>
         </div>
     </div>
 
@@ -81,8 +81,8 @@
             document.getElementById("sessionFail").style.display = "none";
             }, 3000); 
 
-           document.getElementById('students').classList.add("menu-open");
-           document.getElementById('joinedstudents').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
+            document.getElementById('requests').classList.add("menu-open");
+               document.getElementById('bookingRequests').classList.add("menu-open","bg-secondary" ,"bg-opacity-25","text-light","rounded");
  </script>
 
 @endsection

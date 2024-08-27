@@ -209,11 +209,11 @@
                             <p>All </p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="bookedstudents">
+                {{-- <ul class="nav nav-treeview" id="bookedstudents">
                     <li class="nav-item"> <a href="{{route('branch.bookedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
                             <p>Booked</p>
                         </a> </li>
-                </ul>
+                </ul> --}}
                 <ul class="nav nav-treeview" id="joinedstudents">
                     <li class="nav-item"> <a href="{{route('branch.joinedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
                             <p>Joined</p>
@@ -225,7 +225,29 @@
                         </a> </li>
                 </ul>
                 </li>
-             
+                
+                <li class="nav-item" id="requests"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-people-fill text-warning"></i>
+                    <p class="fw-bold">
+                  Booking
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" id="bookingRequests">
+                    <li class="nav-item"> <a href="{{route('branch.viewBookingRequest')}}" class="nav-link"> <i class="nav-icon bi bi-person-fill-add"></i>
+                            <p>Requests</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="canceledBookingRequests">
+                    <li class="nav-item"> <a href="{{route('branch.viewCanceledBookingRequest')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>Canceled</p>
+                        </a> </li>
+                </ul>
+                <ul class="nav nav-treeview" id="RejectedBookingRequests">
+                    <li class="nav-item"> <a href="{{route('branch.viewRejectedBookingRequest')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>Rejected</p>
+                        </a> </li>
+                </ul>
+                </li>
     
             </ul>
         </nav>

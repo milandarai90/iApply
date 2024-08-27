@@ -17,6 +17,7 @@ use App\Http\Controllers\BranchDashboardController;
 use App\Http\Controllers\ConsultancyDashboardController;
 use App\Http\Controllers\UsersHomepageController;
 use App\Http\Controllers\generalCountryGuidelinesController;
+use App\Http\Controllers\BookingApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -158,6 +159,15 @@ Route::prefix('/branch')->name('branch.')->group(function () {
         route::get('/joinedStudents', [StudentsController::class, 'joinedStudents'])->name('joinedStudents');
         route::get('/completedStudents', [StudentsController::class, 'completedStudents'])->name('completedStudents');
 
+
+        //booking
+        route::get('/viewBookingRequest', [BookingApiController::class, 'viewBookingRequest'])->name('viewBookingRequest');
+        route::get('/viewCanceledBookingRequest', [BookingApiController::class, 'viewCanceledBookingRequest'])->name('viewCanceledBookingRequest');
+        route::get('/acceptBookingRequest', [BookingApiController::class, 'acceptBookingRequest'])->name('acceptBookingRequest');
+        route::get('/rejectedBookingRequest', [BookingApiController::class, 'rejectedBookingRequest'])->name('rejectedBookingRequest');
+        route::get('/rejectedBookingRequest', [BookingApiController::class, 'rejectedBookingRequest'])->name('rejectedBookingRequest');
+        route::get('/viewRejectedBookingRequest', [BookingApiController::class, 'viewRejectedBookingRequest'])->name('viewRejectedBookingRequest');
+        
 
     });
 });

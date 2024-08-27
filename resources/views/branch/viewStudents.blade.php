@@ -25,8 +25,16 @@
                     <td>{{$index+1}}</td>
                     <td class="text-danger">{{$item->student->name}}</td>
                     <td>{{$item->student->email}}</td>
+                    @if($item->student->phone)
                     <td>{{$item->student->phone}}</td>
+                    @else
+                    <td>null</td>
+                    @endif
+                    @if( $item->student->u_municipalit && $item->student->u_ward && $item->student->u_district)
                     <td>{{$item->student->u_municipality}} - {{$item->student->u_ward}} , {{$item->student->u_district}}</td>
+                    @else
+                    <td>null</td>
+                    @endif
                     <td><a href="" class="text-success">view</a></td>
                     <td class="fw-bold text-warning">{{$item->status}}</td>
                     <td >

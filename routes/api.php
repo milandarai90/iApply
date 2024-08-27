@@ -16,5 +16,6 @@ Route::middleware('auth:sanctum')->post('/logout', [ApiController::class, 'logou
 Route::middleware('auth:sanctum')->get('/search', [SearchApiController::class, 'search']);
 Route::middleware('auth:sanctum')->post('/book', [BookingApiController::class, 'book']);
 Route::middleware('auth:sanctum')->get('/AfterBookingPage', [BookingApiController::class, 'AfterBookingPage']);
+Route::middleware('auth:sanctum')->post('/cancelBooking', [BookingApiController::class, 'cancelBooking']);
 
 
