@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\SearchApiController;
 use App\Http\Controllers\BookingApiController;
+use App\Http\Controllers\NotificationController;
 
 Route::post('/register', [ApiController::class, 'register']);
 Route::post('/verify_otp', [ApiController::class, 'verifyOtp']);
@@ -17,5 +18,6 @@ Route::middleware('auth:sanctum')->get('/search', [SearchApiController::class, '
 Route::middleware('auth:sanctum')->post('/book', [BookingApiController::class, 'book']);
 Route::middleware('auth:sanctum')->get('/AfterBookingPage', [BookingApiController::class, 'AfterBookingPage']);
 Route::middleware('auth:sanctum')->post('/cancelBooking', [BookingApiController::class, 'cancelBooking']);
+Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'notifications']);
 
 

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('consultancy_id');
             $table->unsignedBigInteger('country_id');
-            $table->foreign('consultancy_id')->refrences('id')->on('consultancy_infos')->onDelete('cascade');
-            $table->foreign('country_id')->refreneces('id')->on('countries')->onDelete('cascade');
+            $table->foreign('consultancy_id')->references('id')->on('consultancy_infos')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->string('guidelines');
             $table->timestamps();
         });

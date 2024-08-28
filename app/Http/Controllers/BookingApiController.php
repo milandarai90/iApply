@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BookingRequest;
-use App\Models\studentsInfo
+use App\Models\studentsInfo;
+use App\Models\Notifications;
 
 
 ;
@@ -60,6 +61,7 @@ class BookingApiController extends Controller
         $bookingRequest->status = 'book';
     
         if ($bookingRequest->save()) {
+           
             $canceledBooking = BookingRequest::where('user_id', $user->id)
                 ->where('consultancy_id', $request->consultancy_id)
                 ->where('branch_id', $request->branch_id)
@@ -71,7 +73,6 @@ class BookingApiController extends Controller
             if ($canceledBooking) {
                 $canceledBooking->delete();
             }
-    
             return response()->json(['message' => 'Booked successfully. Wait for branch or consultancy to confirm.'], 200);
         } else {
             return response()->json(['message' => 'Booking failed. Please contact consultancy or branch.'], 500);
@@ -173,7 +174,7 @@ class BookingApiController extends Controller
         $id = $request->id;
 
         $requestData = BookingRequest::find($id)
-        ->with('bookingRequestToUser')
+        ->with('bookingRequestToUser','bookingRequest_to_branch.userBranch','bookingRequest_to_consultancy.consultancyDetails')
         ->first();
         
        if($requestData){
@@ -187,6 +188,27 @@ class BookingApiController extends Controller
         $addStudents->status = 'joined';
 
         if($addStudents->save()){
+
+                  $checkBook = BookingRequest::where('id', $id)
+                ->where('consultancy_id', $requestData->consultancy_id)
+                ->where('user_id', $requestData->user_id)
+                ->where('branch_id', $requestData->branch_id)
+                ->where('course_id', $requestData->course_id)
+                ->where('classroom_id', $requestData->classroom_id)
+                ->where('status', 'book')
+                ->first();
+                if($checkBook){
+                    $checkBook->delete();
+                }
+
+            $notification =  new Notifications;
+            $notification->sent_to = $requestData->user_id;
+            $notification->sent_by = Auth::user()->id;
+            $notification->status = 'unread';
+            $notification->notification = $requestData->bookingRequestToUser->name. ' your booking request to join class at '. $requestData->bookingRequest_to_branch->userBranch->name. ' of '. $requestData->bookingRequest_to_consultancy->consultancyDetails->name .' is accepted.';
+            
+            $notification->save();
+
             $requestData->delete();
             return redirect()->back()->with('success','Booking request accepted successfully.');
         }
@@ -206,7 +228,9 @@ class BookingApiController extends Controller
         $user = Auth::guard('sanctum')->user();
         $id = $request->id;
     
-        $requestData = BookingRequest::find($id);
+        $requestData = BookingRequest::where('id',$id)
+        ->with('bookingRequestToUser','bookingRequest_to_branch.userBranch','bookingRequest_to_consultancy.consultancyDetails')
+        ->first();
     
         if (!$requestData) {
             return redirect()->back()->with('fail','No data found.');
@@ -227,6 +251,14 @@ class BookingApiController extends Controller
         $requestData->status = 'rejected';
     
         if ($requestData->save()) {
+            $notification =  new Notifications;
+            $notification->sent_to = $requestData->user_id;
+            $notification->sent_by = Auth::user()->id;
+            $notification->status = 'unread';
+            $notification->notification = $requestData->bookingRequestToUser->name. ' your booking request to join class at '. $requestData->bookingRequest_to_branch->userBranch->name. ' of '. $requestData->bookingRequest_to_consultancy->consultancyDetails->name .' is rejected.';
+            
+            $notification->save();
+
             return redirect()->back()->with('fail','Booking rejection successful.');
         } else {
             return redirect()->back()->with('fail','Failed to reject booking.');
