@@ -23,22 +23,28 @@ class ApiController extends Controller
 {
     public function register(Request $request)
     {
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            return response()->json(['message' => 'Email already registered'], 409);
+        }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'c_password' => 'required|string|min:8|same:password'
         ]);
+    
         $otp = rand(10000, 99999);
         $expiresAt = Carbon::now()->addMinutes(10);
-        Otp::create([
-            'email' => $request->email,
-            'otp' => $otp,
-            'expires_at' => $expiresAt,
-        ]);
-        Mail::to($request->email)->send(new SendOtpMail($otp));
+            Otp::updateOrCreate(
+            ['email' => $request->email],
+            ['otp' => $otp, 'expires_at' => $expiresAt]
+        );
+            Mail::to($request->email)->send(new SendOtpMail($otp));
         return response()->json(['message' => 'OTP sent to your email'], 200);
     }
+    
+
 
     public function verifyOtp(Request $request)
     {
@@ -77,7 +83,7 @@ class ApiController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('email', 'password')) && Auth::user()->role == 4) {
             $user = Auth::user();
             $token = $user->createToken('Personal Access Token')->plainTextToken;
             return response()->json(['token' => $token ,'email'=>$user->email], 200);

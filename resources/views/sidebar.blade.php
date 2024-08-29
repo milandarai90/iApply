@@ -204,11 +204,11 @@
                             <p>Add </p>
                         </a> </li>
                 </ul>
-                <ul class="nav nav-treeview" id="viewstudents">
+                {{-- <ul class="nav nav-treeview" id="viewstudents">
                     <li class="nav-item"> <a href="{{route('branch.viewStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
                             <p>All </p>
                         </a> </li>
-                </ul>
+                </ul> --}}
                 {{-- <ul class="nav nav-treeview" id="bookedstudents">
                     <li class="nav-item"> <a href="{{route('branch.bookedStudents')}}" class="nav-link"> <i class="nav-icon bi bi-person-lines-fill"></i>
                             <p>Booked</p>

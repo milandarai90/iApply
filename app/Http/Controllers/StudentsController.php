@@ -115,6 +115,7 @@ class StudentsController extends Controller
         $user = PersonalAccessToken::where('token', Auth::user()->personalAccessTokens->first()->token);
         if ($user) {
             $students = studentsInfo::where('branch_id', Auth::user()->branch_id)
+            ->where('consultancy_id',Auth::user()->consultancy_id)
                 ->with('student', 'classes')
                 ->get();
             return view('branch.viewStudents', compact('students', 'user'));
