@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->post('/cancelBooking', [BookingApiController:
 Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'notifications']);
 
 
+

@@ -12,7 +12,6 @@ class NotificationController extends Controller
     public function notifications(){
         if (Auth::guard('sanctum')->check()) {
             $user = Auth::guard('sanctum')->user();
-    
             $notifications = Notifications::where('sent_to', $user->id)
                 ->latest() 
                 ->get()
