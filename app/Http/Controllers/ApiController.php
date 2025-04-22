@@ -130,6 +130,7 @@ class ApiController extends Controller
             return response()->json($response, 200);
         }
     }
+
     public function home()
     {
         // Check if the user is authenticated
@@ -152,21 +153,21 @@ class ApiController extends Controller
                         ->get()
                         ->map(function ($course) use ($branchDetails){
 
-                            $classDetails = classroom::where('branch_id',$branchDetails->id)
+
+                           $classDetails = classroom::with('students')->where('branch_id',$branchDetails->id)
                             ->where('course_id',$course->id)
                             ->get();
-
-                            $studentCount = studentsInfo::where('branch_id',$branchDetails->id)
-                            ->where('course_id',$course->id)->count();
+                            
+                            // $studentCount = $classDetails->students->count();
 
                             $classCount = $classDetails->count();
-
-                           $classDetails= $classDetails->map(function ($class) use ($course , $classCount){
+                            
+                           $classDetails= $classDetails->map(function ($class) use ($course , $classCount, $classDetails){
 
                                 return[
                                     'id'=>$class->id,
                                     'class_name'=>$class->class_name,
-                                    'students_number' =>$studentCount,
+                                    'students_number' =>count($class->students),
                                     'seat_numbers'=>$class->seats_number,
                                     'status'=>$class->status,
                                     'start_time'=>$class->starting_time,
