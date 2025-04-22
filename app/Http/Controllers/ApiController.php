@@ -18,6 +18,7 @@ use App\Mail\SendOtpMail; // Import the SendOtpMail class
 use App\Models\consultancy_branch;
 use App\Models\generalCountry;
 use App\Models\generalCountryGuidelines;
+use App\Models\studentsInfo;
 
 class ApiController extends Controller
 {
@@ -155,6 +156,9 @@ class ApiController extends Controller
                             ->where('course_id',$course->id)
                             ->get();
 
+                            $studentCount = studentsInfo::where('branch_id',$branchDetails->id)
+                            ->where('course_id',$course->id)->count();
+
                             $classCount = $classDetails->count();
 
                            $classDetails= $classDetails->map(function ($class) use ($course , $classCount){
@@ -162,7 +166,7 @@ class ApiController extends Controller
                                 return[
                                     'id'=>$class->id,
                                     'class_name'=>$class->class_name,
-                                    'students_number' =>$classCount,
+                                    'students_number' =>$studentCount,
                                     'seat_numbers'=>$class->seats_number,
                                     'status'=>$class->status,
                                     'start_time'=>$class->starting_time,
