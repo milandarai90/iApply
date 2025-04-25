@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/notifications', [NotificationController
 
 Route::post('/github/webhook', function(){
     try {
+        //WEBHOOK
         $secret = "iapply@2025";
         $payload = file_get_contents("php://input");
         // file_put_contents("webhook_request.log", $payload, FILE_APPEND);
