@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Models\consultancy_info; // Correct import statement
-use App\Models\country; 
-use App\Models\course; 
-use App\Models\classroom; 
-use App\Models\country_guidelines; 
+use App\Models\consultancy_info;
+use App\Models\country;
+use App\Models\course;
+use App\Models\classroom;
+use App\Models\country_guidelines;
 use Carbon\Carbon;
 use App\Models\Otp;
 use App\Mail\SendOtpMail; // Import the SendOtpMail class
@@ -34,7 +34,7 @@ class ApiController extends Controller
             'password' => 'required|string|min:8',
             'c_password' => 'required|string|min:8|same:password'
         ]);
-    
+
         $otp = rand(10000, 99999);
         $expiresAt = Carbon::now()->addMinutes(10);
             Otp::updateOrCreate(
@@ -44,7 +44,7 @@ class ApiController extends Controller
             Mail::to($request->email)->send(new SendOtpMail($otp));
         return response()->json(['message' => 'OTP sent to your email'], 200);
     }
-    
+
 
 
     public function verifyOtp(Request $request)
@@ -92,7 +92,7 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
-  
+
     public function logout(Request $request)
     {
         $user = Auth::guard('sanctum')->user();
@@ -157,11 +157,11 @@ class ApiController extends Controller
                            $classDetails = classroom::with('students')->where('branch_id',$branchDetails->id)
                             ->where('course_id',$course->id)
                             ->get();
-                            
+
                             // $studentCount = $classDetails->students->count();
 
                             $classCount = $classDetails->count();
-                            
+
                            $classDetails= $classDetails->map(function ($class) use ($course , $classCount, $classDetails){
 
                                 return[
@@ -238,7 +238,7 @@ class ApiController extends Controller
                 });
                 $generalCountry = generalCountry::get()
                 ->map(function ($generalCountryDetails){
-                    
+
                     $generalCountryGuidelines = generalCountryGuidelines::where('generalCountry_id',$generalCountryDetails->id)
                     ->get()
                     ->map(function ($guidelines) use ($generalCountryDetails){
