@@ -94,6 +94,7 @@ class BookingApiController extends Controller
                         'branch' => $data->bookingRequest_to_branch->userBranch->name,
                         'course' => $data->bookingRequest_to_course->course,
                         'classroom' => $data->bookingRequest_to_classroom->class_name,
+                        'status' =>$data->bookingRequest_to_classroom->status
                     ];
                 });
     
