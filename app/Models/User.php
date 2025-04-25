@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -58,7 +59,12 @@ class User extends Authenticatable
 
     public function consultancy()
     {
-        return $this->belongsTo(consultancy_info::class, 'consultancy_id');
+        if(Auth::user()->role === 2){
+            return $this->belongsTo(consultancy_info::class, 'consultancy_id');
+        }elseif(Auth::user()->role === 3){
+            $branch = consultancy_branch::with('branch')->find($this->branch_id);
+            return $branch->branch;
+        }
     }
 
     public function userBranch()
