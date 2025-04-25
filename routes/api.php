@@ -34,6 +34,7 @@ Route::post('/github/webhook', function(){
         }
 
         $data = json_decode($payload, true);
+        Log::info('data = ', $data);
         if ($data["ref"] === "refs/heads/main") {
             exec("cd ~/public_html/iapply && git pull origin main 2>&1", $output, $returnCode);
             // file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
