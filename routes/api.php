@@ -26,7 +26,7 @@ Route::post('/github/webhook', function(){
         Log::info('Server = '. $_SERVER);
         $secret = "iapply@2025";
         $payload = file_get_contents("php://input");
-        // file_put_contents("webhook_request.log", $payload, FILE_APPEND);
+        file_put_contents("webhook_request.log", $payload, FILE_APPEND);
         $signature = $_SERVER["HTTP_X_HUB_SIGNATURE_256"] ?? "";
         $hash = "sha256=" . hash_hmac("sha256", $payload, $secret);
         if (!hash_equals($hash, $signature)) {
@@ -35,7 +35,7 @@ Route::post('/github/webhook', function(){
         }
 
         $data = json_decode($payload, true);
-        Log::info('data = ', $data);
+        Log::info('data = ', (array) $data);
         if ($data["ref"] === "refs/heads/main") {
             exec("cd ~/public_html/iapply && git pull origin main 2>&1", $output, $returnCode);
             // file_put_contents("webhook.log", implode('\n', $output), FILE_APPEND);
