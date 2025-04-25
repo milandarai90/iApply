@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BookingRequest;
 use App\Models\studentsInfo;
 use App\Models\Notifications;
+use App\Models\User;
 
 
 ;
@@ -80,29 +81,47 @@ class BookingApiController extends Controller
     }
     
 
+    // public function AfterBookingPage()
+    // {
+    //     if (Auth::guard('sanctum')->check()) {
+    //         $user = Auth::guard('sanctum')->user();
+            
+    //         $bookingRequestData = BookingRequest::where('user_id', $user->id)
+    //             ->with('bookingRequest_to_consultancy.studentInfos', 'bookingRequest_to_branch.userBranch', 'bookingRequest_to_course', 'bookingRequest_to_classroom')
+    //             ->get()
+    //             ->map(function ($data) {
+    //                 return [
+    //                     'consultancy' => $data->bookingRequest_to_consultancy->consultancyDetails->name,
+    //                     'branch' => $data->bookingRequest_to_branch->userBranch->name,
+    //                     'course' => $data->bookingRequest_to_course->course,
+    //                     'classroom' => $data->bookingRequest_to_classroom->class_name,
+    //                 ];
+    //             });
+    
+    //         if ($bookingRequestData->isEmpty()) {
+    //             return response()->json(['message' => 'No data found.'], 404);
+    //         }
+    
+    //         return response()->json(['data' => $bookingRequestData], 200);
+    //     }
+    
+    //     return response()->json(['message' => 'Unauthorized Access.'], 401);
+    // }
     public function AfterBookingPage()
     {
         if (Auth::guard('sanctum')->check()) {
             $user = Auth::guard('sanctum')->user();
-    
-            $bookingRequestData = BookingRequest::where('user_id', $user->id)
-                ->with('bookingRequest_to_consultancy.consultancyDetails', 'bookingRequest_to_branch.userBranch', 'bookingRequest_to_course', 'bookingRequest_to_classroom')
-                ->get()
-                ->map(function ($data) {
-                    return [
-                        'consultancy' => $data->bookingRequest_to_consultancy->consultancyDetails->name,
-                        'branch' => $data->bookingRequest_to_branch->userBranch->name,
-                        'course' => $data->bookingRequest_to_course->course,
-                        'classroom' => $data->bookingRequest_to_classroom->class_name,
-                        'status' =>$data->bookingRequest_to_classroom->status
-                    ];
-                });
-    
-            if ($bookingRequestData->isEmpty()) {
+            $studentInfos = DB::table('students_infos as si')
+            ->join('consultancy_infos as ci', 'si.consultancy_id', '=', 'ci.id')
+            ->join('consultancy_branches as cb', 'si.branch_id', '=', 'cb.id')
+            ->join('classrooms as cr', 'si.classroom_id', '=', 'cr.id')
+            ->join('courses as cs', 'si.course_id', '=', 'cs.id')
+            ->select('si.status', 'cr.name','cs.name');
+            if ($studentInfos->isEmpty()) {
                 return response()->json(['message' => 'No data found.'], 404);
             }
     
-            return response()->json(['data' => $bookingRequestData], 200);
+            return response()->json(['data' => $studentInfos], 200);
         }
     
         return response()->json(['message' => 'Unauthorized Access.'], 401);

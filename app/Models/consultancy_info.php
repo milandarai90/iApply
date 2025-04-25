@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class consultancy_info extends Model
 {
     use HasFactory;
+     public function studentInfos(){
+        return $this->hasMany(studentsInfo::class, 'consultancy_id');
+    }
+     public function studentStatus(){
+        return $this->hasMany(studentsInfo::class, 'consultancy_id')->get(['user_id','status']);
+    }
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords($value);
@@ -44,4 +50,7 @@ class consultancy_info extends Model
     public function consultancy_to_bookingRequest(){
         return $this->hasMany(BookingRequest::class,'consultancy_id');
     }
+    // public function studentStatus(){
+    //     return $this->hasOne(studentsInfo::class, 'consultancy_id')->select(['status', 'consultancy_id']);
+    // }
 }
