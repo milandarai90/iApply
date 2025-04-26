@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\ProfileImage;
 use App\Models\User;
 use Auth;
+use Illuminate\Supports\Facades\DB;
+
 class ProfileController extends Controller
 {
     public function profile(){
@@ -21,6 +23,7 @@ class ProfileController extends Controller
         $request->validate([
             'profilePicture'=> 'required|image|mimes:jpeg,jpg,png,gif,webp'
         ]);
+        DB::beginTransaction();
         $images = time() . 'profilePictures.'.$request->file('profilePicture')->getClientOriginalExtension();
         $paths = $request->file('profilePicture')->storeAs('public/profile_picture/'.$images);
         $profilePicture = str_replace('public/', '', $paths);
@@ -30,6 +33,7 @@ class ProfileController extends Controller
         $profileImage->user_id = Auth::user()->id;
         $profileImage->image_path = $profilePicture;
         $profileImage->save();
+        DB::commit();
          return redirect('/addProfile')->with('success','photo is uploaded.');
     }
 }
