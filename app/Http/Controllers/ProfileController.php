@@ -25,6 +25,7 @@ class ProfileController extends Controller
         $paths = $request->file('profilePicture')->storeAs('public/profile_picture/'.$images);
         $profilePicture = str_replace('public/', '', $paths);
 
+        ProfileImage::where('user_id', Auth::id())->delete();
         $profileImage = new ProfileImage;
         $profileImage->user_id = Auth::user()->id;
         $profileImage->image_path = $profilePicture;
