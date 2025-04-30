@@ -38,7 +38,7 @@ class BookingApiController extends Controller
             ->first();
 
         if ($checkBooking) {
-            return response()->json(['message' => 'Already Booking request sent.Wait for branch or consultancy to confirm.'], 200);
+            return response()->json(['message' => 'Already Booking request sent.Wait for branch or consultancy to confirm.'], 202);
         }
 
         $student = studentsInfo::where('user_id', $user->id)
@@ -74,7 +74,7 @@ class BookingApiController extends Controller
             if ($canceledBooking) {
                 $canceledBooking->delete();
             }
-            return response()->json(['message' => 'Booked successfully. Wait for branch or consultancy to confirm.'], 202);
+            return response()->json(['message' => 'Booked successfully. Wait for branch or consultancy to confirm.'], 200);
         } else {
             return response()->json(['message' => 'Booking failed. Please contact consultancy or branch.'], 500);
         }
