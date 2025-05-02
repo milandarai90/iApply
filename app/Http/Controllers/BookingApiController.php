@@ -170,7 +170,7 @@ class BookingApiController extends Controller
 
                     return response()->json(['message' => 'Booking canceled successfully.'], 200);
                 } else {
-                    return response()->json(['message' => 'Booking cancellation failed.'], 500);
+                    return response()->json(['message' => 'Booking cancellation failed.'], 400);
                 }
             } else {
                 return response()->json(['message' => 'Booking not found.'], 404);
