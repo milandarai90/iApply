@@ -74,7 +74,7 @@ class ApiController extends Controller
         $user->createToken($user->name . 'token');
         $otpRecord->delete();
 
-        return response()->json(['message' => 'User registered successfully'], 201);
+        return response()->json(['message' => 'User registered successfully'], 200);
     }
 
     public function login(Request $request)
