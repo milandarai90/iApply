@@ -12,13 +12,16 @@ Route::post('/resend_otp', [ApiController::class, 'resendOtp']);
 Route::post('/login', [ApiController::class, 'login'])->name('custom-login');
 
 // Protect the /home route with auth.custom middleware
-Route::middleware('auth:sanctum')->get('/home', [ApiController::class, 'home']);
-Route::middleware('auth:sanctum')->post('/logout', [ApiController::class, 'logout']);
-Route::middleware('auth:sanctum')->get('/search', [SearchApiController::class, 'search']);
-Route::middleware('auth:sanctum')->post('/book', [BookingApiController::class, 'book']);
-Route::middleware('auth:sanctum')->get('/AfterBookingPage', [BookingApiController::class, 'AfterBookingPage']);
-Route::middleware('auth:sanctum')->post('/cancelBooking', [BookingApiController::class, 'cancelBooking']);
-Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'notifications']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/home', [ApiController::class, 'home']);
+    Route::post('/logout', [ApiController::class, 'logout']);
+    Route::get('/search', [SearchApiController::class, 'search']);
+    Route::post('/book', [BookingApiController::class, 'book']);
+    Route::get('/AfterBookingPage', [BookingApiController::class, 'AfterBookingPage']);
+    Route::post('/cancelBooking', [BookingApiController::class, 'cancelBooking']);
+    Route::get('/notifications', [NotificationController::class, 'notifications']);
+    Route::get('/requested-booking', 'ApiController@bookingRequested');
+});
 
 
 Route::post('/github/webhook', function(){

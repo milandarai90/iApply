@@ -19,6 +19,7 @@ use App\Models\consultancy_branch;
 use App\Models\generalCountry;
 use App\Models\generalCountryGuidelines;
 use App\Models\studentsInfo;
+use Throwable;
 
 class ApiController extends Controller
 {
@@ -262,6 +263,16 @@ class ApiController extends Controller
 
         } else {
             return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    }
+
+    public function bookingRequested(Request $request){
+        try{
+            $auth = Auth::user();
+            $requests = BookingRequest::with(['bookingRequest_to_consultancy','bookingRequest_to_branch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
+            return response()->json($response, 200);
+        }catch(Throwable $e){
+            return response()->json($e->getMessage(), 500);
         }
     }
 }
