@@ -298,7 +298,7 @@ class ApiController extends Controller
                 Storage::disk('public')->put($filePath, file_get_contents($fileContent));
                 ProfileImage::create([
                     'user_id'=>$auth->id,
-                    'path'=>$filePath
+                    'image_path'=>$filePath
                 ]);
                 return response()->json('Avatar changed', 200);
             }

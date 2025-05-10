@@ -9,7 +9,7 @@ class ProfileImage extends Model
 {
 
     use HasFactory;
-    protected $fillable = ['user_id','path'];
+    protected $fillable = ['user_id','image_path'];
     public function profileImageToUser(){
         return $this->belongsTo(User::class,'user_id');
     }
