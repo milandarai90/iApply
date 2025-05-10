@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/AfterBookingPage', [BookingApiController::class, 'AfterBookingPage']);
     Route::post('/cancelBooking', [BookingApiController::class, 'cancelBooking']);
     Route::get('/notifications', [NotificationController::class, 'notifications']);
-    Route::get('/requested-booking', 'ApiController@bookingRequested');
+    Route::get('/requested-booking', [ApiController::class, 'bookingRequested']);
 });
 
 
