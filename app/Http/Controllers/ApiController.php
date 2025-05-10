@@ -270,9 +270,7 @@ class ApiController extends Controller
     public function bookingRequested(Request $request){
         try{
             $auth = Auth::user();
-            $requests = BookingRequest::with(['bookingRequest_to_consultancy.consultancyDetails'=>function($q){
-                return $q->select('name');
-            },'bookingRequest_to_branch.userBranch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
+            $requests = BookingRequest::with(['bookingRequest_to_consultancy.consultancyDetails','bookingRequest_to_branch.userBranch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
             // $requests = BookingRequest::where('user_id', $auth->id)->where('status', 'book')->get();
             // $consultancyName = User::where('consultancy_id', $requests->consultancy_id)->first()->name;
             // $branchName = User::where('branch_id',$requests->branch_id)->first()->name;
