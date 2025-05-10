@@ -292,10 +292,10 @@ class ApiController extends Controller
                         $profileImage->delete();
                     }
                 }
-                $fileContent = File::get($request->avatar);
+                $fileContent = $request->file('avatar');
                 $fileName = $fileContent->getClientOriginalName();
                 $filePath = 'profile_picture/'.$fileName;
-                Storage::put($filePath, $fileContent);
+                Storage::disk('public')->put($filePath, file_get_contents($fileContent));
                 ProfileImage::create([
                     'user_id'=>$auth->id,
                     'path'=>$filePath
