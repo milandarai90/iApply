@@ -298,7 +298,9 @@ class ApiController extends Controller
                     'user_id'=>$auth->id,
                     'path'=>$filePath
                 ]);
+                return response()->json('Avatar changed', 200);
             }
+            return response()->json('nothing changed',200);
         }catch(Throwable $e){
             return response()->json($e->getMessage(), 500);
         }
