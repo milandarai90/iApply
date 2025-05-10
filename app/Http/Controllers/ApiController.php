@@ -21,6 +21,7 @@ use App\Models\consultancy_branch;
 use App\Models\generalCountry;
 use App\Models\generalCountryGuidelines;
 use App\Models\studentsInfo;
+use App\Models\ProfileImage;
 use Throwable;
 
 class ApiController extends Controller
