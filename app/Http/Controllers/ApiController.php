@@ -270,8 +270,17 @@ class ApiController extends Controller
     public function bookingRequested(Request $request){
         try{
             $auth = Auth::user();
-            $requests = BookingRequest::with(['bookingRequest_to_consultancy','bookingRequest_to_branch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
-            return response()->json($requests, 200);
+            $requests = BookingRequest::where('user_id', $auth->id)->where('status', 'book')->get();
+            $consultancyName = User::where('consultancy_id', $requests->consultancy_id)->first()->name;
+            $branchName = User::where('branch_id',$requests->branch_id)->first()->name;
+            $courseName = course::find($requests->course_id)->course;
+            $classroomName = classroom::find($requests->classroom_id)->class_name;
+            $response = $requests->toArray();
+            $response['consultancy'] = $consultancyName;
+            $response['branch'] = $branchName;
+            $response['course'] = $courseName;
+            $response['classroom'] = $classroomName;
+            return response()->json($response, 200);
         }catch(Throwable $e){
             return response()->json($e->getMessage(), 500);
         }
