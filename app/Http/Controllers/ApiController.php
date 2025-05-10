@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\consultancy_info;
 use App\Models\country;
 use App\Models\course;
@@ -271,17 +272,33 @@ class ApiController extends Controller
         try{
             $auth = Auth::user();
             $requests = BookingRequest::with(['bookingRequest_to_consultancy.consultancyDetails','bookingRequest_to_branch.userBranch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
-            // $requests = BookingRequest::where('user_id', $auth->id)->where('status', 'book')->get();
-            // $consultancyName = User::where('consultancy_id', $requests->consultancy_id)->first()->name;
-            // $branchName = User::where('branch_id',$requests->branch_id)->first()->name;
-            // $courseName = course::find($requests->course_id)->course;
-            // $classroomName = classroom::find($requests->classroom_id)->class_name;
-            // $response = $requests->toArray();
-            // $response['consultancy'] = $consultancyName;
-            // $response['branch'] = $branchName;
-            // $response['course'] = $courseName;
-            // $response['classroom'] = $classroomName;
             return response()->json($requests, 200 );
+        }catch(Throwable $e){
+            return response()->json($e->getMessage(), 500);
+        }
+    }
+
+    public function changeAvatar(Request $request) {
+        try{
+            $auth = Auth::user();
+            if($request->has('avatar')){
+                $existingAvatar = ProfileImage::where('user_id', $auth->id)->exists();
+                if($existingAvatar){
+                    $profileImages = ProfileImage::where('user_id', $auth->id)->get();
+                    foreach($profileImages as $profileImage){
+                        Storage::delete('storage/'. $profileImage->path);
+                        $profileImage->delete();
+                    }
+                }
+                $fileContent = File::get($request->avatar);
+                $fileName = $fileContent->getClientOriginalName();
+                $filePath = 'profile_picture/'.$fileName;
+                Storage::put($filePath, $fileContent);
+                ProfileImage::create([
+                    'user_id'=>$auth->id,
+                    'path'=>$filePath
+                ]);
+            }
         }catch(Throwable $e){
             return response()->json($e->getMessage(), 500);
         }
