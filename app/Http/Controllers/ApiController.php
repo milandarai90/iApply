@@ -274,7 +274,7 @@ class ApiController extends Controller
         try{
             $auth = Auth::user();
             $requests = BookingRequest::with(['bookingRequest_to_consultancy.consultancyDetails','bookingRequest_to_branch.userBranch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
-            return response()->json($requests, 200 );
+            return response()->json(['result' => $requests], 200 );
         }catch(Throwable $e){
             return response()->json($e->getMessage(), 500);
         }
