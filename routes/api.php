@@ -18,7 +18,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/search', [SearchApiController::class, 'search']);
     Route::post('/book', [BookingApiController::class, 'book']);
     Route::get('/AfterBookingPage', [BookingApiController::class, 'AfterBookingPage']);
-    Route::post('/cancelBooking', [BookingApiController::class, 'cancelBooking']);
+    Route::post('/cancelBookings', [BookingApiController::class, 'cancelBookings']);
     Route::get('/notifications', [NotificationController::class, 'notifications']);
     Route::get('/requested-booking', [ApiController::class, 'bookingRequested']);
     Route::post('/change-avatar', [ApiController::class, 'changeAvatar']);

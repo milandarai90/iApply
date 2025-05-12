@@ -133,7 +133,7 @@ class BookingApiController extends Controller
     }
 
 
-    public function cancelBooking(Request $request)
+    public function cancelBookings(Request $request)
     {
         if (Auth::guard('sanctum')->check()) {
             $user = Auth::guard('sanctum')->user();
