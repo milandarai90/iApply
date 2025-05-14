@@ -302,7 +302,7 @@ class ApiController extends Controller
                 ]);
                 return response()->json(['message'=>"Avatar changed"], 200);
             }
-            return response()->json(['message'=>"nothing changed"],200);
+            return response()->json(['message'=>"nothing changed"],300);
         }catch(Throwable $e){
             return response()->json($e->getMessage(), 500);
         }
