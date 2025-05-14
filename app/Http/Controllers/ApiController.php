@@ -279,32 +279,34 @@ class ApiController extends Controller
             return response()->json($e->getMessage(), 500);
         }
     }
+public function changeAvatar(Request $request) {
+    try {
+        $auth = Auth::user();
 
-    public function changeAvatar(Request $request) {
-        try{
-            $auth = Auth::user();
-            if($request->has('avatar')){
-                $existingAvatar = ProfileImage::where('user_id', $auth->id)->exists();
-                if($existingAvatar){
-                    $profileImages = ProfileImage::where('user_id', $auth->id)->get();
-                    foreach($profileImages as $profileImage){
-                        Storage::delete('storage/'. $profileImage->path);
-                        $profileImage->delete();
-                    }
-                }
-                $fileContent = $request->file('avatar');
-                $fileName = $fileContent->getClientOriginalName();
-                $filePath = 'profile_picture/'.$fileName;
-                Storage::disk('public')->put($filePath, file_get_contents($fileContent));
-                ProfileImage::create([
-                    'user_id'=>$auth->id,
-                    'image_path'=>$filePath
-                ]);
-                return response()->json(['message'=>"Avatar changed"], 200);
+        if ($request->hasFile('avatar')) {
+            $profileImages = ProfileImage::where('user_id', $auth->id)->get();
+            foreach ($profileImages as $profileImage) {
+                Storage::disk('public')->delete($profileImage->image_path);
+                $profileImage->delete();
             }
-            return response()->json(['message'=>"nothing changed"],300);
-        }catch(Throwable $e){
-            return response()->json($e->getMessage(), 500);
+
+            $file = $request->file('avatar');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = 'profile_picture/' . $fileName;
+            Storage::disk('public')->put($filePath, file_get_contents($file));
+
+            ProfileImage::create([
+                'user_id' => $auth->id,
+                'image_path' => $filePath
+            ]);
+
+            return response()->json(['message' => "Avatar changed"], 200);
         }
+
+        return response()->json(['message' => "No avatar uploaded"], 300);
+    } catch (Throwable $e) {
+        return response()->json(['message' => 'Server error'], 500);
     }
+}
+
 }
