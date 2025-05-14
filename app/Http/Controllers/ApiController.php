@@ -300,9 +300,9 @@ class ApiController extends Controller
                     'user_id'=>$auth->id,
                     'image_path'=>$filePath
                 ]);
-                return response()->json('Avatar changed', 200);
+                return response()->json(['message'=>"Avatar changed"], 200);
             }
-            return response()->json('nothing changed',200);
+            return response()->json(['message'=>"nothing changed"],200);
         }catch(Throwable $e){
             return response()->json($e->getMessage(), 500);
         }
