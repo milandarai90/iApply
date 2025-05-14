@@ -42,15 +42,13 @@ class ApiController extends Controller
 
         $otp = rand(10000, 99999);
         $expiresAt = Carbon::now()->addMinutes(10);
-            Otp::updateOrCreate(
+        Otp::updateOrCreate(
             ['email' => $request->email],
             ['otp' => $otp, 'expires_at' => $expiresAt]
         );
-            Mail::to($request->email)->send(new SendOtpMail($otp));
+        Mail::to($request->email)->send(new SendOtpMail($otp));
         return response()->json(['message' => 'OTP sent to your email'], 200);
     }
-
-
 
     public function verifyOtp(Request $request)
     {
@@ -92,7 +90,7 @@ class ApiController extends Controller
         if (Auth::attempt($request->only('email', 'password')) && Auth::user()->role == 4) {
             $user = Auth::user();
             $token = $user->createToken('Personal Access Token')->plainTextToken;
-            return response()->json(['token' => $token ,'email'=>$user->email], 200);
+            return response()->json(['token' => $token, 'email' => $user->email], 200);
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);
@@ -142,171 +140,180 @@ class ApiController extends Controller
         if (Auth::guard('sanctum')->check()) {
             $user = Auth::guard('sanctum')->user();
 
-            if($user->role ==4){
-                $consultancy = consultancy_info::with('consultancyDetails','consultancyDetails.userToProfileImage')
-                ->get()
-                ->map(function($consultancyDetails){
-
-                    $branch = consultancy_branch::where('consultancy_id',$consultancyDetails->id)
-                    ->with('userBranch','userBranch.userToProfileImage','classBranch','branchCourse')
+            if ($user->role == 4) {
+                $consultancy = consultancy_info::with('consultancyDetails', 'consultancyDetails.userToProfileImage')
                     ->get()
-                    ->map(function($branchDetails) use ($consultancyDetails){
+                    ->map(function ($consultancyDetails) {
 
-                        $course = course::where('consultancy_id',$branchDetails->consultancy_id)
-                        ->where('branch_id',$branchDetails->id)
-                        ->with('course')
-                        ->get()
-                        ->map(function ($course) use ($branchDetails){
+                        $branch = consultancy_branch::where('consultancy_id', $consultancyDetails->id)
+                            ->with('userBranch', 'userBranch.userToProfileImage', 'classBranch', 'branchCourse')
+                            ->get()
+                            ->map(function ($branchDetails) use ($consultancyDetails) {
+
+                                $course = course::where('consultancy_id', $branchDetails->consultancy_id)
+                                    ->where('branch_id', $branchDetails->id)
+                                    ->with('course')
+                                    ->get()
+                                    ->map(function ($course) use ($branchDetails) {
 
 
-                           $classDetails = classroom::with('students')->where('branch_id',$branchDetails->id)
-                            ->where('course_id',$course->id)
-                            ->get();
+                                        $classDetails = classroom::with('students')->where('branch_id', $branchDetails->id)
+                                            ->where('course_id', $course->id)
+                                            ->get();
 
-                            // $studentCount = $classDetails->students->count();
+                                        // $studentCount = $classDetails->students->count();
 
-                            $classCount = $classDetails->count();
+                                        $classCount = $classDetails->count();
 
-                           $classDetails= $classDetails->map(function ($class) use ($course , $classCount, $classDetails){
+                                        $classDetails = $classDetails->map(function ($class) use ($course, $classCount, $classDetails) {
 
-                                return[
-                                    'id'=>$class->id,
-                                    'class_name'=>$class->class_name,
-                                    'students_number' =>count($class->students),
-                                    'seat_numbers'=>$class->seats_number,
-                                    'status'=>$class->status,
-                                    'start_time'=>$class->starting_time,
-                                    'end_time'=>$class->ending_time,
-                                    'start_date'=>$class->starting_date,
-                                    'end_date'=>$class->ending_date,
+                                            return [
+                                                'id' => $class->id,
+                                                'class_name' => $class->class_name,
+                                                'students_number' => count($class->students),
+                                                'seat_numbers' => $class->seats_number,
+                                                'status' => $class->status,
+                                                'start_time' => $class->starting_time,
+                                                'end_time' => $class->ending_time,
+                                                'start_date' => $class->starting_date,
+                                                'end_date' => $class->ending_date,
+                                            ];
+                                        });
+
+                                        return [
+                                            'id' => $course->id,
+                                            'course_title' => $course->course,
+                                            'class_details' => $classDetails->isNotEmpty() ? $classDetails : null
+                                        ];
+                                    });
+
+                                return [
+                                    'id' => $branchDetails->id,
+                                    'name' => $branchDetails->userBranch->name,
+                                    'email' => $branchDetails->userBranch->email,
+                                    'phone' => $branchDetails->userBranch->phone,
+                                    'u_district' => $branchDetails->userBranch->u_district,
+                                    'u_municipality' => $branchDetails->userBranch->u_municipality,
+                                    'u_ward' => $branchDetails->userBranch->u_ward,
+                                    'photo' => $branchDetails->userBranch->userToProfileImage ?  url(asset('storage/' . $branchDetails->userBranch->userToProfileImage->image_path)) : null,
+                                    'course_details' => $course,
                                 ];
                             });
 
-                            return[
-                                'id' => $course->id,
-                                'course_title'=>$course->course,
-                                'class_details' => $classDetails->isNotEmpty() ? $classDetails : null
-                            ];
-                        });
 
-                        return[
-                            'id'=>$branchDetails->id,
-                            'name'=>$branchDetails->userBranch->name,
-                            'email'=>$branchDetails->userBranch->email,
-                            'phone'=>$branchDetails->userBranch->phone,
-                            'u_district'=>$branchDetails->userBranch->u_district,
-                            'u_municipality'=>$branchDetails->userBranch->u_municipality,
-                            'u_ward'=>$branchDetails->userBranch->u_ward,
-                            'photo' => $branchDetails->userBranch->userToProfileImage ?  url(asset('storage/'.$branchDetails->userBranch->userToProfileImage->image_path)):null,
-                            'course_details' => $course,
-                        ];
+                        $country = country::where('consultancy_id', $consultancyDetails->id)
+                            ->with('country_to_guidelines')
+                            ->get()
+                            ->map(function ($countryData) {
 
-                    });
+                                $guidelines = country_guidelines::where('consultancy_id', $countryData->consultancy_id)
+                                    ->where('country_id', $countryData->id)
+                                    ->get()
+                                    ->map(function ($guide) use ($countryData) {
+
+                                        return [
+                                            'process' => $guide->guidelines
+                                        ];
+                                    });
+
+                                return [
+                                    'country' => $countryData->name,
+                                    'map' => $countryData->country_map ? url('storage/' . $countryData->country_map) : null,
+                                    'guidelines' => $guidelines->isNotEmpty() ? $guidelines : null,
+                                ];
+                            });
 
 
-                    $country = country::where('consultancy_id',$consultancyDetails->id)
-                    ->with('country_to_guidelines')
-                    ->get()
-                    ->map(function($countryData){
+                        return [
+                            'id' => $consultancyDetails->id,
+                            'name' => $consultancyDetails->consultancyDetails->name,
+                            'email' => $consultancyDetails->consultancyDetails->email,
+                            'phone' => $consultancyDetails->consultancyDetails->phone,
+                            'u_district' => $consultancyDetails->consultancyDetails->u_district,
+                            'u_municipality' => $consultancyDetails->consultancyDetails->u_municipality,
+                            'u_ward' => $consultancyDetails->consultancyDetails->u_ward,
+                            'photo' => $consultancyDetails->consultancyDetails->userToProfileImage ?  url(asset('storage/' . $consultancyDetails->consultancyDetails->userToProfileImage->image_path)) : null,
+                            'branch_details' => $branch,
+                            'country_details' => $country->isNotEmpty() ? $country : null,
 
-                        $guidelines = country_guidelines::where('consultancy_id',$countryData->consultancy_id)
-                        ->where('country_id',$countryData->id)
-                        ->get()
-                        ->map(function ($guide) use ($countryData){
-
-                            return[
-                               'process'=>$guide->guidelines
-                            ];
-                        });
-
-                        return[
-                            'country'=>$countryData->name,
-                            'map'=>$countryData->country_map ? url('storage/'. $countryData->country_map) : null,
-                            'guidelines'=> $guidelines->isNotEmpty() ?$guidelines:null,
                         ];
                     });
-
-
-                    return [
-                        'id'=>$consultancyDetails->id,
-                        'name'=>$consultancyDetails->consultancyDetails->name,
-                        'email'=>$consultancyDetails->consultancyDetails->email,
-                        'phone'=>$consultancyDetails->consultancyDetails->phone,
-                        'u_district'=>$consultancyDetails->consultancyDetails->u_district,
-                        'u_municipality'=>$consultancyDetails->consultancyDetails->u_municipality,
-                        'u_ward'=>$consultancyDetails->consultancyDetails->u_ward,
-                        'photo' => $consultancyDetails->consultancyDetails->userToProfileImage ?  url(asset('storage/'.$consultancyDetails->consultancyDetails->userToProfileImage->image_path)):null,
-                        'branch_details'=> $branch,
-                        'country_details'=>$country->isNotEmpty() ? $country :null,
-
-                    ];
-                });
                 $generalCountry = generalCountry::get()
-                ->map(function ($generalCountryDetails){
+                    ->map(function ($generalCountryDetails) {
 
-                    $generalCountryGuidelines = generalCountryGuidelines::where('generalCountry_id',$generalCountryDetails->id)
-                    ->get()
-                    ->map(function ($guidelines) use ($generalCountryDetails){
+                        $generalCountryGuidelines = generalCountryGuidelines::where('generalCountry_id', $generalCountryDetails->id)
+                            ->get()
+                            ->map(function ($guidelines) use ($generalCountryDetails) {
 
-                        return[
-                            'id'=>$guidelines->id,
-                            'Guidelines'=> $guidelines->guidelines,
+                                return [
+                                    'id' => $guidelines->id,
+                                    'Guidelines' => $guidelines->guidelines,
+                                ];
+                            });
+
+                        return [
+                            'id' => $generalCountryDetails->id,
+                            'country' => $generalCountryDetails->name,
+                            'map' => url(asset('storage/' . $generalCountryDetails->map)),
+                            'guidelines' => $generalCountryGuidelines,
                         ];
                     });
-
-                    return[
-                        'id'=> $generalCountryDetails->id,
-                        'country'=>$generalCountryDetails->name,
-                        'map'=> url(asset('storage/'.$generalCountryDetails->map)),
-                        'guidelines'=>$generalCountryGuidelines,
-                    ];
-
-                } );
-                return response()->json(['consultancy_details'=> $consultancy,'general_country'=>$generalCountry]);
+                return response()->json(['consultancy_details' => $consultancy, 'general_country' => $generalCountry]);
             }
-
         } else {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
     }
 
-    public function bookingRequested(Request $request){
-        try{
+    public function bookingRequested(Request $request)
+    {
+        try {
             $auth = Auth::user();
-            $requests = BookingRequest::with(['bookingRequest_to_consultancy.consultancyDetails','bookingRequest_to_branch.userBranch','bookingRequest_to_course','bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
-            return response()->json(['result' => $requests], 200 );
-        }catch(Throwable $e){
+            $requests = BookingRequest::with(['bookingRequest_to_consultancy.consultancyDetails', 'bookingRequest_to_branch.userBranch', 'bookingRequest_to_course', 'bookingRequest_to_classroom'])->where('user_id', $auth->id)->where('status', 'book')->get();
+            return response()->json(['result' => $requests], 200);
+        } catch (Throwable $e) {
             return response()->json($e->getMessage(), 500);
         }
     }
-public function changeAvatar(Request $request) {
-    try {
-        $auth = Auth::user();
 
-        if ($request->hasFile('avatar')) {
-            $profileImages = ProfileImage::where('user_id', $auth->id)->get();
-            foreach ($profileImages as $profileImage) {
-                Storage::disk('public')->delete($profileImage->image_path);
-                $profileImage->delete();
+    public function changeAvatar(Request $request)
+    {
+        try {
+            $auth = Auth::user();
+
+            if ($request->hasFile('avatar')) {
+                $profileImages = ProfileImage::where('user_id', $auth->id)->get();
+                foreach ($profileImages as $profileImage) {
+                    Storage::disk('public')->delete($profileImage->image_path);
+                    $profileImage->delete();
+                }
+
+                $file = $request->file('avatar');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = 'profile_picture/' . $fileName;
+                Storage::disk('public')->put($filePath, file_get_contents($file));
+
+                ProfileImage::create([
+                    'user_id' => $auth->id,
+                    'image_path' => $filePath
+                ]);
+
+                return response()->json(['message' => "Avatar changed"], 200);
             }
 
-            $file = $request->file('avatar');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = 'profile_picture/' . $fileName;
-            Storage::disk('public')->put($filePath, file_get_contents($file));
-
-            ProfileImage::create([
-                'user_id' => $auth->id,
-                'image_path' => $filePath
-            ]);
-
-            return response()->json(['message' => "Avatar changed"], 200);
+            return response()->json(['message' => "No avatar uploaded"], 300);
+        } catch (Throwable $e) {
+            return response()->json(['message' => 'Server error'], 500);
         }
-
-        return response()->json(['message' => "No avatar uploaded"], 300);
-    } catch (Throwable $e) {
-        return response()->json(['message' => 'Server error'], 500);
     }
-}
 
+    public function userDetail(Request $request)
+    {
+        try {
+            $auth = User::with(['userToProfileImage'])->find(Auth::id());
+            return response()->json(['success' => true, 'message' => 'success', 'data' => $auth], 200);
+        } catch (Throwable $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage(), 'data' => null], 500);
+        }
+    }
 }

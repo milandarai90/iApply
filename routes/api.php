@@ -5,6 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\SearchApiController;
 use App\Http\Controllers\BookingApiController;
 use App\Http\Controllers\NotificationController;
+use Illuminate\Support\Facades\Log;
 
 Route::post('/register', [ApiController::class, 'register']);
 Route::post('/verify_otp', [ApiController::class, 'verifyOtp']);
@@ -12,7 +13,7 @@ Route::post('/resend_otp', [ApiController::class, 'resendOtp']);
 Route::post('/login', [ApiController::class, 'login'])->name('custom-login');
 
 // Protect the /home route with auth.custom middleware
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/home', [ApiController::class, 'home']);
     Route::post('/logout', [ApiController::class, 'logout']);
     Route::get('/search', [SearchApiController::class, 'search']);
@@ -22,10 +23,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/notifications', [NotificationController::class, 'notifications']);
     Route::get('/requested-booking', [ApiController::class, 'bookingRequested']);
     Route::post('/change-avatar', [ApiController::class, 'changeAvatar']);
+    Route::get('/user-detail', [ApiController::class, 'userDetail']);
 });
 
 
-Route::post('/github/webhook', function(){
+Route::post('/github/webhook', function () {
     try {
         Log::info('Server = ', $_SERVER);
         $secret = "iapply@2025";
