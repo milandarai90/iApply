@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class consultancy_branch extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at', 'updated_at'];
     public function branch()
     {
         return $this->belongsTo(consultancy_info::class, 'consultancy_id');

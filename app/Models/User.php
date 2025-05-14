@@ -41,6 +41,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -59,9 +61,9 @@ class User extends Authenticatable
 
     public function consultancy()
     {
-        if(Auth::user()->role === 2){
+        if (Auth::user()->role === 2) {
             return $this->belongsTo(consultancy_info::class, 'consultancy_id');
-        }elseif(Auth::user()->role === 3){
+        } elseif (Auth::user()->role === 3) {
             $branch = consultancy_branch::with('branch')->find($this->branch_id);
             return $branch->branch;
         }
@@ -102,10 +104,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(PersonalAccessToken::class, 'tokenable_id');
     }
-    public function userToProfileImage(){
-        return $this->hasOne(ProfileImage::class,'user_id');
+    public function userToProfileImage()
+    {
+        return $this->hasOne(ProfileImage::class, 'user_id');
     }
-    public function userToBookingRequest(){
-        return $this->hasMany(BookingRequest::class,'user_id');
+    public function userToBookingRequest()
+    {
+        return $this->hasMany(BookingRequest::class, 'user_id');
     }
 }

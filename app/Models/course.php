@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class course extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at', 'updated_at'];
     protected static function boot()
     {
         parent::boot();

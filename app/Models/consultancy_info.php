@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class consultancy_info extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at', 'updated_at'];
      public function studentInfos(){
         return $this->hasMany(studentsInfo::class, 'consultancy_id');
     }

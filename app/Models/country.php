@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class country extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at', 'updated_at'];
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords($value);

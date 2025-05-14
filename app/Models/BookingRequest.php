@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class BookingRequest extends Model
 {
     use HasFactory;
-    public function bookingRequestToUser(){
-        return $this->belongsTo(User::class,'user_id');
+    public function bookingRequestToUser()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function bookingRequest_to_consultancy(){
-        return $this->belongsTo(consultancy_info::class,'consultancy_id');
+    public function bookingRequest_to_consultancy()
+    {
+        return $this->belongsTo(consultancy_info::class, 'consultancy_id');
     }
     public function bookingRequest_to_branch()
     {
