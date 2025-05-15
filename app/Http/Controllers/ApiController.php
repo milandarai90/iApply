@@ -298,10 +298,10 @@ class ApiController extends Controller
                     'image_path' => $filePath
                 ]);
 
-                return response()->json(['message' => "Avatar changed"], 200);
+                return response()->json(['message' => "Photo uploaded successfully."], 200);
             }
 
-            return response()->json(['message' => "No avatar uploaded"], 300);
+            return response()->json(['message' => "Photo not changed, size too big"], 300);
         } catch (Throwable $e) {
             return response()->json(['message' => 'Server error'], 500);
         }
