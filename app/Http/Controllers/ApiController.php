@@ -301,7 +301,7 @@ class ApiController extends Controller
                 return response()->json(['message' => "Photo uploaded successfully."], 200);
             }
 
-            return response()->json(['message' => "Photo not changed, size too big"], 300);
+            return response()->json(['message' => "Your photo size is large to be changed."], 300);
         } catch (Throwable $e) {
             return response()->json(['message' => 'Server error'], 500);
         }
